@@ -11,6 +11,8 @@ from app import ALGORITHM_VERSION
 from app.analysis import run
 from app.domain import AnalysisRequest, SavedAnalysis
 from app.providers import ARCHIVE
+from app.storage import store_analysis
+from app.api import export_html
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "research_results"
@@ -38,6 +40,8 @@ for name, case in cases.items():
                           comparison=comparison, created_at=datetime.now(timezone.utc),
                           algorithm_version=ALGORITHM_VERSION, source_records=records)
     (OUT / f"{name}.json").write_text(saved.model_dump_json(indent=2),encoding="utf-8")
+    store_analysis(saved)
+    (OUT / f"{name}.html").write_text(export_html(saved.id).body.decode("utf-8"),encoding="utf-8")
     first_weather = windows[0].factors[0]
     first_probability = first_weather.evidence[0]["event"]["value"] if first_weather.evidence else None
     observed = validate(request.start.date().isoformat()) if name != "window_demo" else None
