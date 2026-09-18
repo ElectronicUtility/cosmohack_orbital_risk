@@ -1,5 +1,5 @@
 {
-  "id": "32b6d31616b74eb49d878d15cb65eef0",
+  "id": "505ec81f8b2f438ea36a3d05a6a073fc",
   "request": {
     "mode": "replay",
     "start": "2024-05-05T01:00:00Z",
@@ -18,9 +18,22 @@
       "factors": [
         {
           "mechanism": "space_weather",
+          "role": "risk_mechanism",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "forecast_below_experimental_threshold",
           "covered_minutes": 60.0,
-          "overlap_minutes": 0.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": 15.0,
+          "forecast_horizon_hours": 74.0,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": "1 UTC day",
+          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "comparison_value": 15.0,
+          "comparison_unit": "daily_probability_percent",
+          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "archive",
           "evidence": [
@@ -43,21 +56,135 @@
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
                 ]
               },
-              "overlap_minutes": 60.0,
-              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+              "forecast_validity_overlap_minutes": 60.0,
+              "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
             }
           ],
           "limitations": [
-            "Forecast probability is not observed astronaut radiation dose.",
+            "Forecast validity coverage is not duration of adverse conditions; that duration is unknown.",
+            "Daily probability is not the probability of exposure in this particular EVA window or an observed astronaut dose.",
+            "Three-hour planetary Kp, when present, is forecast context only and is not mapped to EVA dose or double-counted as a second risk factor.",
+            "When a window spans different daily probabilities, the prototype does not invent a rule to collapse them into one value.",
+            "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
+        },
+        {
+          "mechanism": "conjunctions",
+          "role": "risk_mechanism",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven.",
+          "state": "no_reconstructed_close_approach_within_screen",
+          "covered_minutes": 60.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": null,
+          "comparison_unit": "minimum_modeled_separation_km",
+          "comparison_quantity": "ISS-object minimum modeled separation",
+          "comparison_direction": "higher_is_better",
+          "comparison_tolerance": 0.0,
+          "completeness": "reconstruction_unverified_catalog_completeness",
+          "freshness": "historical_reconstruction_publication_unknown",
+          "evidence": [
+            {
+              "screening_threshold_km": 5.0,
+              "coverage": [
+                "2024-05-05T01:00:00+00:00",
+                "2024-05-05T02:00:00+00:00"
+              ],
+              "reconstruction": {
+                "status": "historical_reconstruction",
+                "candidate_objects": 4148,
+                "screened_candidates": 23,
+                "refined_coarse_intervals": 50,
+                "reported_events": 0,
+                "screening_threshold_km": 5.0,
+                "coarse_step_seconds": 60,
+                "curvature_margin_km": 8.81845693126857,
+                "iss_element_epoch": "2024-05-05T00:59:41.479584+00:00",
+                "iss_element_age_hours_at_window_start": 0.00514456,
+                "element_snapshot_policy": "latest element epoch at or before window start, held fixed through the full window",
+                "snapshot_sensitivity": {
+                  "interpretation": "Diagnostic of element-set turnover only; not a probability or calibrated position uncertainty.",
+                  "publication_time_known": false,
+                  "candidate_objects_with_later_element_epoch_inside_window": 122,
+                  "candidate_object_fraction_with_later_element_epoch_inside_window": 0.029411764705882353,
+                  "iss_later_element_epoch_count_inside_window": 0,
+                  "iss_first_later_element_epoch_inside_window": null,
+                  "iss_last_later_element_epoch_inside_window": null,
+                  "reported_events": []
+                },
+                "oldest_candidate_epoch": "2024-04-28T21:41:10.923360+00:00",
+                "newest_candidate_epoch": "2024-05-05T00:59:27.805920+00:00",
+                "oldest_candidate_element_age_hours_at_window_start": 147.3136324,
+                "newest_candidate_element_age_hours_at_window_start": 0.0089428,
+                "candidate_element_age_hours_at_window_start": {
+                  "p50": 14.90465944,
+                  "p90": 45.39951664,
+                  "p99": 120.52500496
+                },
+                "publication_time_known": false,
+                "excluded_duplicate_state_objects": 11,
+                "duplicate_state_groups": [
+                  [
+                    53239,
+                    54216,
+                    58146,
+                    58811
+                  ],
+                  [
+                    49044,
+                    58460,
+                    58898,
+                    58961,
+                    59097,
+                    59287,
+                    59294
+                  ]
+                ],
+                "excluded_known_iss_associations": [],
+                "ambiguous_persistent_proximity_events": []
+              },
+              "forecast_semantics": null,
+              "rule": "Compare the minimum modeled/reported separation directly; no cross-factor scalar risk score is created."
+            }
+          ],
+          "limitations": [
+            "The 5 km value is a conjunction screening threshold, not an EVA safety or operating limit.",
+            "No reported/reconstructed approach inside 5 km does not imply zero debris risk.",
+            "Orbital conjunction probability is not the probability of a fragment striking an EVA crewmember.",
+            "Historical result is a TLE geometry reconstruction, not an archived SOCRATES report.",
+            "No covariance is available, so collision probability is not calculated.",
+            "Individual historical TLE publication times are unavailable; this mechanism is excluded from strict point-in-time replay claims.",
+            "Candidate catalog completeness at the historical instant cannot be proven from this public mirror.",
+            "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
+            "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
+          ],
+          "algorithm_version": "0.4.0"
         },
         {
           "mechanism": "lighting",
+          "role": "plan_constraint",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "no_restriction_detected",
           "covered_minutes": 60.0,
           "overlap_minutes": 0.0,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": 0.0,
+          "comparison_unit": "minutes_of_plan_constraint",
+          "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
@@ -66,8 +193,12 @@
               "unit": "minutes",
               "value": 0.0,
               "intervals": [],
-              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-              "orbit_epoch": "2024-05-05T00:59:41.479584+00:00",
+              "orbit_records": [
+                "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+              ],
+              "orbit_epochs": [
+                "2024-05-05T00:59:41.479584+00:00"
+              ],
               "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
               "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
             }
@@ -77,7 +208,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
         }
       ],
       "orbit": [
@@ -239,7 +370,7 @@
         }
       ],
       "limitations": [
-        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+        "Историческая орбита и сближения — реконструкция; их доступность на момент cutoff не подтверждена. Для геометрии используется единый снимок элементов на начало каждого окна, без скрытого переключения TLE внутри окна. В strict replay они показываются как validation/reconstruction и не участвуют в решении, пока их доступность к cutoff не доказана."
       ]
     },
     {
@@ -250,9 +381,22 @@
       "factors": [
         {
           "mechanism": "space_weather",
+          "role": "risk_mechanism",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "forecast_below_experimental_threshold",
           "covered_minutes": 60.0,
-          "overlap_minutes": 0.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": 15.0,
+          "forecast_horizon_hours": 74.0,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": "1 UTC day",
+          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "comparison_value": 15.0,
+          "comparison_unit": "daily_probability_percent",
+          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "archive",
           "evidence": [
@@ -275,28 +419,142 @@
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
                 ]
               },
-              "overlap_minutes": 60.0,
-              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+              "forecast_validity_overlap_minutes": 60.0,
+              "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
             }
           ],
           "limitations": [
-            "Forecast probability is not observed astronaut radiation dose.",
+            "Forecast validity coverage is not duration of adverse conditions; that duration is unknown.",
+            "Daily probability is not the probability of exposure in this particular EVA window or an observed astronaut dose.",
+            "Three-hour planetary Kp, when present, is forecast context only and is not mapped to EVA dose or double-counted as a second risk factor.",
+            "When a window spans different daily probabilities, the prototype does not invent a rule to collapse them into one value.",
+            "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
+        },
+        {
+          "mechanism": "conjunctions",
+          "role": "risk_mechanism",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven.",
+          "state": "no_reconstructed_close_approach_within_screen",
+          "covered_minutes": 60.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": null,
+          "comparison_unit": "minimum_modeled_separation_km",
+          "comparison_quantity": "ISS-object minimum modeled separation",
+          "comparison_direction": "higher_is_better",
+          "comparison_tolerance": 0.0,
+          "completeness": "reconstruction_unverified_catalog_completeness",
+          "freshness": "historical_reconstruction_publication_unknown",
+          "evidence": [
+            {
+              "screening_threshold_km": 5.0,
+              "coverage": [
+                "2024-05-05T07:00:00+00:00",
+                "2024-05-05T08:00:00+00:00"
+              ],
+              "reconstruction": {
+                "status": "historical_reconstruction",
+                "candidate_objects": 4155,
+                "screened_candidates": 40,
+                "refined_coarse_intervals": 95,
+                "reported_events": 0,
+                "screening_threshold_km": 5.0,
+                "coarse_step_seconds": 60,
+                "curvature_margin_km": 8.81845693126857,
+                "iss_element_epoch": "2024-05-05T04:11:15.266400+00:00",
+                "iss_element_age_hours_at_window_start": 2.812426,
+                "element_snapshot_policy": "latest element epoch at or before window start, held fixed through the full window",
+                "snapshot_sensitivity": {
+                  "interpretation": "Diagnostic of element-set turnover only; not a probability or calibrated position uncertainty.",
+                  "publication_time_known": false,
+                  "candidate_objects_with_later_element_epoch_inside_window": 159,
+                  "candidate_object_fraction_with_later_element_epoch_inside_window": 0.038267148014440436,
+                  "iss_later_element_epoch_count_inside_window": 0,
+                  "iss_first_later_element_epoch_inside_window": null,
+                  "iss_last_later_element_epoch_inside_window": null,
+                  "reported_events": []
+                },
+                "oldest_candidate_epoch": "2024-04-28T21:41:10.923360+00:00",
+                "newest_candidate_epoch": "2024-05-05T06:59:28.080672+00:00",
+                "oldest_candidate_element_age_hours_at_window_start": 153.3136324,
+                "newest_candidate_element_age_hours_at_window_start": 0.00886648,
+                "candidate_element_age_hours_at_window_start": {
+                  "p50": 12.10476256,
+                  "p90": 47.20938424,
+                  "p99": 124.3707796
+                },
+                "publication_time_known": false,
+                "excluded_duplicate_state_objects": 11,
+                "duplicate_state_groups": [
+                  [
+                    53239,
+                    54216,
+                    58146,
+                    58811
+                  ],
+                  [
+                    49044,
+                    58460,
+                    58898,
+                    58961,
+                    59097,
+                    59287,
+                    59294
+                  ]
+                ],
+                "excluded_known_iss_associations": [],
+                "ambiguous_persistent_proximity_events": []
+              },
+              "forecast_semantics": null,
+              "rule": "Compare the minimum modeled/reported separation directly; no cross-factor scalar risk score is created."
+            }
+          ],
+          "limitations": [
+            "The 5 km value is a conjunction screening threshold, not an EVA safety or operating limit.",
+            "No reported/reconstructed approach inside 5 km does not imply zero debris risk.",
+            "Orbital conjunction probability is not the probability of a fragment striking an EVA crewmember.",
+            "Historical result is a TLE geometry reconstruction, not an archived SOCRATES report.",
+            "No covariance is available, so collision probability is not calculated.",
+            "Individual historical TLE publication times are unavailable; this mechanism is excluded from strict point-in-time replay claims.",
+            "Candidate catalog completeness at the historical instant cannot be proven from this public mirror.",
+            "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
+            "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
+          ],
+          "algorithm_version": "0.4.0"
         },
         {
           "mechanism": "lighting",
+          "role": "plan_constraint",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "attention",
           "covered_minutes": 60.0,
-          "overlap_minutes": 15.0,
+          "overlap_minutes": 10.0,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": 10.0,
+          "comparison_unit": "minutes_of_plan_constraint",
+          "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
             {
               "quantity": "Earth-shadow interval",
               "unit": "minutes",
-              "value": 15.0,
+              "value": 10.0,
               "intervals": [
                 {
                   "start": "2024-05-05T07:00:00+00:00",
@@ -307,15 +565,14 @@
                   "start": "2024-05-05T07:05:00+00:00",
                   "end": "2024-05-05T07:10:00+00:00",
                   "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-05T07:10:00+00:00",
-                  "end": "2024-05-05T07:15:00+00:00",
-                  "minutes": 5.0
                 }
               ],
-              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-              "orbit_epoch": "2024-05-05T04:11:15.266400+00:00",
+              "orbit_records": [
+                "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+              ],
+              "orbit_epochs": [
+                "2024-05-05T04:11:15.266400+00:00"
+              ],
               "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
               "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
             }
@@ -325,7 +582,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
         }
       ],
       "orbit": [
@@ -487,7 +744,7 @@
         }
       ],
       "limitations": [
-        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+        "Историческая орбита и сближения — реконструкция; их доступность на момент cutoff не подтверждена. Для геометрии используется единый снимок элементов на начало каждого окна, без скрытого переключения TLE внутри окна. В strict replay они показываются как validation/reconstruction и не участвуют в решении, пока их доступность к cutoff не доказана."
       ]
     },
     {
@@ -498,9 +755,22 @@
       "factors": [
         {
           "mechanism": "space_weather",
+          "role": "risk_mechanism",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "forecast_below_experimental_threshold",
           "covered_minutes": 60.0,
-          "overlap_minutes": 0.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": 15.0,
+          "forecast_horizon_hours": 74.0,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": "1 UTC day",
+          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "comparison_value": 15.0,
+          "comparison_unit": "daily_probability_percent",
+          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "archive",
           "evidence": [
@@ -523,21 +793,135 @@
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
                 ]
               },
-              "overlap_minutes": 60.0,
-              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+              "forecast_validity_overlap_minutes": 60.0,
+              "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
             }
           ],
           "limitations": [
-            "Forecast probability is not observed astronaut radiation dose.",
+            "Forecast validity coverage is not duration of adverse conditions; that duration is unknown.",
+            "Daily probability is not the probability of exposure in this particular EVA window or an observed astronaut dose.",
+            "Three-hour planetary Kp, when present, is forecast context only and is not mapped to EVA dose or double-counted as a second risk factor.",
+            "When a window spans different daily probabilities, the prototype does not invent a rule to collapse them into one value.",
+            "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
+        },
+        {
+          "mechanism": "conjunctions",
+          "role": "risk_mechanism",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven.",
+          "state": "no_reconstructed_close_approach_within_screen",
+          "covered_minutes": 60.0,
+          "overlap_minutes": null,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": null,
+          "comparison_unit": "minimum_modeled_separation_km",
+          "comparison_quantity": "ISS-object minimum modeled separation",
+          "comparison_direction": "higher_is_better",
+          "comparison_tolerance": 0.0,
+          "completeness": "reconstruction_unverified_catalog_completeness",
+          "freshness": "historical_reconstruction_publication_unknown",
+          "evidence": [
+            {
+              "screening_threshold_km": 5.0,
+              "coverage": [
+                "2024-05-05T13:00:00+00:00",
+                "2024-05-05T14:00:00+00:00"
+              ],
+              "reconstruction": {
+                "status": "historical_reconstruction",
+                "candidate_objects": 4157,
+                "screened_candidates": 26,
+                "refined_coarse_intervals": 69,
+                "reported_events": 0,
+                "screening_threshold_km": 5.0,
+                "coarse_step_seconds": 60,
+                "curvature_margin_km": 8.81845693126857,
+                "iss_element_epoch": "2024-05-05T12:05:33.299232+00:00",
+                "iss_element_age_hours_at_window_start": 0.9074168800000001,
+                "element_snapshot_policy": "latest element epoch at or before window start, held fixed through the full window",
+                "snapshot_sensitivity": {
+                  "interpretation": "Diagnostic of element-set turnover only; not a probability or calibrated position uncertainty.",
+                  "publication_time_known": false,
+                  "candidate_objects_with_later_element_epoch_inside_window": 447,
+                  "candidate_object_fraction_with_later_element_epoch_inside_window": 0.10752946836661054,
+                  "iss_later_element_epoch_count_inside_window": 2,
+                  "iss_first_later_element_epoch_inside_window": "2024-05-05T13:00:54.486720+00:00",
+                  "iss_last_later_element_epoch_inside_window": "2024-05-05T13:00:54.486720+00:00",
+                  "reported_events": []
+                },
+                "oldest_candidate_epoch": "2024-04-28T21:41:10.923360+00:00",
+                "newest_candidate_epoch": "2024-05-05T12:59:58.623936+00:00",
+                "oldest_candidate_element_age_hours_at_window_start": 159.3136324,
+                "newest_candidate_element_age_hours_at_window_start": 0.00038224,
+                "candidate_element_age_hours_at_window_start": {
+                  "p50": 9.2688568,
+                  "p90": 47.394201759999994,
+                  "p99": 126.74213560000001
+                },
+                "publication_time_known": false,
+                "excluded_duplicate_state_objects": 11,
+                "duplicate_state_groups": [
+                  [
+                    53239,
+                    54216,
+                    58146,
+                    58811
+                  ],
+                  [
+                    49044,
+                    58460,
+                    58898,
+                    58961,
+                    59097,
+                    59287,
+                    59294
+                  ]
+                ],
+                "excluded_known_iss_associations": [],
+                "ambiguous_persistent_proximity_events": []
+              },
+              "forecast_semantics": null,
+              "rule": "Compare the minimum modeled/reported separation directly; no cross-factor scalar risk score is created."
+            }
+          ],
+          "limitations": [
+            "The 5 km value is a conjunction screening threshold, not an EVA safety or operating limit.",
+            "No reported/reconstructed approach inside 5 km does not imply zero debris risk.",
+            "Orbital conjunction probability is not the probability of a fragment striking an EVA crewmember.",
+            "Historical result is a TLE geometry reconstruction, not an archived SOCRATES report.",
+            "No covariance is available, so collision probability is not calculated.",
+            "Individual historical TLE publication times are unavailable; this mechanism is excluded from strict point-in-time replay claims.",
+            "Candidate catalog completeness at the historical instant cannot be proven from this public mirror.",
+            "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
+            "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
+          ],
+          "algorithm_version": "0.4.0"
         },
         {
           "mechanism": "lighting",
+          "role": "plan_constraint",
+          "decision_eligible": false,
+          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "attention",
           "covered_minutes": 60.0,
           "overlap_minutes": 25.0,
+          "forecast_probability_percent": null,
+          "forecast_horizon_hours": null,
+          "supports_next_6h_horizon": null,
+          "forecast_temporal_resolution": null,
+          "forecast_basis": null,
+          "comparison_value": 25.0,
+          "comparison_unit": "minutes_of_plan_constraint",
+          "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
+          "comparison_direction": "lower_is_better",
+          "comparison_tolerance": 0.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
@@ -572,8 +956,12 @@
                   "minutes": 5.0
                 }
               ],
-              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-              "orbit_epoch": "2024-05-05T12:05:33.299232+00:00",
+              "orbit_records": [
+                "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+              ],
+              "orbit_epochs": [
+                "2024-05-05T12:05:33.299232+00:00"
+              ],
               "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
               "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
             }
@@ -583,7 +971,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.1"
+          "algorithm_version": "0.4.0"
         }
       ],
       "orbit": [
@@ -602,11 +990,11 @@
         {
           "at": "2024-05-05T13:05:00Z",
           "position_teme_km": [
-            -6624.3744822945055,
-            365.4918016316729,
-            1456.4279860742067
+            -6624.1303346513105,
+            364.8040410554591,
+            1458.1776093325013
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -614,11 +1002,11 @@
         {
           "at": "2024-05-05T13:10:00Z",
           "position_teme_km": [
-            -5951.544459849126,
-            -1106.404086187816,
-            3074.2568020504937
+            -5950.730856673715,
+            -1107.0198017617952,
+            3075.7835143235056
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -626,11 +1014,11 @@
         {
           "at": "2024-05-05T13:15:00Z",
           "position_teme_km": [
-            -4603.0490951754155,
-            -2452.6941123190695,
-            4342.0826263760255
+            -4601.7825191887105,
+            -2453.1720145070753,
+            4343.22463183101
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -638,11 +1026,11 @@
         {
           "at": "2024-05-05T13:20:00Z",
           "position_teme_km": [
-            -2732.063850678314,
-            -3520.5886443905633,
-            5115.651059824845
+            -2730.49938799969,
+            -3520.879839844353,
+            5116.288188977827
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -650,11 +1038,11 @@
         {
           "at": "2024-05-05T13:25:00Z",
           "position_teme_km": [
-            -551.0201647275228,
-            -4188.937749181232,
-            5307.003671805892
+            -549.3366825160273,
+            -4189.009489183042,
+            5307.064128604397
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -662,11 +1050,11 @@
         {
           "at": "2024-05-05T13:30:00Z",
           "position_teme_km": [
-            1692.5521387089718,
-            -4381.82564742283,
-            4894.2835585632065
+            1694.1638406360948,
+            -4381.6603602965415,
+            4893.748749715099
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -674,11 +1062,11 @@
         {
           "at": "2024-05-05T13:35:00Z",
           "position_teme_km": [
-            3743.8928355247367,
-            -4077.1129428871695,
-            3924.197057153386
+            3745.2412277819826,
+            -4076.7095328903283,
+            3923.1058916399425
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -686,11 +1074,11 @@
         {
           "at": "2024-05-05T13:40:00Z",
           "position_teme_km": [
-            5369.780094645947,
-            -3309.1079600142575,
-            2506.935911761107
+            5370.687004940942,
+            -3308.4858415895196,
+            2505.3874547202413
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -698,11 +1086,11 @@
         {
           "at": "2024-05-05T13:45:00Z",
           "position_teme_km": [
-            6385.240068598603,
-            -2164.933514228592,
-            803.8866550216449
+            6385.559716378531,
+            -2164.1374099093946,
+            802.037849920055
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -710,11 +1098,11 @@
         {
           "at": "2024-05-05T13:50:00Z",
           "position_teme_km": [
-            6675.05025427619,
-            -774.7065940680949,
-            -990.8040116366561
+            6674.691791841073,
+            -773.808557978895,
+            -992.7492516765456
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -722,11 +1110,11 @@
         {
           "at": "2024-05-05T13:55:00Z",
           "position_teme_km": [
-            6207.117237617478,
-            703.5050234294764,
-            -2672.7535108602974
+            6206.06562968629,
+            704.4096316421764,
+            -2674.5655930845887
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
@@ -734,39 +1122,61 @@
         {
           "at": "2024-05-05T14:00:00Z",
           "position_teme_km": [
-            5035.819568265931,
-            2102.0586700541685,
-            -4051.053972163686
+            5034.147857969867,
+            2102.8624215509894,
+            -4052.507454840552
           ],
-          "epoch": "2024-05-05T13:00:54.486720Z",
+          "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
           "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
           "classification": "historical_reconstruction_publication_unknown"
         }
       ],
       "limitations": [
-        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+        "Историческая орбита и сближения — реконструкция; их доступность на момент cutoff не подтверждена. Для геометрии используется единый снимок элементов на начало каждого окна, без скрытого переключения TLE внутри окна. В strict replay они показываются как validation/reconstruction и не участвуют в решении, пока их доступность к cutoff не доказана."
       ]
     }
   ],
   "comparison": {
-    "outcome": "preferred",
-    "preferred_index": 0,
-    "reasons": [
-      "В окне 1 пересечение ни с одним фактором не длиннее, а хотя бы с одним короче (экспериментальный допуск 10 мин)."
+    "outcome": "equivalent",
+    "preferred_index": null,
+    "pareto_frontier_indices": [
+      0,
+      1,
+      2
     ],
-    "algorithm_version": "0.1.1"
+    "reasons": [
+      "Окна на Парето-фронте 1, 2, 3 эквивалентны в пределах явно заданных допусков."
+    ],
+    "decision_mechanisms": [
+      "space_weather"
+    ],
+    "excluded_mechanisms": [
+      {
+        "mechanism": "conjunctions",
+        "reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven."
+      },
+      {
+        "mechanism": "lighting",
+        "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
+      }
+    ],
+    "algorithm_version": "0.4.0"
   },
-  "created_at": "2026-09-18T16:54:50.776151Z",
-  "algorithm_version": "0.1.1",
+  "created_at": "2026-09-18T21:31:49.073570Z",
+  "algorithm_version": "0.4.0",
   "source_records": [
     {
       "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
       "source": "noaa_archive",
       "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
       "content_sha256": "b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-      "retrieved_at": "2026-09-18T16:54:50.696043Z",
+      "retrieved_at": "2026-09-18T21:31:46.699192Z",
       "published_at": "2024-05-04T22:00:00Z",
+      "archive_last_modified_at": "2024-05-04T22:00:10Z",
+      "publication_basis": "Issued plus retrospective matching HTTP Last-Modified; no signed historical snapshot",
+      "artifact_path": null,
+      "source_revision": null,
       "http_status": 200,
       "parser_version": "1",
       "cache_state": "archived"
@@ -776,11 +1186,30 @@
       "source": "iss_history_extract",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-      "retrieved_at": "2026-09-18T16:54:50.701045Z",
+      "retrieved_at": "2026-09-18T21:31:46.705725Z",
       "published_at": null,
+      "archive_last_modified_at": null,
+      "publication_basis": "unknown",
+      "artifact_path": null,
+      "source_revision": null,
       "http_status": 200,
       "parser_version": "1",
       "cache_state": "archived"
+    },
+    {
+      "id": "conjunction_tle_history:a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89",
+      "source": "conjunction_tle_history",
+      "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+      "content_sha256": "a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89",
+      "retrieved_at": "2026-09-18T19:43:43.154699Z",
+      "published_at": null,
+      "archive_last_modified_at": null,
+      "publication_basis": "Individual element publication timestamps are unavailable; historical reconstruction only",
+      "artifact_path": "data/conjunctions/tle_candidates_2024_may_june.parquet",
+      "source_revision": "8adc73511d84b3a1cd90ba15b2b774eda282ec89",
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "archived_local_extract"
     }
   ]
 }

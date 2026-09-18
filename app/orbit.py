@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from sgp4.api import Satrec, WGS72, jday
 
 from .domain import OrbitState, Window, aware
-from .providers import historical_elements, ISS_ARCHIVE
+from .providers import historical_elements, ISS_ARCHIVE, CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES
 import hashlib
 
 UTC = timezone.utc
@@ -18,10 +18,12 @@ def julian(t: datetime):
 
 
 def historical_satrec(row: dict):
-    epoch = aware(datetime.fromisoformat(row["epoch"]))
+    raw_epoch = row["epoch"]
+    epoch = aware(raw_epoch if isinstance(raw_epoch, datetime) else datetime.fromisoformat(raw_epoch))
     jd, fr = julian(epoch)
     sat = Satrec()
-    sat.sgp4init(WGS72, "i", 25544, jd + fr - 2433281.5, float(row["bstar"]), 0.0, 0.0,
+    satnum = int(row.get("norad_id", 25544))
+    sat.sgp4init(WGS72, "i", satnum, jd + fr - 2433281.5, float(row["bstar"]), 0.0, 0.0,
                  float(row["eccentricity"]), math.radians(float(row["arg_perigee"])),
                  math.radians(float(row["inclination"])), math.radians(float(row["mean_anomaly"])),
                  float(row["mean_motion"]) * 2 * math.pi / 1440,
@@ -29,7 +31,25 @@ def historical_satrec(row: dict):
     return sat, epoch
 
 
-def state_at(at: datetime, mode: str, current=None):
+def historical_row_at(at: datetime):
+    """Return the newest ISS element epoch at or before ``at``.
+
+    Element epoch is not treated as a publication timestamp.  This helper is
+    therefore suitable only for the explicitly labelled historical
+    reconstruction path.
+    """
+    at = aware(at)
+    prior = []
+    for row in historical_elements():
+        epoch = aware(datetime.fromisoformat(row["epoch"]))
+        if epoch <= at:
+            prior.append((epoch, row))
+    if not prior:
+        return None
+    return max(prior, key=lambda item: item[0])[1]
+
+
+def state_at(at: datetime, mode: str, current=None, historical_row=None):
     at = aware(at)
     if mode == "current":
         if current is None:
@@ -39,16 +59,14 @@ def state_at(at: datetime, mode: str, current=None):
         epoch = datetime.fromtimestamp((sat.jdsatepoch + sat.jdsatepochF - 2440587.5) * 86400, UTC)
         url, raw_id, classification = raw.url, raw.id, "current"
     else:
-        rows = historical_elements()
-        prior = [r for r in rows if aware(datetime.fromisoformat(r["epoch"])) <= at]
-        if not prior:
+        row = historical_row if historical_row is not None else historical_row_at(at)
+        if row is None:
             return None
-        row = max(prior, key=lambda r: aware(datetime.fromisoformat(r["epoch"])))
         sat, epoch = historical_satrec(row)
         url = "https://huggingface.co/datasets/juliensimon/space-track-tle-history"
         raw_id = "iss_history_extract:" + hashlib.sha256(ISS_ARCHIVE.read_bytes()).hexdigest()
         classification = "historical_reconstruction_publication_unknown"
-    if abs((at - epoch).total_seconds()) > 2 * 86400:
+    if abs((at - epoch).total_seconds()) > CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES * 60:
         return None
     jd, fr = julian(at)
     error, position, _ = sat.sgp4(jd, fr)
@@ -59,13 +77,22 @@ def state_at(at: datetime, mode: str, current=None):
 
 
 def trajectory(window: Window, mode: str, current=None, step_minutes=5):
+    # Historical reconstruction uses one explicit window-start orbital snapshot.
+    # Switching element sets mid-window would silently give this trajectory a
+    # different temporal meaning from the historical conjunction reconstruction.
+    # Publication time is unknown, so this remains reconstruction rather than
+    # point-in-time replay.
+    historical_row = None if mode == "current" else historical_row_at(window.start)
     times = []
     at = window.start
     while at < window.end:
         times.append(at)
         at += timedelta(minutes=step_minutes)
     times.append(window.end)
-    return [state for t in times if (state := state_at(t, mode, current)) is not None]
+    return [
+        state for t in times
+        if (state := state_at(t, mode, current, historical_row=historical_row)) is not None
+    ]
 
 
 def sun_vector(t: datetime):

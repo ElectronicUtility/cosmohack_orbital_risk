@@ -1,0 +1,14 @@
+{
+  "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+  "source_file": "data/tle_2024.parquet",
+  "source_revision": "8adc73511d84b3a1cd90ba15b2b774eda282ec89",
+  "local_file": "data/conjunctions/tle_candidates_2024_may_june.parquet",
+  "local_sha256": "a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89",
+  "rows": 532989,
+  "objects": 4580,
+  "period": "2024-04-29T00:00:00Z/2024-07-02T00:00:00Z",
+  "selection": "objects with at least one element whose orbital radial range intersects 380-460 km; all period elements retained for each selected object",
+  "publication_time": null,
+  "classification": "historical reconstruction only",
+  "limitation": "Individual element publication times and covariance are unavailable; this extract cannot support strict point-in-time collision probability replay."
+}

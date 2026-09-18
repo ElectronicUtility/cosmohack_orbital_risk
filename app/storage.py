@@ -8,22 +8,22 @@ from pathlib import Path
 from .domain import RawRecord
 
 ROOT = Path(__file__).resolve().parents[1]
-DB = Path(os.getenv("COSMO_DB", ROOT / "data" / "analyses.db"))
-
-
 def connect():
-    DB.parent.mkdir(parents=True, exist_ok=True)
-    con = sqlite3.connect(DB)
+    db = Path(os.getenv("COSMO_DB", ROOT / "data" / "analyses.db"))
+    db.parent.mkdir(parents=True, exist_ok=True)
+    con = sqlite3.connect(db)
     con.execute("CREATE TABLE IF NOT EXISTS raw (id TEXT PRIMARY KEY, source TEXT, url TEXT, payload BLOB, metadata TEXT)")
     con.execute("CREATE TABLE IF NOT EXISTS analyses (id TEXT PRIMARY KEY, document TEXT)")
     con.commit()
     return con
 
 
-def store_raw(source: str, url: str, payload: bytes, published_at=None, cache_state="fresh") -> RawRecord:
+def store_raw(source: str, url: str, payload: bytes, published_at=None, cache_state="fresh",
+              archive_last_modified_at=None, publication_basis="unknown") -> RawRecord:
     digest = hashlib.sha256(payload).hexdigest()
     record = RawRecord(id=f"{source}:{digest}", source=source, url=url, content_sha256=digest,
                        retrieved_at=datetime.now(timezone.utc), published_at=published_at,
+                       archive_last_modified_at=archive_last_modified_at, publication_basis=publication_basis,
                        cache_state=cache_state)
     with connect() as con:
         con.execute("INSERT OR REPLACE INTO raw VALUES (?,?,?,?,?)",

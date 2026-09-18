@@ -25,7 +25,8 @@ class AnalysisRequest(BaseModel):
     duration_hours: float = Field(ge=1, le=8)
     search_hours: float = Field(gt=0, le=24)
     cutoff: datetime | None = None
-    requires_sunlight: bool = True
+    # A plan-specific constraint must be supplied by the analyst, not invented by the service.
+    requires_sunlight: bool
     refresh: bool = False
 
     @field_validator("start", "cutoff")
@@ -65,11 +66,15 @@ class RawRecord(BaseModel):
     content_sha256: str
     retrieved_at: datetime
     published_at: datetime | None = None
+    archive_last_modified_at: datetime | None = None
+    publication_basis: str = "unknown"
+    artifact_path: str | None = None
+    source_revision: str | None = None
     http_status: int = 200
     parser_version: str = "1"
     cache_state: str = "fresh"
 
-    @field_validator("retrieved_at", "published_at")
+    @field_validator("retrieved_at", "published_at", "archive_last_modified_at")
     @classmethod
     def utc_time(cls, v: datetime | None) -> datetime | None:
         return aware(v) if v is not None else None
@@ -110,11 +115,47 @@ class OrbitState(BaseModel):
         return aware(v)
 
 
+class ConjunctionEvent(BaseModel):
+    id: str
+    tca: datetime
+    min_separation_km: float = Field(ge=0)
+    relative_speed_km_s: float = Field(ge=0)
+    object_norad_id: int
+    object_name: str | None = None
+    object_element_epoch: datetime | None = None
+    iss_element_epoch: datetime | None = None
+    max_probability: float | None = Field(default=None, ge=0, le=1)
+    published_at: datetime | None = None
+    source_record_ids: list[str]
+    source_url: str
+    classification: str
+    limitations: list[str] = []
+    algorithm_version: str
+
+    @field_validator("tca", "published_at", "object_element_epoch", "iss_element_epoch")
+    @classmethod
+    def utc_time(cls, v: datetime | None) -> datetime | None:
+        return aware(v) if v is not None else None
+
+
 class FactorAssessment(BaseModel):
     mechanism: str
+    role: str = "risk_mechanism"
+    decision_eligible: bool = True
+    eligibility_reason: str | None = None
     state: str
     covered_minutes: float
     overlap_minutes: float | None
+    forecast_probability_percent: float | None = None
+    forecast_horizon_hours: float | None = None
+    supports_next_6h_horizon: bool | None = None
+    forecast_temporal_resolution: str | None = None
+    forecast_basis: str | None = None
+    comparison_value: float | None = None
+    comparison_unit: str | None = None
+    comparison_quantity: str | None = None
+    comparison_direction: str = "lower_is_better"
+    comparison_tolerance: float = 0.0
     completeness: str
     freshness: str
     evidence: list[dict] = []
@@ -132,7 +173,10 @@ class WindowAssessment(BaseModel):
 class Comparison(BaseModel):
     outcome: str
     preferred_index: int | None = None
+    pareto_frontier_indices: list[int] = []
     reasons: list[str]
+    decision_mechanisms: list[str] = []
+    excluded_mechanisms: list[dict] = []
     algorithm_version: str
 
 

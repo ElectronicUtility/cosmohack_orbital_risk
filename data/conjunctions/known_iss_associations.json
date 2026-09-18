@@ -1,0 +1,13 @@
+[
+  {
+    "norad_id": 59913,
+    "international_designator": "2024-103A",
+    "name": "Progress MS-27 / Progress 88",
+    "relationship": "ISS visiting vehicle",
+    "valid_start": "2024-05-30T09:43:00Z",
+    "valid_end": "2024-11-19T12:53:00Z",
+    "identity_source": "https://www.n2yo.com/browse/?m=5&y=2024",
+    "relationship_source": "https://www.nasa.gov/blogs/spacestation/2024/06/01/cargo-craft-docks-to-station-completes-space-delivery/",
+    "note": "NASA identifies Progress 88 as an ISS cargo craft launched May 30 and docked June 1; the catalog source maps Progress MS-27 to NORAD 59913. This record prevents a docked/visiting vehicle from being mislabeled as an independent debris conjunction."
+  }
+]

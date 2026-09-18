@@ -3,90 +3,222 @@
     "cutoff": "2024-05-10T00:00:00+00:00",
     "baseline": {
       "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
-      "probability_percent": 50.0,
-      "attention_each_window": true
+      "probability_percent": 50.0
     },
     "full": {
       "outcome": "equivalent",
-      "weather_states": [
-        "attention",
-        "attention",
-        "attention"
+      "decision_mechanisms": [
+        "space_weather"
+      ],
+      "excluded_mechanisms": [
+        {
+          "mechanism": "conjunctions",
+          "reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven."
+        },
+        {
+          "mechanism": "lighting",
+          "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
+        }
+      ],
+      "factor_states": [
+        {
+          "space_weather": "attention",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        },
+        {
+          "space_weather": "attention",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        },
+        {
+          "space_weather": "attention",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        }
+      ],
+      "weather_probability_percent": [
+        50.0,
+        50.0,
+        50.0
+      ],
+      "conjunction_min_separation_km": [
+        null,
+        null,
+        null
+      ],
+      "conjunction_decision_eligible": [
+        false,
+        false,
+        false
       ],
       "lighting_overlap_minutes": [
-        40.0,
-        30.0,
-        30.0
+        65.0,
+        70.0,
+        60.0
+      ],
+      "lighting_decision_eligible": [
+        false,
+        false,
+        false
       ]
     },
     "validation_after_replay": {
       "observed_S1_onset_on_start_day": true,
-      "brier_baseline": 0.25,
-      "brier_full_weather": 0.25
+      "note": "Onset catalog does not establish every day above the S1 threshold; no probability score is calculated."
     },
     "source_ids": [
       "noaa_archive:7a9274c4314fc8021bb72bed13a092791052bf281bdf2cca04810d0e6403a4da",
-      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+      "conjunction_tle_history:a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89"
     ]
   },
   "control": {
     "cutoff": "2024-05-02T00:00:00+00:00",
     "baseline": {
       "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
-      "probability_percent": 10.0,
-      "attention_each_window": false
+      "probability_percent": 10.0
     },
     "full": {
       "outcome": "equivalent",
-      "weather_states": [
-        "forecast_below_experimental_threshold",
-        "forecast_below_experimental_threshold",
-        "forecast_below_experimental_threshold"
+      "decision_mechanisms": [
+        "space_weather"
+      ],
+      "excluded_mechanisms": [
+        {
+          "mechanism": "conjunctions",
+          "reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven."
+        },
+        {
+          "mechanism": "lighting",
+          "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
+        }
+      ],
+      "factor_states": [
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        },
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        },
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        }
+      ],
+      "weather_probability_percent": [
+        10.0,
+        10.0,
+        10.0
+      ],
+      "conjunction_min_separation_km": [
+        null,
+        null,
+        null
+      ],
+      "conjunction_decision_eligible": [
+        false,
+        false,
+        false
       ],
       "lighting_overlap_minutes": [
         130.0,
-        125.0,
-        130.0
+        140.0,
+        135.0
+      ],
+      "lighting_decision_eligible": [
+        false,
+        false,
+        false
       ]
     },
     "validation_after_replay": {
       "observed_S1_onset_on_start_day": false,
-      "brier_baseline": 0.010000000000000002,
-      "brier_full_weather": 0.010000000000000002
+      "note": "Onset catalog does not establish every day above the S1 threshold; no probability score is calculated."
     },
     "source_ids": [
       "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
-      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+      "conjunction_tle_history:a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89"
     ]
   },
   "window_demo": {
     "cutoff": "2024-05-04T23:00:00+00:00",
     "baseline": {
       "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
-      "probability_percent": 15.0,
-      "attention_each_window": false
+      "probability_percent": 15.0
     },
     "full": {
-      "outcome": "preferred",
-      "weather_states": [
-        "forecast_below_experimental_threshold",
-        "forecast_below_experimental_threshold",
-        "forecast_below_experimental_threshold"
+      "outcome": "equivalent",
+      "decision_mechanisms": [
+        "space_weather"
+      ],
+      "excluded_mechanisms": [
+        {
+          "mechanism": "conjunctions",
+          "reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven."
+        },
+        {
+          "mechanism": "lighting",
+          "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
+        }
+      ],
+      "factor_states": [
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "no_restriction_detected"
+        },
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        },
+        {
+          "space_weather": "forecast_below_experimental_threshold",
+          "conjunctions": "no_reconstructed_close_approach_within_screen",
+          "lighting": "attention"
+        }
+      ],
+      "weather_probability_percent": [
+        15.0,
+        15.0,
+        15.0
+      ],
+      "conjunction_min_separation_km": [
+        null,
+        null,
+        null
+      ],
+      "conjunction_decision_eligible": [
+        false,
+        false,
+        false
       ],
       "lighting_overlap_minutes": [
         0.0,
-        15.0,
+        10.0,
         25.0
+      ],
+      "lighting_decision_eligible": [
+        false,
+        false,
+        false
       ]
     },
     "validation_after_replay": {
       "observed_S1_onset_on_start_day": null,
-      "brier_baseline": null,
-      "brier_full_weather": null
+      "note": "Onset catalog does not establish every day above the S1 threshold; no probability score is calculated."
     },
     "source_ids": [
       "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+      "conjunction_tle_history:a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89"
     ]
   }
 }

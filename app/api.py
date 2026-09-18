@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import html
 import uuid
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -12,7 +11,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from . import __version__, ALGORITHM_VERSION
 from .analysis import run
 from .domain import AnalysisRequest, SavedAnalysis
-from .storage import load_analysis, store_analysis, latest_raw
+from .providers import current_provider_health
+from .storage import load_analysis, store_analysis
 
 app = FastAPI(title="ВКД: исследовательская система поддержки решений", version=__version__)
 PAGE = Path(__file__).resolve().parent / "index.html"
@@ -30,13 +30,7 @@ def health():
 
 @app.get("/api/sources")
 def sources():
-    disabled = {s.strip() for s in os.getenv("DISABLE_PROVIDERS", "").split(",")}
-    result = {}
-    for name in ("noaa_current", "iss_current"):
-        cached = latest_raw(name)
-        result[name] = {"enabled": name not in disabled,
-                        "last_successful_record": cached[1].model_dump(mode="json") if cached else None}
-    return result
+    return current_provider_health()
 
 
 @app.post("/api/analyze", response_model=SavedAnalysis)
