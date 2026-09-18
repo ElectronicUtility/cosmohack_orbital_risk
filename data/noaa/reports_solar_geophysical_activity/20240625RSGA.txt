@@ -1,0 +1,51 @@
+:Product: 0625RSGA.txt
+:Issued: 2024 Jun 25 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 177 Issued at 2200Z on 25 Jun 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 24/2100Z to
+25/2100Z: Solar activity has been at moderate levels for the past 24
+hours. The largest solar event of the period was a M1 event observed at
+25/1245Z from Region 3723 (S19E44). There are currently 8 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is likely to be moderate on
+days one, two, and three (26 Jun, 27 Jun, 28 Jun).
+
+IIA.  Geophysical Activity Summary 24/2100Z to 25/2100Z: The geomagnetic
+field has been at quiet to unsettled levels for the past 24 hours. Solar
+wind speed reached a peak of 357 km/s at 25/1434Z. Total IMF reached 10
+nT at 25/2029Z. The maximum southward component of Bz reached -8 nT at
+25/1413Z.  Electrons greater than 2 MeV at geosynchronous orbit reached
+a peak level of 121 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet levels on days one, two, and three (26 Jun, 27 Jun, 28
+Jun).
+
+III.  Event probabilities 26 Jun-28 Jun
+Class M    55/55/55
+Class X    05/05/05
+Proton     05/05/05
+PCAF       green
+
+IV.  Penticton 10.7 cm Flux
+Observed           25 Jun 194
+Predicted   26 Jun-28 Jun 200/200/200
+90 Day Mean        25 Jun 177
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 24 Jun  007/006
+Estimated Afr/Ap 25 Jun  009/009
+Predicted Afr/Ap 26 Jun-28 Jun  006/005-005/005-006/005
+
+VI.  Geomagnetic Activity Probabilities 26 Jun-28 Jun
+A.  Middle Latitudes
+Active                10/10/10
+Minor Storm           01/01/01
+Major-severe storm    01/01/01
+B.  High Latitudes
+Active                15/15/15
+Minor Storm           20/20/20
+Major-severe storm    20/20/20

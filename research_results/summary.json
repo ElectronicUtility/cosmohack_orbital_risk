@@ -1,0 +1,92 @@
+{
+  "event": {
+    "cutoff": "2024-05-10T00:00:00+00:00",
+    "baseline": {
+      "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
+      "probability_percent": 50.0,
+      "attention_each_window": true
+    },
+    "full": {
+      "outcome": "equivalent",
+      "weather_states": [
+        "attention",
+        "attention",
+        "attention"
+      ],
+      "lighting_overlap_minutes": [
+        40.0,
+        30.0,
+        30.0
+      ]
+    },
+    "validation_after_replay": {
+      "observed_S1_onset_on_start_day": true,
+      "brier_baseline": 0.25,
+      "brier_full_weather": 0.25
+    },
+    "source_ids": [
+      "noaa_archive:7a9274c4314fc8021bb72bed13a092791052bf281bdf2cca04810d0e6403a4da",
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+    ]
+  },
+  "control": {
+    "cutoff": "2024-05-02T00:00:00+00:00",
+    "baseline": {
+      "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
+      "probability_percent": 10.0,
+      "attention_each_window": false
+    },
+    "full": {
+      "outcome": "equivalent",
+      "weather_states": [
+        "forecast_below_experimental_threshold",
+        "forecast_below_experimental_threshold",
+        "forecast_below_experimental_threshold"
+      ],
+      "lighting_overlap_minutes": [
+        130.0,
+        125.0,
+        130.0
+      ]
+    },
+    "validation_after_replay": {
+      "observed_S1_onset_on_start_day": false,
+      "brier_baseline": 0.010000000000000002,
+      "brier_full_weather": 0.010000000000000002
+    },
+    "source_ids": [
+      "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+    ]
+  },
+  "window_demo": {
+    "cutoff": "2024-05-04T23:00:00+00:00",
+    "baseline": {
+      "method": "Latest issued daily proton probability applied uniformly to every window; no orbit",
+      "probability_percent": 15.0,
+      "attention_each_window": false
+    },
+    "full": {
+      "outcome": "preferred",
+      "weather_states": [
+        "forecast_below_experimental_threshold",
+        "forecast_below_experimental_threshold",
+        "forecast_below_experimental_threshold"
+      ],
+      "lighting_overlap_minutes": [
+        0.0,
+        15.0,
+        25.0
+      ]
+    },
+    "validation_after_replay": {
+      "observed_S1_onset_on_start_day": null,
+      "brier_baseline": null,
+      "brier_full_weather": null
+    },
+    "source_ids": [
+      "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
+      "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295"
+    ]
+  }
+}

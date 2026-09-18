@@ -1,0 +1,11 @@
+{
+  "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+  "source_file": "data/tle_2024.parquet",
+  "revision": "8adc73511d84b3a1cd90ba15b2b774eda282ec89",
+  "extraction_query": "SELECT * FROM read_parquet(source_file) WHERE norad_id=25544 AND epoch>=TIMESTAMP '2024-04-30' AND epoch<TIMESTAMP '2024-07-02' ORDER BY epoch",
+  "rows": 425,
+  "epoch_time_standard": "UTC in source; serialized with aware offset and normalized to UTC in application",
+  "publication_time": null,
+  "classification": "historical reconstruction only",
+  "limitation": "The published dataset has no individual record creation/publication time. Orbit geometry must not be presented as strict point-in-time replay. Full 2024 Parquet was not retained locally; extracted rows are retained with source revision and query."
+}

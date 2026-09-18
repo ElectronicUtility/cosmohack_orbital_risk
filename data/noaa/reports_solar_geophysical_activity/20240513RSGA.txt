@@ -1,0 +1,57 @@
+:Product: 0513RSGA.txt
+:Issued: 2024 May 13 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 134 Issued at 2200Z on 13 May 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 12/2100Z to
+13/2100Z: Solar activity has been at high levels for the past 24 hours.
+The largest solar event of the period was a M6 event observed at
+13/0944Z from Region 3664 (S19W87). There are currently 13 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is expected to be moderate
+with a chance for X-class flares on day one (14 May) and expected to be
+low with a chance for M-class flares and a slight chance for an X-class
+flare on days two and three (15 May, 16 May).
+
+IIA.  Geophysical Activity Summary 12/2100Z to 13/2100Z: The geomagnetic
+field has been at unsettled to major storm levels for the past 24 hours.
+Solar wind speed reached a peak of 891 km/s at 12/2242Z. Total IMF
+reached 10 nT at 12/2204Z. The maximum southward component of Bz reached
+-8 nT at 12/2151Z.  Protons greater than 10 MeV at geosynchronous orbit
+reached a peak level of 58 pfu at 13/1850Z. Electrons greater than 2 MeV
+at geosynchronous orbit reached a peak level of 754 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to major storm levels on day one (14 May), quiet to minor
+storm levels on day two (15 May) and quiet to unsettled levels on day
+three (16 May). Protons greater than 10 Mev are expected to cross
+threshold on day one (14 May) and have a chance of crossing threshold on
+day two (15 May).
+
+III.  Event probabilities 14 May-16 May
+Class M    80/40/40
+Class X    40/10/10
+Proton     99/25/05
+PCAF       red
+
+IV.  Penticton 10.7 cm Flux
+Observed           13 May 215
+Predicted   14 May-16 May 215/200/190
+90 Day Mean        13 May 165
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 12 May  031/054
+Estimated Afr/Ap 13 May  028/038
+Predicted Afr/Ap 14 May-16 May  018/026-015/020-008/010
+
+VI.  Geomagnetic Activity Probabilities 14 May-16 May
+A.  Middle Latitudes
+Active                30/35/20
+Minor Storm           35/30/05
+Major-severe storm    25/15/01
+B.  High Latitudes
+Active                05/05/15
+Minor Storm           20/20/25
+Major-severe storm    75/70/25

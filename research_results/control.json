@@ -1,0 +1,3292 @@
+{
+  "id": "bd20e20cd94b4479857c9c049fedac14",
+  "request": {
+    "mode": "replay",
+    "start": "2024-05-02T06:00:00Z",
+    "duration_hours": 6.0,
+    "search_hours": 12.0,
+    "cutoff": "2024-05-02T00:00:00Z",
+    "requires_sunlight": true,
+    "refresh": false
+  },
+  "windows": [
+    {
+      "window": {
+        "start": "2024-05-02T06:00:00Z",
+        "end": "2024-05-02T12:00:00Z"
+      },
+      "factors": [
+        {
+          "mechanism": "space_weather",
+          "state": "forecast_below_experimental_threshold",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 0.0,
+          "completeness": "complete",
+          "freshness": "archive",
+          "evidence": [
+            {
+              "event": {
+                "id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast",
+                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "value": 10.0,
+                "unit": "%",
+                "valid_start": "2024-05-02T00:00:00Z",
+                "valid_end": "2024-05-03T00:00:00Z",
+                "published_at": "2024-05-01T22:00:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240501RSGA.txt",
+                "limitations": [
+                  "Daily probability is not an EVA dose or an event arrival time.",
+                  "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
+                ]
+              },
+              "overlap_minutes": 360.0,
+              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+            }
+          ],
+          "limitations": [
+            "Forecast probability is not observed astronaut radiation dose.",
+            "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
+          ],
+          "algorithm_version": "0.1.0"
+        },
+        {
+          "mechanism": "lighting",
+          "state": "attention",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 130.0,
+          "completeness": "complete",
+          "freshness": "historical_reconstruction",
+          "evidence": [
+            {
+              "quantity": "Earth-shadow interval",
+              "unit": "minutes",
+              "value": 130.0,
+              "intervals": [
+                {
+                  "start": "2024-05-02T06:00:00+00:00",
+                  "end": "2024-05-02T06:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T06:05:00+00:00",
+                  "end": "2024-05-02T06:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T06:10:00+00:00",
+                  "end": "2024-05-02T06:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T06:15:00+00:00",
+                  "end": "2024-05-02T06:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T06:20:00+00:00",
+                  "end": "2024-05-02T06:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T06:25:00+00:00",
+                  "end": "2024-05-02T06:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:30:00+00:00",
+                  "end": "2024-05-02T07:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:35:00+00:00",
+                  "end": "2024-05-02T07:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:40:00+00:00",
+                  "end": "2024-05-02T07:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:45:00+00:00",
+                  "end": "2024-05-02T07:50:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:50:00+00:00",
+                  "end": "2024-05-02T07:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T07:55:00+00:00",
+                  "end": "2024-05-02T08:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T08:00:00+00:00",
+                  "end": "2024-05-02T08:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:05:00+00:00",
+                  "end": "2024-05-02T09:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:10:00+00:00",
+                  "end": "2024-05-02T09:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:15:00+00:00",
+                  "end": "2024-05-02T09:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:20:00+00:00",
+                  "end": "2024-05-02T09:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:25:00+00:00",
+                  "end": "2024-05-02T09:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T09:30:00+00:00",
+                  "end": "2024-05-02T09:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T10:35:00+00:00",
+                  "end": "2024-05-02T10:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T10:40:00+00:00",
+                  "end": "2024-05-02T10:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T10:45:00+00:00",
+                  "end": "2024-05-02T10:50:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T10:50:00+00:00",
+                  "end": "2024-05-02T10:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T10:55:00+00:00",
+                  "end": "2024-05-02T11:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T11:00:00+00:00",
+                  "end": "2024-05-02T11:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T11:05:00+00:00",
+                  "end": "2024-05-02T11:10:00+00:00",
+                  "minutes": 5.0
+                }
+              ],
+              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+              "orbit_epoch": "2024-05-02T05:01:25.990176+00:00",
+              "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+              "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
+            }
+          ],
+          "limitations": [
+            "Solar vector and cylindrical Earth shadow are approximate.",
+            "Illumination is an operational constraint, not a standalone claim of danger.",
+            "Historical orbital elements have no verified publication time; geometry is reconstruction."
+          ],
+          "algorithm_version": "0.1.0"
+        }
+      ],
+      "orbit": [
+        {
+          "at": "2024-05-02T06:00:00Z",
+          "position_teme_km": [
+            -5790.030953572553,
+            2012.0238395207073,
+            -2940.3640904192052
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:05:00Z",
+          "position_teme_km": [
+            -6638.099925719973,
+            665.1788508531761,
+            -1299.1657768822213
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:10:00Z",
+          "position_teme_km": [
+            -6734.044684942703,
+            -756.9897659511573,
+            489.5935389416977
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:15:00Z",
+          "position_teme_km": [
+            -6066.008352167724,
+            -2093.2519132576435,
+            2222.616430182886
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:20:00Z",
+          "position_teme_km": [
+            -4709.341988510118,
+            -3191.873990491929,
+            3702.5940084510594
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:25:00Z",
+          "position_teme_km": [
+            -2818.01558542232,
+            -3928.121447649629,
+            4761.020965046221
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:30:00Z",
+          "position_teme_km": [
+            -606.8076411029394,
+            -4218.484188796223,
+            5277.485267123727
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:35:00Z",
+          "position_teme_km": [
+            1673.271044839952,
+            -4030.021375960755,
+            5193.218912296501
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:40:00Z",
+          "position_teme_km": [
+            3763.346713540463,
+            -3383.991608152727,
+            4517.641017735366
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:45:00Z",
+          "position_teme_km": [
+            5425.864588049773,
+            -2353.5314217405794,
+            3327.3878528896576
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:50:00Z",
+          "position_teme_km": [
+            6471.644008572113,
+            -1055.5655430333309,
+            1757.8636529323508
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T06:55:00Z",
+          "position_teme_km": [
+            6781.795884113392,
+            362.3939426711199,
+            -12.053877035092098
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:00:00Z",
+          "position_teme_km": [
+            6321.633977552535,
+            1739.2214288422374,
+            -1780.6392292947328
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:05:00Z",
+          "position_teme_km": [
+            5144.523549240596,
+            2918.8549105010734,
+            -3346.777000007318
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:10:00Z",
+          "position_teme_km": [
+            3385.144182195264,
+            3768.203410544692,
+            -4533.142629809616
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:15:00Z",
+          "position_teme_km": [
+            1243.3879371479195,
+            4192.006271799392,
+            -5206.128069694686
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:20:00Z",
+          "position_teme_km": [
+            -1038.6313289310822,
+            4143.065004347163,
+            -5290.336083425507
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:25:00Z",
+          "position_teme_km": [
+            -3203.560803177232,
+            3627.0868470446203,
+            -4776.48035070033
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:30:00Z",
+          "position_teme_km": [
+            -5007.05787181976,
+            2701.962846567013,
+            -3722.286999040737
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:35:00Z",
+          "position_teme_km": [
+            -6244.794007451283,
+            1471.6034710692982,
+            -2246.3919380698107
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:40:00Z",
+          "position_teme_km": [
+            -6775.635416393198,
+            74.71578746608377,
+            -515.5584306891973
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:45:00Z",
+          "position_teme_km": [
+            -6538.274166176924,
+            -1330.6071363796143,
+            1273.8460679677378
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:50:00Z",
+          "position_teme_km": [
+            -5558.8742626059175,
+            -2584.8998425303052,
+            2918.2458535168557
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T07:55:00Z",
+          "position_teme_km": [
+            -3948.361094033759,
+            -3545.7203627552535,
+            4230.385935080715
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:00:00Z",
+          "position_teme_km": [
+            -1889.6133027904104,
+            -4104.023475953326,
+            5060.920189295109
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:05:00Z",
+          "position_teme_km": [
+            383.6166081857174,
+            -4196.499153610691,
+            5315.38289719041
+          ],
+          "epoch": "2024-05-02T05:01:25.990176Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:10:00Z",
+          "position_teme_km": [
+            2610.283375531684,
+            -3813.6219701040914,
+            4965.921388738684
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:15:00Z",
+          "position_teme_km": [
+            4543.680289271077,
+            -2997.3026132992895,
+            4050.6857997215247
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:20:00Z",
+          "position_teme_km": [
+            5960.788596889999,
+            -1840.4287084138416,
+            2673.9012131265526
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:25:00Z",
+          "position_teme_km": [
+            6700.3403064037175,
+            -474.3596040659877,
+            992.3197494609393
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:30:00Z",
+          "position_teme_km": [
+            6678.46306937359,
+            945.6327345717264,
+            -802.3718034621653
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:35:00Z",
+          "position_teme_km": [
+            5898.451196878247,
+            2258.3175285048605,
+            -2505.773196951996
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:40:00Z",
+          "position_teme_km": [
+            4450.033523203508,
+            3315.155959134069,
+            -3924.499650150592
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:45:00Z",
+          "position_teme_km": [
+            2498.3788393906852,
+            3997.182458662398,
+            -4898.268379500398
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:50:00Z",
+          "position_teme_km": [
+            264.6892282875141,
+            4228.089123680721,
+            -5317.652815161101
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T08:55:00Z",
+          "position_teme_km": [
+            -1998.8645343142123,
+            3982.2854228737697,
+            -5135.77510368271
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:00:00Z",
+          "position_teme_km": [
+            -4037.0015876924026,
+            3287.4500161058177,
+            -4373.151481002503
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:05:00Z",
+          "position_teme_km": [
+            -5619.370575902964,
+            2221.5386372019443,
+            -3115.4931804919506
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:10:00Z",
+          "position_teme_km": [
+            -6566.256799148992,
+            904.4589359036273,
+            -1504.587457409162
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:15:00Z",
+          "position_teme_km": [
+            -6769.287704368331,
+            -515.0369651567478,
+            277.18955309039
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:20:00Z",
+          "position_teme_km": [
+            -6204.447725358832,
+            -1876.0832276279275,
+            2027.398887284864
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:25:00Z",
+          "position_teme_km": [
+            -4935.332472589641,
+            -3024.1636171311893,
+            3546.8096327297944
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:30:00Z",
+          "position_teme_km": [
+            -3105.9447823941896,
+            -3828.9371276043175,
+            4662.438561912471
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:35:00Z",
+          "position_teme_km": [
+            -924.0244121892308,
+            -4199.12613618894,
+            5247.377688746362
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:40:00Z",
+          "position_teme_km": [
+            1362.7604415948704,
+            -4092.7520407427555,
+            5235.09504194485
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:45:00Z",
+          "position_teme_km": [
+            3494.826114588502,
+            -3521.770301972201,
+            4626.837889466484
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:50:00Z",
+          "position_teme_km": [
+            5229.910487009921,
+            -2550.7784263956996,
+            3491.560864379606
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T09:55:00Z",
+          "position_teme_km": [
+            6370.603403979521,
+            -1289.8996834583315,
+            1958.3523257646846
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:00:00Z",
+          "position_teme_km": [
+            6787.165963242321,
+            117.60329691470619,
+            201.90471165929696
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:05:00Z",
+          "position_teme_km": [
+            6432.713045434614,
+            1511.7735642530922,
+            -1577.5800242688968
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:10:00Z",
+          "position_teme_km": [
+            5348.538386500197,
+            2734.4998858445183,
+            -3177.663711439499
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:15:00Z",
+          "position_teme_km": [
+            3658.8178135123085,
+            3647.7076219933115,
+            -4417.054405955296
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:20:00Z",
+          "position_teme_km": [
+            1555.6850174354113,
+            4148.854057711488,
+            -5156.061651646006
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:25:00Z",
+          "position_teme_km": [
+            -722.9732655044993,
+            4182.020696721547,
+            -5311.826340902364
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:30:00Z",
+          "position_teme_km": [
+            -2920.123921101738,
+            3743.7157187563867,
+            -4867.04312461144
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:35:00Z",
+          "position_teme_km": [
+            -4787.834508836757,
+            2883.1239740039787,
+            -3871.698391305239
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:40:00Z",
+          "position_teme_km": [
+            -6114.628839814173,
+            1696.8719494103223,
+            -2437.7818732474007
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:45:00Z",
+          "position_teme_km": [
+            -6749.384150137369,
+            318.6264612970734,
+            -727.2501015102044
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:50:00Z",
+          "position_teme_km": [
+            -6619.037393661061,
+            -1095.7011526204585,
+            1065.9069069161908
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T10:55:00Z",
+          "position_teme_km": [
+            -5737.578140478802,
+            -2385.6726208537584,
+            2737.7390628135554
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:00:00Z",
+          "position_teme_km": [
+            -4204.774059333987,
+            -3404.813900305018,
+            4097.889777885694
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:05:00Z",
+          "position_teme_km": [
+            -2194.665264270882,
+            -4037.46601399885,
+            4991.557482877914
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:10:00Z",
+          "position_teme_km": [
+            64.52451462704897,
+            -4211.896941272058,
+            5317.11302603279
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:15:00Z",
+          "position_teme_km": [
+            2316.3801953942916,
+            -3908.2843767028135,
+            5037.470599208966
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:20:00Z",
+          "position_teme_km": [
+            4305.19836277117,
+            -3160.907736499599,
+            4184.2259639449785
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:25:00Z",
+          "position_teme_km": [
+            5804.855741560909,
+            -2054.4104564720665,
+            2854.2470785579694
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:30:00Z",
+          "position_teme_km": [
+            6644.687913237835,
+            -714.3996695833026,
+            1198.9197819907288
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:35:00Z",
+          "position_teme_km": [
+            6729.355274651779,
+            706.8163893356268,
+            -593.0696986524999
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:40:00Z",
+          "position_teme_km": [
+            6049.975105266505,
+            2047.8180641781676,
+            -2317.5806084339897
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:45:00Z",
+          "position_teme_km": [
+            4684.851102817852,
+            3156.767247562823,
+            -3778.7349679380723
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:50:00Z",
+          "position_teme_km": [
+            2789.803421169983,
+            3908.7238566801643,
+            -4811.351851815669
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T11:55:00Z",
+          "position_teme_km": [
+            579.7658594334966,
+            4219.461667073516,
+            -5299.319525697262
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:00:00Z",
+          "position_teme_km": [
+            -1695.6709558649186,
+            4054.4269643285556,
+            -5188.054078143147
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        }
+      ],
+      "limitations": [
+        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+      ]
+    },
+    {
+      "window": {
+        "start": "2024-05-02T12:00:00Z",
+        "end": "2024-05-02T18:00:00Z"
+      },
+      "factors": [
+        {
+          "mechanism": "space_weather",
+          "state": "forecast_below_experimental_threshold",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 0.0,
+          "completeness": "complete",
+          "freshness": "archive",
+          "evidence": [
+            {
+              "event": {
+                "id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast",
+                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "value": 10.0,
+                "unit": "%",
+                "valid_start": "2024-05-02T00:00:00Z",
+                "valid_end": "2024-05-03T00:00:00Z",
+                "published_at": "2024-05-01T22:00:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240501RSGA.txt",
+                "limitations": [
+                  "Daily probability is not an EVA dose or an event arrival time.",
+                  "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
+                ]
+              },
+              "overlap_minutes": 360.0,
+              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+            }
+          ],
+          "limitations": [
+            "Forecast probability is not observed astronaut radiation dose.",
+            "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
+          ],
+          "algorithm_version": "0.1.0"
+        },
+        {
+          "mechanism": "lighting",
+          "state": "attention",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 125.0,
+          "completeness": "complete",
+          "freshness": "historical_reconstruction",
+          "evidence": [
+            {
+              "quantity": "Earth-shadow interval",
+              "unit": "minutes",
+              "value": 125.0,
+              "intervals": [
+                {
+                  "start": "2024-05-02T12:10:00+00:00",
+                  "end": "2024-05-02T12:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T12:15:00+00:00",
+                  "end": "2024-05-02T12:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T12:20:00+00:00",
+                  "end": "2024-05-02T12:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T12:25:00+00:00",
+                  "end": "2024-05-02T12:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T12:30:00+00:00",
+                  "end": "2024-05-02T12:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T12:35:00+00:00",
+                  "end": "2024-05-02T12:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T13:40:00+00:00",
+                  "end": "2024-05-02T13:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T13:45:00+00:00",
+                  "end": "2024-05-02T13:50:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T13:50:00+00:00",
+                  "end": "2024-05-02T13:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T13:55:00+00:00",
+                  "end": "2024-05-02T14:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T14:00:00+00:00",
+                  "end": "2024-05-02T14:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T14:05:00+00:00",
+                  "end": "2024-05-02T14:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T14:10:00+00:00",
+                  "end": "2024-05-02T14:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:15:00+00:00",
+                  "end": "2024-05-02T15:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:20:00+00:00",
+                  "end": "2024-05-02T15:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:25:00+00:00",
+                  "end": "2024-05-02T15:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:30:00+00:00",
+                  "end": "2024-05-02T15:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:35:00+00:00",
+                  "end": "2024-05-02T15:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T15:40:00+00:00",
+                  "end": "2024-05-02T15:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T16:50:00+00:00",
+                  "end": "2024-05-02T16:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T16:55:00+00:00",
+                  "end": "2024-05-02T17:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T17:00:00+00:00",
+                  "end": "2024-05-02T17:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T17:05:00+00:00",
+                  "end": "2024-05-02T17:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T17:10:00+00:00",
+                  "end": "2024-05-02T17:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T17:15:00+00:00",
+                  "end": "2024-05-02T17:20:00+00:00",
+                  "minutes": 5.0
+                }
+              ],
+              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+              "orbit_epoch": "2024-05-02T08:05:57.890112+00:00",
+              "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+              "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
+            }
+          ],
+          "limitations": [
+            "Solar vector and cylindrical Earth shadow are approximate.",
+            "Illumination is an operational constraint, not a standalone claim of danger.",
+            "Historical orbital elements have no verified publication time; geometry is reconstruction."
+          ],
+          "algorithm_version": "0.1.0"
+        }
+      ],
+      "orbit": [
+        {
+          "at": "2024-05-02T12:00:00Z",
+          "position_teme_km": [
+            -1695.6709558649186,
+            4054.4269643285556,
+            -5188.054078143147
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:05:00Z",
+          "position_teme_km": [
+            -3779.8952120553904,
+            3432.2511597643906,
+            -4490.163933951918
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:10:00Z",
+          "position_teme_km": [
+            -5437.446649407273,
+            2422.714690837123,
+            -3284.0735586422793
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:15:00Z",
+          "position_teme_km": [
+            -6480.215435156076,
+            1139.31747968346,
+            -1705.6958500414892
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:20:00Z",
+          "position_teme_km": [
+            -6789.014377868168,
+            -273.0753861634427,
+            66.36123732910796
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:25:00Z",
+          "position_teme_km": [
+            -6327.801053887933,
+            -1654.4671895627139,
+            1830.8319255627362
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:30:00Z",
+          "position_teme_km": [
+            -5148.3458577871215,
+            -2848.0564704833596,
+            3386.8878146958123
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:35:00Z",
+          "position_teme_km": [
+            -3384.4334934140575,
+            -3718.3281793140054,
+            4557.364708071203
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:40:00Z",
+          "position_teme_km": [
+            -1236.3721735933736,
+            -4166.561898502186,
+            5209.102098671664
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:45:00Z",
+          "position_teme_km": [
+            1052.0026887757315,
+            -4141.932301858704,
+            5267.9791107251995
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:50:00Z",
+          "position_teme_km": [
+            3220.9429651019996,
+            -3647.1349867879894,
+            4727.167485018642
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T12:55:00Z",
+          "position_teme_km": [
+            5024.036876553474,
+            -2738.117220294649,
+            3647.945977980574
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:00:00Z",
+          "position_teme_km": [
+            6256.162816536318,
+            -1517.9372752341237,
+            2152.990409960944
+          ],
+          "epoch": "2024-05-02T08:05:57.890112Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:05:00Z",
+          "position_teme_km": [
+            6777.082921960752,
+            -124.79089798357106,
+            412.0829046398763
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:10:00Z",
+          "position_teme_km": [
+            6527.855485187236,
+            1282.170295144702,
+            -1375.3661995275024
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:15:00Z",
+          "position_teme_km": [
+            5537.921746565522,
+            2543.6930394999245,
+            -3006.374266635948
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:20:00Z",
+          "position_teme_km": [
+            3920.814359728651,
+            3517.211404609908,
+            -4296.032633641018
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:25:00Z",
+          "position_teme_km": [
+            1860.57542875529,
+            4093.306056710688,
+            -5098.889578808728
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:30:00Z",
+          "position_teme_km": [
+            -409.6205297306749,
+            4207.611461019161,
+            -5324.877039250274
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:35:00Z",
+          "position_teme_km": [
+            -2633.641046824885,
+            3847.5486628631656,
+            -4948.8267162072825
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:40:00Z",
+          "position_teme_km": [
+            -4560.576543907268,
+            3053.5345904242367,
+            -4013.0259591298286
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:45:00Z",
+          "position_teme_km": [
+            -5972.3776885430725,
+            1914.6801479377514,
+            -2622.7363736378434
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:50:00Z",
+          "position_teme_km": [
+            -6708.3980174055,
+            559.2337270889368,
+            -934.9110949313097
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T13:55:00Z",
+          "position_teme_km": [
+            -6684.114559643495,
+            -859.5550898254568,
+            859.1226355123007
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:00:00Z",
+          "position_teme_km": [
+            -5901.431757011783,
+            -2180.7956325834302,
+            2555.3734599042227
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:05:00Z",
+          "position_teme_km": [
+            -4448.841240553858,
+            -3254.476503436824,
+            3960.7185401539136
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:10:00Z",
+          "position_teme_km": [
+            -2491.2473903596283,
+            -3958.737391940812,
+            4915.200180347375
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:15:00Z",
+          "position_teme_km": [
+            -250.9142459652683,
+            -4213.715683535172,
+            5310.264488543376
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:20:00Z",
+          "position_teme_km": [
+            2017.8867637334574,
+            -3990.4588328331497,
+            5100.92912921653
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:25:00Z",
+          "position_teme_km": [
+            4057.555411442453,
+            -3314.1311479436686,
+            4310.796488313166
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:30:00Z",
+          "position_teme_km": [
+            5636.218424817147,
+            -2261.2907985485554,
+            3029.5302416221075
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:35:00Z",
+          "position_teme_km": [
+            6574.21402317582,
+            -951.4196642816444,
+            1402.9326015318434
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:40:00Z",
+          "position_teme_km": [
+            6764.971239191012,
+            466.6031268911015,
+            -383.59300677244937
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:45:00Z",
+          "position_teme_km": [
+            6187.473510726518,
+            1831.6710900658402,
+            -2126.4784125186097
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:50:00Z",
+          "position_teme_km": [
+            4908.44789999824,
+            2989.124314945167,
+            -3627.657523344475
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T14:55:00Z",
+          "position_teme_km": [
+            3074.044809670043,
+            3808.446454020371,
+            -4717.313626408405
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:00:00Z",
+          "position_teme_km": [
+            892.4814669504503,
+            4197.772317917551,
+            -5272.844871508959
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:05:00Z",
+          "position_teme_km": [
+            -1389.758931558457,
+            4113.721878316982,
+            -5232.074339381605
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:10:00Z",
+          "position_teme_km": [
+            -3515.291437011361,
+            3565.8622497019182,
+            -4599.724419547534
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:15:00Z",
+          "position_teme_km": [
+            -5244.0841575315235,
+            2615.6256172676804,
+            -3446.8566350102415
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:20:00Z",
+          "position_teme_km": [
+            -6380.091362221511,
+            1369.7853210747635,
+            -1903.3343507641391
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:25:00Z",
+          "position_teme_km": [
+            -6793.631867237562,
+            -31.11733944626625,
+            -143.7349020965155
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:30:00Z",
+          "position_teme_km": [
+            -6436.767962028858,
+            -1428.460463833458,
+            1632.169498308338
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:35:00Z",
+          "position_teme_km": [
+            -5349.363303351576,
+            -2663.6676174537592,
+            3222.287565942893
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:40:00Z",
+          "position_teme_km": [
+            -3654.7012978472576,
+            -3596.498016671305,
+            4445.575730215266
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:45:00Z",
+          "position_teme_km": [
+            -1545.2162982613133,
+            -4121.120488858846,
+            5162.851124884911
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:50:00Z",
+          "position_teme_km": [
+            739.6310706713558,
+            -4178.044420010578,
+            5292.539631788685
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T15:55:00Z",
+          "position_teme_km": [
+            2940.5070505432636,
+            -3760.721617567072,
+            4819.769543279081
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:00:00Z",
+          "position_teme_km": [
+            4807.405391003085,
+            -2916.3006844150927,
+            3798.072282850747
+          ],
+          "epoch": "2024-05-02T13:00:01.736928Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:05:00Z",
+          "position_teme_km": [
+            6127.959349634469,
+            -1740.4643551553131,
+            2344.196532810302
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:10:00Z",
+          "position_teme_km": [
+            6752.113281604633,
+            -366.8737458341304,
+            622.6174118432916
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:15:00Z",
+          "position_teme_km": [
+            6609.106515914248,
+            1048.4219927394895,
+            -1169.9319249307155
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:20:00Z",
+          "position_teme_km": [
+            5716.113555023321,
+            2344.7899373782443,
+            -2829.4023845690676
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:25:00Z",
+          "position_teme_km": [
+            4175.678856507604,
+            3375.640103362324,
+            -4167.574699301859
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:30:00Z",
+          "position_teme_km": [
+            2163.2442032916974,
+            4025.011241437885,
+            -5033.436322874126
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:35:00Z",
+          "position_teme_km": [
+            -93.31862903667026,
+            4220.259254147885,
+            -5329.784644690055
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:40:00Z",
+          "position_teme_km": [
+            -2339.3703360491195,
+            3939.7139625364516,
+            -5023.54138700294
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:45:00Z",
+          "position_teme_km": [
+            -4321.554126932648,
+            3214.8606181848127,
+            -4149.146445094179
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:50:00Z",
+          "position_teme_km": [
+            -5815.667017660708,
+            2126.9956324668115,
+            -2804.9095347803336
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T16:55:00Z",
+          "position_teme_km": [
+            -6651.813643665615,
+            798.5479499604435,
+            -1142.5086364552126
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:00:00Z",
+          "position_teme_km": [
+            -6734.119560331128,
+            -620.356441268391,
+            649.6838172390253
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:05:00Z",
+          "position_teme_km": [
+            -6052.339412063206,
+            -1968.8493347343408,
+            2367.9201937657713
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:10:00Z",
+          "position_teme_km": [
+            -4683.460778086889,
+            -3093.820787537619,
+            3816.5646884135435
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:15:00Z",
+          "position_teme_km": [
+            -2782.8848546593895,
+            -3867.5680697454895,
+            4830.705245872651
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:20:00Z",
+          "position_teme_km": [
+            -566.4416725076435,
+            -4202.3422914425655,
+            5294.998320996035
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:25:00Z",
+          "position_teme_km": [
+            1714.2845145898873,
+            -4060.1646651898673,
+            5156.619945769009
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:30:00Z",
+          "position_teme_km": [
+            3800.364272386751,
+            -3457.0301015132027,
+            4431.139564097701
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:35:00Z",
+          "position_teme_km": [
+            5454.707567571938,
+            -2461.1914275925255,
+            3200.8705735084313
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:40:00Z",
+          "position_teme_km": [
+            6489.0817857133925,
+            -1185.6304796359075,
+            1605.7792249032125
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:45:00Z",
+          "position_teme_km": [
+            6785.930685577082,
+            224.69424039596552,
+            -172.34969230882442
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:50:00Z",
+          "position_teme_km": [
+            6312.117673451129,
+            1609.5327432438019,
+            -1930.8920181939268
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T17:55:00Z",
+          "position_teme_km": [
+            5122.565909800302,
+            2811.9191413158505,
+            -3469.9384129681766
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:00:00Z",
+          "position_teme_km": [
+            3353.327143150659,
+            3696.175758893602,
+            -4615.297523447318
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        }
+      ],
+      "limitations": [
+        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+      ]
+    },
+    {
+      "window": {
+        "start": "2024-05-02T18:00:00Z",
+        "end": "2024-05-03T00:00:00Z"
+      },
+      "factors": [
+        {
+          "mechanism": "space_weather",
+          "state": "forecast_below_experimental_threshold",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 0.0,
+          "completeness": "complete",
+          "freshness": "archive",
+          "evidence": [
+            {
+              "event": {
+                "id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast",
+                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "value": 10.0,
+                "unit": "%",
+                "valid_start": "2024-05-02T00:00:00Z",
+                "valid_end": "2024-05-03T00:00:00Z",
+                "published_at": "2024-05-01T22:00:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240501RSGA.txt",
+                "limitations": [
+                  "Daily probability is not an EVA dose or an event arrival time.",
+                  "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
+                ]
+              },
+              "overlap_minutes": 360.0,
+              "rule": "Experimental attention threshold on a daily external probability; not EVA risk."
+            }
+          ],
+          "limitations": [
+            "Forecast probability is not observed astronaut radiation dose.",
+            "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
+          ],
+          "algorithm_version": "0.1.0"
+        },
+        {
+          "mechanism": "lighting",
+          "state": "attention",
+          "covered_minutes": 360.0,
+          "overlap_minutes": 130.0,
+          "completeness": "complete",
+          "freshness": "historical_reconstruction",
+          "evidence": [
+            {
+              "quantity": "Earth-shadow interval",
+              "unit": "minutes",
+              "value": 130.0,
+              "intervals": [
+                {
+                  "start": "2024-05-02T18:20:00+00:00",
+                  "end": "2024-05-02T18:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:25:00+00:00",
+                  "end": "2024-05-02T18:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:30:00+00:00",
+                  "end": "2024-05-02T18:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:35:00+00:00",
+                  "end": "2024-05-02T18:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:40:00+00:00",
+                  "end": "2024-05-02T18:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:45:00+00:00",
+                  "end": "2024-05-02T18:50:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T18:50:00+00:00",
+                  "end": "2024-05-02T18:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T19:55:00+00:00",
+                  "end": "2024-05-02T20:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T20:00:00+00:00",
+                  "end": "2024-05-02T20:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T20:05:00+00:00",
+                  "end": "2024-05-02T20:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T20:10:00+00:00",
+                  "end": "2024-05-02T20:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T20:15:00+00:00",
+                  "end": "2024-05-02T20:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T20:20:00+00:00",
+                  "end": "2024-05-02T20:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:25:00+00:00",
+                  "end": "2024-05-02T21:30:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:30:00+00:00",
+                  "end": "2024-05-02T21:35:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:35:00+00:00",
+                  "end": "2024-05-02T21:40:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:40:00+00:00",
+                  "end": "2024-05-02T21:45:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:45:00+00:00",
+                  "end": "2024-05-02T21:50:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:50:00+00:00",
+                  "end": "2024-05-02T21:55:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T21:55:00+00:00",
+                  "end": "2024-05-02T22:00:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:00:00+00:00",
+                  "end": "2024-05-02T23:05:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:05:00+00:00",
+                  "end": "2024-05-02T23:10:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:10:00+00:00",
+                  "end": "2024-05-02T23:15:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:15:00+00:00",
+                  "end": "2024-05-02T23:20:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:20:00+00:00",
+                  "end": "2024-05-02T23:25:00+00:00",
+                  "minutes": 5.0
+                },
+                {
+                  "start": "2024-05-02T23:25:00+00:00",
+                  "end": "2024-05-02T23:30:00+00:00",
+                  "minutes": 5.0
+                }
+              ],
+              "orbit_record": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+              "orbit_epoch": "2024-05-02T16:02:16.514016+00:00",
+              "source": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+              "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."
+            }
+          ],
+          "limitations": [
+            "Solar vector and cylindrical Earth shadow are approximate.",
+            "Illumination is an operational constraint, not a standalone claim of danger.",
+            "Historical orbital elements have no verified publication time; geometry is reconstruction."
+          ],
+          "algorithm_version": "0.1.0"
+        }
+      ],
+      "orbit": [
+        {
+          "at": "2024-05-02T18:00:00Z",
+          "position_teme_km": [
+            3353.327143150659,
+            3696.175758893602,
+            -4615.297523447318
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:05:00Z",
+          "position_teme_km": [
+            1205.3449939292889,
+            4163.0622501313255,
+            -5238.019391243797
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:10:00Z",
+          "position_teme_km": [
+            -1078.606327767237,
+            4160.4638753374675,
+            -5268.348806237907
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:15:00Z",
+          "position_teme_km": [
+            -3240.940680839496,
+            3688.806057984178,
+            -4703.022731251364
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:20:00Z",
+          "position_teme_km": [
+            -5037.539802843229,
+            2800.9451085813444,
+            -3605.5503313589575
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:25:00Z",
+          "position_teme_km": [
+            -6264.779134948738,
+            1596.578490126739,
+            -2099.493401483353
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:30:00Z",
+          "position_teme_km": [
+            -6782.683723957853,
+            211.48967396935186,
+            -355.11203654918427
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:35:00Z",
+          "position_teme_km": [
+            -6531.448877007449,
+            -1197.548261044541,
+            1429.6082130068075
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:40:00Z",
+          "position_teme_km": [
+            -5538.888949112531,
+            -2470.6485980194466,
+            3051.586098115714
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:45:00Z",
+          "position_teme_km": [
+            -3917.489752621142,
+            -3463.25271553352,
+            4326.12881639723
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:50:00Z",
+          "position_teme_km": [
+            -1851.390642322212,
+            -4062.7298931344153,
+            5108.2013195347035
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T18:55:00Z",
+          "position_teme_km": [
+            424.8333062407326,
+            -4201.108427183084,
+            5308.872981005838
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:00:00Z",
+          "position_teme_km": [
+            2652.822734814689,
+            -3862.6314734640714,
+            4905.238732533134
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:05:00Z",
+          "position_teme_km": [
+            4579.536021703173,
+            -3085.521164650733,
+            3942.9925885109324
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:10:00Z",
+          "position_teme_km": [
+            5985.868503632423,
+            -1957.8185973673983,
+            2531.451708805644
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:15:00Z",
+          "position_teme_km": [
+            6711.806472001019,
+            -607.5794149134574,
+            831.3548092248003
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:20:00Z",
+          "position_teme_km": [
+            6675.085896674372,
+            811.7176977958075,
+            -963.5019827356195
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:25:00Z",
+          "position_teme_km": [
+            5880.744228662907,
+            2138.9269070849105,
+            -2648.746612494397
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:30:00Z",
+          "position_teme_km": [
+            4420.147215166114,
+            3223.8722085799855,
+            -4033.134763659434
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:35:00Z",
+          "position_teme_km": [
+            2459.7969570391274,
+            3944.4033266531596,
+            -4960.338860516327
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:40:00Z",
+          "position_teme_km": [
+            221.80822001679195,
+            4219.833202390978,
+            -5326.208017350726
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:45:00Z",
+          "position_teme_km": [
+            -2041.2039513824652,
+            4019.4971353123733,
+            -5089.863752319372
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:50:00Z",
+          "position_teme_km": [
+            -4073.9997288924383,
+            3365.892577130468,
+            -4277.914728024736
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T19:55:00Z",
+          "position_teme_km": [
+            -5646.76444925862,
+            2332.2875265607613,
+            -2981.6265174073947
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:00:00Z",
+          "position_teme_km": [
+            -6580.805260494894,
+            1034.9306706915504,
+            -1347.197085636848
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:05:00Z",
+          "position_teme_km": [
+            -6769.185872029513,
+            -379.6486952642865,
+            440.2567440740888
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:10:00Z",
+          "position_teme_km": [
+            -6189.585315969084,
+            -1751.131030944303,
+            2177.5872488087066
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:15:00Z",
+          "position_teme_km": [
+            -4907.329456755687,
+            -2923.8137016504097,
+            3667.00120469655
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:20:00Z",
+          "position_teme_km": [
+            -3067.954074628807,
+            -3764.567126146581,
+            4738.93207804087
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:25:00Z",
+          "position_teme_km": [
+            -880.3486392778682,
+            -4178.030838923769,
+            5271.451970106136
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:30:00Z",
+          "position_teme_km": [
+            1407.1674146056266,
+            -4117.308679329145,
+            5203.9889608747
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:35:00Z",
+          "position_teme_km": [
+            3534.914531490397,
+            -3589.166586880928,
+            4544.06233151984
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:40:00Z",
+          "position_teme_km": [
+            5261.106708607133,
+            -2653.337367740731,
+            3366.5179831355886
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:45:00Z",
+          "position_teme_km": [
+            6389.352712304647,
+            -1415.9587901339894,
+            1805.285694028585
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:50:00Z",
+          "position_teme_km": [
+            6791.374372199842,
+            -17.63322285401085,
+            38.27007403308631
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T20:55:00Z",
+          "position_teme_km": [
+            6422.004053049778,
+            1382.7242319129557,
+            -1733.1434486261023
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:00:00Z",
+          "position_teme_km": [
+            5324.270302735446,
+            2626.3094312382664,
+            -3307.499627398804
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:05:00Z",
+          "position_teme_km": [
+            3623.870771495766,
+            3572.690649713232,
+            -4506.504094495475
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:10:00Z",
+          "position_teme_km": [
+            1514.0844398815866,
+            4115.560000124231,
+            -5195.081868729713
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:15:00Z",
+          "position_teme_km": [
+            -766.514369791158,
+            4194.248599144894,
+            -5296.055814013859
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:20:00Z",
+          "position_teme_km": [
+            -2960.689356959164,
+            3800.075345650829,
+            -4798.2500897993705
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:25:00Z",
+          "position_teme_km": [
+            -4820.799065218811,
+            2977.199515702582,
+            -3757.5933736115885
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:30:00Z",
+          "position_teme_km": [
+            -6136.153975533866,
+            1817.9656427406776,
+            -2291.205281632589
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:35:00Z",
+          "position_teme_km": [
+            -6756.8780602136385,
+            452.98646976694647,
+            -564.7793717980284
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:40:00Z",
+          "position_teme_km": [
+            -6611.504408290911,
+            -963.3170439359352,
+            1225.8161800389635
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:45:00Z",
+          "position_teme_km": [
+            -5715.775100162127,
+            -2270.2745441639827,
+            2876.8733510348666
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:50:00Z",
+          "position_teme_km": [
+            -4171.129988080709,
+            -3319.485341098137,
+            4200.388009634376
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T21:55:00Z",
+          "position_teme_km": [
+            -2152.9829504931704,
+            -3991.8808416592024,
+            5045.736071809926
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:00:00Z",
+          "position_teme_km": [
+            109.52104183528772,
+            -4211.215901667192,
+            5316.789278540049
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:05:00Z",
+          "position_teme_km": [
+            2359.582746122927,
+            -3952.563713166961,
+            4982.655245807662
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:10:00Z",
+          "position_teme_km": [
+            4341.686536276206,
+            -3245.0942368482592,
+            4081.1295964286855
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:15:00Z",
+          "position_teme_km": [
+            5830.464266153905,
+            -2168.922788433654,
+            2714.596703066206
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:20:00Z",
+          "position_teme_km": [
+            6656.512861168255,
+            -846.222029346976,
+            1038.6348350263518
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:25:00Z",
+          "position_teme_km": [
+            6726.118200548508,
+            572.6594353700748,
+            -755.713952934948
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:30:00Z",
+          "position_teme_km": [
+            6032.169001568736,
+            1926.5712628747754,
+            -2464.0819180393028
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:35:00Z",
+          "position_teme_km": [
+            4654.6404598519775,
+            3062.221286136965,
+            -3892.5019242346552
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:40:00Z",
+          "position_teme_km": [
+            2750.717551542927,
+            3851.646233719031,
+            -4879.572072475464
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:45:00Z",
+          "position_teme_km": [
+            536.2668052905318,
+            4206.360957526533,
+            -5314.349843760372
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:50:00Z",
+          "position_teme_km": [
+            -1738.670611882369,
+            4086.8008172147065,
+            -5148.219452774754
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T22:55:00Z",
+          "position_teme_km": [
+            -3817.527174800079,
+            3506.4140284524656,
+            -4399.92512489328
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:00:00Z",
+          "position_teme_km": [
+            -5465.385771086601,
+            2530.2271025536124,
+            -3153.5603349322832
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:05:00Z",
+          "position_teme_km": [
+            -6495.165145388245,
+            1267.9601239517954,
+            -1549.6275149850483
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:10:00Z",
+          "position_teme_km": [
+            -6789.1236577762875,
+            -137.90490042238847,
+            230.2967469574973
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:15:00Z",
+          "position_teme_km": [
+            -6312.929656635619,
+            -1528.099049684571,
+            1983.9860737981937
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:20:00Z",
+          "position_teme_km": [
+            -5120.108148572162,
+            -2744.8180831241993,
+            3511.8064001638245
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:25:00Z",
+          "position_teme_km": [
+            -3346.0052497841825,
+            -3649.9247371950687,
+            4639.807332451883
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:30:00Z",
+          "position_teme_km": [
+            -1192.1044543625871,
+            -4140.746126147377,
+            5239.670080243568
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:35:00Z",
+          "position_teme_km": [
+            1097.0899947667303,
+            -4161.617871667502,
+            5243.173085277904
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:40:00Z",
+          "position_teme_km": [
+            3261.7249614433995,
+            -3710.062755397926,
+            4649.7811124410755
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:45:00Z",
+          "position_teme_km": [
+            5055.8620384118585,
+            -2837.1165580886504,
+            3526.765036329848
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:50:00Z",
+          "position_teme_km": [
+            6275.401650914914,
+            -1641.7483385222524,
+            2001.8148050546067
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-02T23:55:00Z",
+          "position_teme_km": [
+            6781.643476947415,
+            -259.765438924894,
+            248.67525214761213
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        },
+        {
+          "at": "2024-05-03T00:00:00Z",
+          "position_teme_km": [
+            6517.495905809476,
+            1151.7529354716012,
+            -1532.828893330321
+          ],
+          "epoch": "2024-05-02T16:02:16.514016Z",
+          "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+          "raw_record_id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+          "classification": "historical_reconstruction_publication_unknown"
+        }
+      ],
+      "limitations": [
+        "Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."
+      ]
+    }
+  ],
+  "comparison": {
+    "outcome": "equivalent",
+    "preferred_index": null,
+    "reasons": [
+      "Лучшие окна различаются не более чем на экспериментальный допуск 10 мин."
+    ],
+    "algorithm_version": "0.1.0"
+  },
+  "created_at": "2026-09-18T16:48:02.625537Z",
+  "algorithm_version": "0.1.0",
+  "source_records": [
+    {
+      "id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+      "source": "noaa_archive",
+      "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240501RSGA.txt",
+      "content_sha256": "f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
+      "retrieved_at": "2026-09-18T16:48:02.218098Z",
+      "published_at": "2024-05-01T22:00:00Z",
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "archived"
+    },
+    {
+      "id": "iss_history_extract:3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+      "source": "iss_history_extract",
+      "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
+      "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+      "retrieved_at": "2026-09-18T16:48:02.231398Z",
+      "published_at": null,
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "archived"
+    }
+  ]
+}

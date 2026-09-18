@@ -1,0 +1,53 @@
+:Product: 0530RSGA.txt
+:Issued: 2024 May 30 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 151 Issued at 2200Z on 30 May 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 29/2100Z to
+30/2100Z: Solar activity has been at moderate levels for the past 24
+hours. The largest solar event of the period was a M1 event observed at
+30/0713Z from Region 3691 (N27W06). There are currently 7 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is expected to be moderate
+with a chance for X-class flares on days one, two, and three (31 May, 01
+Jun, 02 Jun).
+
+IIA.  Geophysical Activity Summary 29/2100Z to 30/2100Z: The geomagnetic
+field has been at quiet to unsettled levels for the past 24 hours. Solar
+wind speed reached a peak of 365 km/s at 30/0003Z. Total IMF reached 10
+nT at 29/2125Z. The maximum southward component of Bz reached -8 nT at
+30/1427Z.  Electrons greater than 2 MeV at geosynchronous orbit reached
+a peak level of 337 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to major storm levels on days one and two (31 May, 01
+Jun) and quiet levels on day three (02 Jun). Protons have a chance of
+crossing threshold on days one, two, and three (31 May, 01 Jun, 02 Jun).
+
+III.  Event probabilities 31 May-02 Jun
+Class M    75/75/75
+Class X    35/35/35
+Proton     25/25/25
+PCAF       green
+
+IV.  Penticton 10.7 cm Flux
+Observed           30 May 175
+Predicted   31 May-02 Jun 175/175/175
+90 Day Mean        30 May 168
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 29 May  010/009
+Estimated Afr/Ap 30 May  006/006
+Predicted Afr/Ap 31 May-02 Jun  014/025-018/025-005/010
+
+VI.  Geomagnetic Activity Probabilities 31 May-02 Jun
+A.  Middle Latitudes
+Active                30/30/10
+Minor Storm           35/35/01
+Major-severe storm    25/25/01
+B.  High Latitudes
+Active                05/05/15
+Minor Storm           20/20/20
+Major-severe storm    75/75/20

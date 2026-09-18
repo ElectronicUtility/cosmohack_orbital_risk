@@ -1,0 +1,54 @@
+:Product: 0617RSGA.txt
+:Issued: 2024 Jun 17 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 169 Issued at 2200Z on 17 Jun 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 16/2100Z to
+17/2100Z: Solar activity has been at moderate levels for the past 24
+hours. The largest solar event of the period was a M1 event observed at
+17/0804Z from Region 3712 (S26W12). There are currently 7 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is likely to be moderate
+with a slight chance for an X-class flare on days one, two, and three
+(18 Jun, 19 Jun, 20 Jun).
+
+IIA.  Geophysical Activity Summary 16/2100Z to 17/2100Z: The geomagnetic
+field has been at quiet to unsettled levels for the past 24 hours. Solar
+wind speed reached a peak of 543 km/s at 17/0513Z. Total IMF reached 11
+nT at 17/1426Z. The maximum southward component of Bz reached -9 nT at
+17/1700Z.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to active levels on day one (18 Jun), quiet to unsettled
+levels on day two (19 Jun) and quiet levels on day three (20 Jun).
+Protons have a slight chance of crossing threshold on day one (18 Jun)
+and have a slight chance of crossing threshold on days two and three (19
+Jun, 20 Jun).
+
+III.  Event probabilities 18 Jun-20 Jun
+Class M    55/55/55
+Class X    10/10/10
+Proton     15/10/10
+PCAF       green
+
+IV.  Penticton 10.7 cm Flux
+Observed           17 Jun 180
+Predicted   18 Jun-20 Jun 180/180/180
+90 Day Mean        17 Jun 176
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 16 Jun  009/013
+Estimated Afr/Ap 17 Jun  009/010
+Predicted Afr/Ap 18 Jun-20 Jun  014/015-008/008-006/005
+
+VI.  Geomagnetic Activity Probabilities 18 Jun-20 Jun
+A.  Middle Latitudes
+Active                35/20/10
+Minor Storm           20/05/01
+Major-severe storm    05/01/01
+B.  High Latitudes
+Active                10/15/15
+Minor Storm           30/25/20
+Major-severe storm    50/30/20

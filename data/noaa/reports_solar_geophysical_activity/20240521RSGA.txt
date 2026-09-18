@@ -1,0 +1,54 @@
+:Product: 0521RSGA.txt
+:Issued: 2024 May 21 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 142 Issued at 2200Z on 21 May 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 20/2100Z to
+21/2100Z: Solar activity has been at moderate levels for the past 24
+hours. The largest solar event of the period was a M1 event observed at
+21/1931Z from Region 3679 (S09W46). There are currently 9 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is likely to be moderate
+with a slight chance for an X-class flare on days one, two, and three
+(22 May, 23 May, 24 May).
+
+IIA.  Geophysical Activity Summary 20/2100Z to 21/2100Z: The geomagnetic
+field has been at quiet to unsettled levels for the past 24 hours. Solar
+wind speed reached a peak of 467 km/s at 21/1847Z. Total IMF reached 7
+nT at 21/1836Z. The maximum southward component of Bz reached -6 nT at
+21/1355Z.  Electrons greater than 2 MeV at geosynchronous orbit reached
+a peak level of 764 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to unsettled levels on days one and two (22 May, 23 May)
+and unsettled to active levels on day three (24 May). Protons have a
+slight chance of crossing threshold on days one, two, and three (22 May,
+23 May, 24 May).
+
+III.  Event probabilities 22 May-24 May
+Class M    55/55/55
+Class X    10/10/10
+Proton     10/10/10
+PCAF       green
+
+IV.  Penticton 10.7 cm Flux
+Observed           21 May 191
+Predicted   22 May-24 May 190/192/192
+90 Day Mean        21 May 169
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 20 May  010/008
+Estimated Afr/Ap 21 May  009/010
+Predicted Afr/Ap 22 May-24 May  007/008-008/008-011/014
+
+VI.  Geomagnetic Activity Probabilities 22 May-24 May
+A.  Middle Latitudes
+Active                25/15/30
+Minor Storm           05/05/10
+Major-severe storm    01/01/01
+B.  High Latitudes
+Active                20/15/15
+Minor Storm           30/25/25
+Major-severe storm    30/25/40

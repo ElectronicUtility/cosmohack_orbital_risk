@@ -1,0 +1,59 @@
+:Product: 0608RSGA.txt
+:Issued: 2024 Jun 08 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 160 Issued at 2200Z on 08 Jun 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 07/2100Z to
+08/2100Z: Solar activity has been at high levels for the past 24 hours.
+The largest solar event of the period was a M9 event observed at
+08/0149Z from Region 3697 (S17W72). There are currently 9 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is expected to be moderate
+with a chance for X-class flares on days one and two (09 Jun, 10 Jun)
+and expected to be low with a chance for M-class flares and a slight
+chance for an X-class flare on day three (11 Jun).
+
+IIA.  Geophysical Activity Summary 07/2100Z to 08/2100Z: The geomagnetic
+field has been at quiet to active levels for the past 24 hours. Solar
+wind speed reached a peak of 545 km/s at 08/1946Z. Total IMF reached 11
+nT at 08/0535Z. The maximum southward component of Bz reached -8 nT at
+08/0038Z.  Protons greater than 10 MeV at geosynchronous orbit reached a
+peak level of 1028 pfu at 08/0800Z. Protons greater than 100 MeV at
+geosynchronous orbit reached a peak level of 8 pfu at 08/0625Z.
+Electrons greater than 2 MeV at geosynchronous orbit reached a peak
+level of 178 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to unsettled levels on day one (09 Jun), quiet to major
+storm levels on day two (10 Jun) and quiet to minor storm levels on day
+three (11 Jun). Protons are expected to cross threshold on day one (09
+Jun), have a chance of crossing threshold on day two (10 Jun) and have a
+slight chance of crossing threshold on day three (11 Jun).
+
+III.  Event probabilities 09 Jun-11 Jun
+Class M    75/75/50
+Class X    25/25/10
+Proton     99/50/10
+PCAF       red
+
+IV.  Penticton 10.7 cm Flux
+Observed           08 Jun 190
+Predicted   09 Jun-11 Jun 190/175/175
+90 Day Mean        08 Jun 173
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 07 Jun  020/022
+Estimated Afr/Ap 08 Jun  015/022
+Predicted Afr/Ap 09 Jun-11 Jun  009/010-020/035-015/020
+
+VI.  Geomagnetic Activity Probabilities 09 Jun-11 Jun
+A.  Middle Latitudes
+Active                25/35/40
+Minor Storm           05/40/25
+Major-severe storm    01/20/05
+B.  High Latitudes
+Active                15/05/10
+Minor Storm           30/15/25
+Major-severe storm    30/80/60

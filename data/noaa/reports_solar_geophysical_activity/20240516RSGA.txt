@@ -1,0 +1,54 @@
+:Product: 0516RSGA.txt
+:Issued: 2024 May 16 2200 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar Geophysical Activity Report and Forecast
+SDF Number 137 Issued at 2200Z on 16 May 2024
+
+IA.  Analysis of Solar Active Regions and Activity from 15/2100Z to
+16/2100Z: Solar activity has been at moderate levels for the past 24
+hours. The largest solar event of the period was a M1 event observed at
+16/0804Z from Region 3685 (S13E64). There are currently 13 numbered
+sunspot regions on the disk.
+IB.  Solar Activity Forecast: Solar activity is expected to be low with
+a chance for M-class flares and a slight chance for an X-class flare on
+days one, two, and three (17 May, 18 May, 19 May).
+
+IIA.  Geophysical Activity Summary 15/2100Z to 16/2100Z: The geomagnetic
+field has been at quiet to major storm levels for the past 24 hours.
+Solar wind speed reached a peak of 529 km/s at 16/0528Z. Total IMF
+reached 17 nT at 16/0611Z. The maximum southward component of Bz reached
+-12 nT at 16/0656Z.  Protons greater than 10 MeV at geosynchronous orbit
+reached a peak level of 22 pfu at 16/1115Z. Electrons greater than 2 MeV
+at geosynchronous orbit reached a peak level of 602 pfu.
+IIB.  Geophysical Activity Forecast: The geomagnetic field is expected
+to be at quiet to active levels on days one and three (17 May, 19 May)
+and quiet to unsettled levels on day two (18 May). Protons greater than
+10 Mev have a chance of crossing threshold on day one (17 May).
+
+III.  Event probabilities 17 May-19 May
+Class M    40/40/40
+Class X    10/10/10
+Proton     25/05/05
+PCAF       green
+
+IV.  Penticton 10.7 cm Flux
+Observed           16 May 207
+Predicted   17 May-19 May 200/190/180
+90 Day Mean        16 May 166
+
+V.  Geomagnetic A Indices
+Observed Afr/Ap 15 May  010/010
+Estimated Afr/Ap 16 May  019/029
+Predicted Afr/Ap 17 May-19 May  013/015-008/008-012/015
+
+VI.  Geomagnetic Activity Probabilities 17 May-19 May
+A.  Middle Latitudes
+Active                35/20/35
+Minor Storm           15/05/15
+Major-severe storm    01/01/01
+B.  High Latitudes
+Active                10/15/10
+Minor Storm           25/25/25
+Major-severe storm    50/25/50
