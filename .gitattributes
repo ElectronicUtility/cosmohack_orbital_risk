@@ -6,5 +6,8 @@
 *.yml text eol=lf
 *.yaml text eol=lf
 *.parquet binary
-data/** -text
-tests/fixtures/** -text
+data/noaa/*/*.txt binary
+data/noaa/sep_catalog_*.html binary
+data/conjunctions/*.html binary
+data/iss_2024_may_june.json binary
+tests/fixtures/** binary
