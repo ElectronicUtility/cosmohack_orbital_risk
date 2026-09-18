@@ -3,5 +3,6 @@ uvicorn==0.53.0
 httpx==0.28.1
 sgp4==2.27
 duckdb==1.5.5
+pytz==2026.3.post1
 pydantic==2.13.5
 pytest==9.1.1
