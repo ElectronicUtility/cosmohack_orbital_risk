@@ -178,3 +178,19 @@ def test_every_historical_day_has_a_dated_weather_release(tmp_path,monkeypatch):
         assert records, start.date()
         assert all(e.published_at<=start-timedelta(hours=6) for e in events)
         assert any(e.valid_start<=start and e.valid_end>=start+timedelta(hours=2) for e in events)
+
+
+def test_stale_orbit_blocks_favorable_comparison(tmp_path,monkeypatch):
+    from app import analysis
+    root=Path(__file__).parent/"fixtures"
+    raw=RawRecord(id="fixture",source="noaa_current",url="https://services.swpc.noaa.gov/text/3-day-forecast.txt",
+        content_sha256="fixture",retrieved_at=datetime(2026,9,18,13,tzinfo=UTC),
+        published_at=datetime(2026,9,18,12,30,tzinfo=UTC))
+    events=forecast_events((root/"noaa_3day_20260918.txt").read_text(),raw)
+    tle=(root/"iss_20260918.tle").read_text().splitlines()
+    monkeypatch.setattr(analysis,"current_weather",lambda refresh=False:(events,[raw],"fresh"))
+    monkeypatch.setattr(analysis,"current_tle",lambda refresh=False:((tle[1],tle[2],raw),[raw],"stale"))
+    windows,comparison,_=run(AnalysisRequest(mode="current",start="2026-09-18T18:00:00Z",
+        duration_hours=2,search_hours=2))
+    assert comparison.outcome=="insufficient"
+    assert all(w.factors[1].state=="insufficient" and w.factors[1].freshness=="stale" for w in windows)

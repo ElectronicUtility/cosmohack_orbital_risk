@@ -45,7 +45,7 @@ def weather_assessment(window: Window, events, status, cutoff=None):
     )
 
 
-def lighting_assessment(window: Window, states, requires_sunlight):
+def lighting_assessment(window: Window, states, requires_sunlight, provider_status="current"):
     total = window.duration.total_seconds() / 60
     if not states or states[0].at != window.start or states[-1].at != window.end:
         return FactorAssessment(mechanism="lighting", state="insufficient", covered_minutes=0,
@@ -59,26 +59,28 @@ def lighting_assessment(window: Window, states, requires_sunlight):
             minutes = (b.at - a.at).total_seconds() / 60
             dark += minutes
             intervals.append({"start": a.at.isoformat(), "end": b.at.isoformat(), "minutes": minutes})
+    unavailable = provider_status in {"stale", "disabled", "missing", "invalid"}
     return FactorAssessment(mechanism="lighting",
-        state="attention" if requires_sunlight and dark > 0 else "no_restriction_detected",
+        state="insufficient" if unavailable else ("attention" if requires_sunlight and dark > 0 else "no_restriction_detected"),
         covered_minutes=total, overlap_minutes=dark if requires_sunlight else 0,
-        completeness="complete", freshness="historical_reconstruction" if states[0].classification.startswith("historical") else "current",
+        completeness="complete" if not unavailable else "stale_or_unavailable",
+        freshness="historical_reconstruction" if states[0].classification.startswith("historical") else provider_status,
         evidence=[{"quantity": "Earth-shadow interval", "unit": "minutes", "value": dark,
                    "intervals": intervals, "orbit_record": states[0].raw_record_id,
                    "orbit_epoch": states[0].epoch.isoformat(), "source": states[0].source_url,
                    "rule": "Earth-shadow geometry; relevant only when the plan requires direct sunlight."}],
-        limitations=["Solar vector and cylindrical Earth shadow are approximate.",
+        limitations=(["Orbit provider is unavailable or stale; no favorable conclusion."] if unavailable else []) + (["Solar vector and cylindrical Earth shadow are approximate.",
                      "Illumination is an operational constraint, not a standalone claim of danger.",
                      "Historical orbital elements have no verified publication time; geometry is reconstruction."] if states[0].classification.startswith("historical") else
                     ["Solar vector and cylindrical Earth shadow are approximate.",
-                     "Illumination is an operational constraint, not a standalone claim of danger."],
+                     "Illumination is an operational constraint, not a standalone claim of danger."]),
         algorithm_version=ALGORITHM_VERSION)
 
 
-def evaluate(window: Window, events, weather_status, orbit_mode, current_orbit=None, cutoff=None, requires_sunlight=True):
+def evaluate(window: Window, events, weather_status, orbit_mode, current_orbit=None, cutoff=None, requires_sunlight=True, orbit_status="current"):
     states = trajectory(window, orbit_mode, current_orbit)
     factors = [weather_assessment(window, events, weather_status, cutoff),
-               lighting_assessment(window, states, requires_sunlight)]
+               lighting_assessment(window, states, requires_sunlight, orbit_status)]
     return WindowAssessment(window=window, factors=factors, orbit=states,
                             limitations=["Историческая геометрия — реконструкция; её доступность на момент cutoff не подтверждена."] if orbit_mode != "current" else [])
 
@@ -114,15 +116,16 @@ def run(request: AnalysisRequest):
     windows = [Window(start=s, end=s + timedelta(hours=request.duration_hours)) for s in starts]
     if request.mode == "current":
         events, weather_records, weather_status = current_weather(request.refresh)
-        orbit_input, orbit_records, _ = current_tle(request.refresh)
+        orbit_input, orbit_records, orbit_status = current_tle(request.refresh)
         cutoff = None
     else:
         cutoff = request.cutoff if request.mode == "replay" else max(w.end for w in windows)
         events, weather_records, weather_status = archived_weather(cutoff, min(w.start for w in windows), max(w.end for w in windows))
         orbit_input = None
+        orbit_status = "historical_reconstruction"
         orbit_records = [store_raw("iss_history_extract",
                           "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
                           ISS_ARCHIVE.read_bytes(), cache_state="archived")]
     results = [evaluate(w, events, weather_status, request.mode.value, orbit_input,
-                        cutoff if request.mode == "replay" else None, request.requires_sunlight) for w in windows]
+                        cutoff if request.mode == "replay" else None, request.requires_sunlight, orbit_status) for w in windows]
     return results, compare(results), weather_records + orbit_records

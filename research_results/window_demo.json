@@ -1,5 +1,5 @@
 {
-  "id": "a0765f75a2a848ef86b78ef904f25b6a",
+  "id": "32b6d31616b74eb49d878d15cb65eef0",
   "request": {
     "mode": "replay",
     "start": "2024-05-05T01:00:00Z",
@@ -51,7 +51,7 @@
             "Forecast probability is not observed astronaut radiation dose.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         },
         {
           "mechanism": "lighting",
@@ -77,7 +77,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         }
       ],
       "orbit": [
@@ -283,7 +283,7 @@
             "Forecast probability is not observed astronaut radiation dose.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         },
         {
           "mechanism": "lighting",
@@ -325,7 +325,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         }
       ],
       "orbit": [
@@ -531,7 +531,7 @@
             "Forecast probability is not observed astronaut radiation dose.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         },
         {
           "mechanism": "lighting",
@@ -583,7 +583,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.1.0"
+          "algorithm_version": "0.1.1"
         }
       ],
       "orbit": [
@@ -755,17 +755,17 @@
     "reasons": [
       "В окне 1 пересечение ни с одним фактором не длиннее, а хотя бы с одним короче (экспериментальный допуск 10 мин)."
     ],
-    "algorithm_version": "0.1.0"
+    "algorithm_version": "0.1.1"
   },
-  "created_at": "2026-09-18T16:50:42.796688Z",
-  "algorithm_version": "0.1.0",
+  "created_at": "2026-09-18T16:54:50.776151Z",
+  "algorithm_version": "0.1.1",
   "source_records": [
     {
       "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
       "source": "noaa_archive",
       "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
       "content_sha256": "b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-      "retrieved_at": "2026-09-18T16:50:42.711360Z",
+      "retrieved_at": "2026-09-18T16:54:50.696043Z",
       "published_at": "2024-05-04T22:00:00Z",
       "http_status": 200,
       "parser_version": "1",
@@ -776,7 +776,7 @@
       "source": "iss_history_extract",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-      "retrieved_at": "2026-09-18T16:50:42.715876Z",
+      "retrieved_at": "2026-09-18T16:54:50.701045Z",
       "published_at": null,
       "http_status": 200,
       "parser_version": "1",
