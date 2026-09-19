@@ -1,0 +1,42 @@
+:Product: 0513SGAS.txt
+:Issued: 2024 May 13 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 134 Issued at 0245Z on 13 May 2024
+This report is compiled from data received at SWO on 12 May
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0041 0045 0052  3664 S20W68 M3.2  Sf 220              IV           
+ 0309 0309 0309                       110                           
+ 0451 0451 0451                       150                           
+ 0521 0521 0521                       130                           
+ 0537 0552 0606  3664 S20W65 M2.4  Sf                               
+ 0643 0643 0643                       100                           
+ 1014 1022 1032  3664 S18W67 C9.2  Sf 620                           
+ 1051 1052 1052                       510                           
+ 1227 1241 1254  3664 S09E78 M1.6  Sf 250                           
+ 1340 1347 1349  3679 S09E78 M1.0  Sf                               
+ 1349 1356 1408  3664 S21W70 M1.5  Sf                               
+ 1501 1501 1501                       110                           
+ 1611 1626 1638  3664 S18W72 X1.0  1f                               
+ 2017 2032 2049  3664        M4.8     140                           
+ 2201 2206 2212  3664        M1.1                                   
+ 2214 2218 2224  3676 S21E11 M1.1  Sf                               
+ 2300 2310 2314  3664 S18W77 M1.0  Sf                               
+B.  Proton Events:  None
+C.  Geomagnetic Activity Summary:  The geomagnetic field reached
+severe levels.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 222  SSN 186  Afr/Ap 031/054   X-ray Background C4.9
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 1.6e+08   GT 10 MeV 1.3e+06 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 4.50e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 5 8 5 4 2 2 3 6 Planetary 6 8 4 4 2 3 4 6 
+F.  Comments:  None

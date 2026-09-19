@@ -11,3 +11,4 @@ data/noaa/sep_catalog_*.html binary
 data/conjunctions/*.html binary
 data/iss_2024_may_june.json binary
 tests/fixtures/** binary
+data/validation/sgas/*.txt binary

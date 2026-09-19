@@ -1,0 +1,266 @@
+{
+  "astropy_version": "7.1.0",
+  "solar_samples": 244,
+  "shadow_windows": 36,
+  "reference": "Astropy get_sun (ERFA), transformed GCRS to TEME, direct SGP4 at 10-second midpoints",
+  "reference_documentation": "https://docs.astropy.org/en/stable/api/astropy.coordinates.get_sun.html",
+  "source_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
+  "max_solar_direction_difference_degrees": 0.0056912599312079004,
+  "max_shadow_difference_minutes": 0.2369791666666714,
+  "mean_shadow_difference_minutes": 0.06112557870370453,
+  "limitations": "Independent solar ephemeris and direct propagation; shared TLE and cylindrical shadow. Does not validate actual ISS position, atmospheric refraction, penumbra or crew illumination.",
+  "rows": [
+    {
+      "start": "2024-05-01T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 18.3359375,
+      "reference_shadow_minutes": 18.333333333333332,
+      "absolute_difference_minutes": 0.002604166666667851
+    },
+    {
+      "start": "2024-05-01T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 33.859375,
+      "reference_shadow_minutes": 33.833333333333336,
+      "absolute_difference_minutes": 0.026041666666664298
+    },
+    {
+      "start": "2024-05-01T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 135.15625,
+      "reference_shadow_minutes": 135.0,
+      "absolute_difference_minutes": 0.15625
+    },
+    {
+      "start": "2024-05-06T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 23.1796875,
+      "reference_shadow_minutes": 23.166666666666668,
+      "absolute_difference_minutes": 0.013020833333332149
+    },
+    {
+      "start": "2024-05-06T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 49.7578125,
+      "reference_shadow_minutes": 49.833333333333336,
+      "absolute_difference_minutes": 0.0755208333333357
+    },
+    {
+      "start": "2024-05-06T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 102.4296875,
+      "reference_shadow_minutes": 102.66666666666667,
+      "absolute_difference_minutes": 0.2369791666666714
+    },
+    {
+      "start": "2024-05-11T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 1.1484375,
+      "reference_shadow_minutes": 1.1666666666666667,
+      "absolute_difference_minutes": 0.01822916666666674
+    },
+    {
+      "start": "2024-05-11T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 6.046875,
+      "reference_shadow_minutes": 6.0,
+      "absolute_difference_minutes": 0.046875
+    },
+    {
+      "start": "2024-05-11T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 24.0,
+      "reference_shadow_minutes": 23.833333333333332,
+      "absolute_difference_minutes": 0.16666666666666785
+    },
+    {
+      "start": "2024-05-16T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 25.84375,
+      "reference_shadow_minutes": 25.833333333333332,
+      "absolute_difference_minutes": 0.010416666666667851
+    },
+    {
+      "start": "2024-05-16T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 45.5234375,
+      "reference_shadow_minutes": 45.5,
+      "absolute_difference_minutes": 0.0234375
+    },
+    {
+      "start": "2024-05-16T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 104.375,
+      "reference_shadow_minutes": 104.33333333333333,
+      "absolute_difference_minutes": 0.041666666666671404
+    },
+    {
+      "start": "2024-05-21T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 14.9921875,
+      "reference_shadow_minutes": 15.0,
+      "absolute_difference_minutes": 0.0078125
+    },
+    {
+      "start": "2024-05-21T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 33.53125,
+      "reference_shadow_minutes": 33.5,
+      "absolute_difference_minutes": 0.03125
+    },
+    {
+      "start": "2024-05-21T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 134.40625,
+      "reference_shadow_minutes": 134.33333333333334,
+      "absolute_difference_minutes": 0.07291666666665719
+    },
+    {
+      "start": "2024-05-26T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 26.8828125,
+      "reference_shadow_minutes": 26.833333333333332,
+      "absolute_difference_minutes": 0.04947916666666785
+    },
+    {
+      "start": "2024-05-26T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 62.6484375,
+      "reference_shadow_minutes": 62.666666666666664,
+      "absolute_difference_minutes": 0.018229166666664298
+    },
+    {
+      "start": "2024-05-26T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 134.2109375,
+      "reference_shadow_minutes": 134.33333333333334,
+      "absolute_difference_minutes": 0.12239583333334281
+    },
+    {
+      "start": "2024-05-31T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 25.1640625,
+      "reference_shadow_minutes": 25.166666666666668,
+      "absolute_difference_minutes": 0.002604166666667851
+    },
+    {
+      "start": "2024-05-31T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 35.96875,
+      "reference_shadow_minutes": 36.0,
+      "absolute_difference_minutes": 0.03125
+    },
+    {
+      "start": "2024-05-31T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 143.84375,
+      "reference_shadow_minutes": 143.66666666666666,
+      "absolute_difference_minutes": 0.1770833333333428
+    },
+    {
+      "start": "2024-06-05T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 21.6953125,
+      "reference_shadow_minutes": 21.666666666666668,
+      "absolute_difference_minutes": 0.02864583333333215
+    },
+    {
+      "start": "2024-06-05T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 56.8515625,
+      "reference_shadow_minutes": 56.666666666666664,
+      "absolute_difference_minutes": 0.1848958333333357
+    },
+    {
+      "start": "2024-06-05T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 129.046875,
+      "reference_shadow_minutes": 129.0,
+      "absolute_difference_minutes": 0.046875
+    },
+    {
+      "start": "2024-06-10T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 27.3515625,
+      "reference_shadow_minutes": 27.333333333333332,
+      "absolute_difference_minutes": 0.01822916666666785
+    },
+    {
+      "start": "2024-06-10T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 34.546875,
+      "reference_shadow_minutes": 34.5,
+      "absolute_difference_minutes": 0.046875
+    },
+    {
+      "start": "2024-06-10T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 138.1875,
+      "reference_shadow_minutes": 138.33333333333334,
+      "absolute_difference_minutes": 0.1458333333333428
+    },
+    {
+      "start": "2024-06-15T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 21.6796875,
+      "reference_shadow_minutes": 21.666666666666668,
+      "absolute_difference_minutes": 0.013020833333332149
+    },
+    {
+      "start": "2024-06-15T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 56.8515625,
+      "reference_shadow_minutes": 56.833333333333336,
+      "absolute_difference_minutes": 0.018229166666664298
+    },
+    {
+      "start": "2024-06-15T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 129.171875,
+      "reference_shadow_minutes": 129.16666666666666,
+      "absolute_difference_minutes": 0.005208333333342807
+    },
+    {
+      "start": "2024-06-20T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 23.5546875,
+      "reference_shadow_minutes": 23.5,
+      "absolute_difference_minutes": 0.0546875
+    },
+    {
+      "start": "2024-06-20T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 35.953125,
+      "reference_shadow_minutes": 35.833333333333336,
+      "absolute_difference_minutes": 0.1197916666666643
+    },
+    {
+      "start": "2024-06-20T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 143.859375,
+      "reference_shadow_minutes": 143.83333333333334,
+      "absolute_difference_minutes": 0.026041666666657193
+    },
+    {
+      "start": "2024-06-25T06:00:00+00:00",
+      "duration_hours": 1,
+      "production_shadow_minutes": 27.4140625,
+      "reference_shadow_minutes": 27.5,
+      "absolute_difference_minutes": 0.0859375
+    },
+    {
+      "start": "2024-06-25T06:00:00+00:00",
+      "duration_hours": 2,
+      "production_shadow_minutes": 62.78125,
+      "reference_shadow_minutes": 62.833333333333336,
+      "absolute_difference_minutes": 0.0520833333333357
+    },
+    {
+      "start": "2024-06-25T06:00:00+00:00",
+      "duration_hours": 6,
+      "production_shadow_minutes": 134.4765625,
+      "reference_shadow_minutes": 134.5,
+      "absolute_difference_minutes": 0.0234375
+    }
+  ]
+}

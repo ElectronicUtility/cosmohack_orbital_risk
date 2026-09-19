@@ -1,3 +1,4 @@
+import { staticDemo, apiURL, routeURL } from "./runtime.js";
 import {
   names,
   modes,
@@ -23,11 +24,8 @@ import {
   publicationLabel,
   quantityLabel,
 } from "./model.js?v=20260919-7";
-import { OrbitScene } from "./orbit.js?v=20260919-7";
+import { OrbitScene } from "./orbit.js?v=20260919-6";
 import { buildReport } from "./report.js?v=20260919-7";
-
-import { initTooltips, infoButton } from "./tooltips.js?v=20260919-7";
-const tips = initTooltips();
 
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
@@ -40,6 +38,10 @@ const state = {
   controller: null,
   timer: null,
 };
+if (staticDemo) {
+  document.body.dataset.staticDemo = "true";
+  for (const link of $$("a[data-route]")) link.href = routeURL(link.dataset.route);
+}
 const scene = new OrbitScene($("orbit-canvas"));
 const examples = {
   sunlight: "Работа на свету",
@@ -89,7 +91,6 @@ function modeUI() {
     current:
       "Новый запрос к текущим источникам. Актуальность проверяется при расчёте.",
   }[$("mode").value];
-  $("mode-info").dataset.tip = $("mode-help").textContent;
 }
 function fillForm(request) {
   $("mode").value = request.mode;
@@ -138,7 +139,9 @@ function readyStatus() {
 function updateURL(push = false) {
   if (!state.analysis) return;
   const url = new URL(location.href);
+  const page = url.searchParams.get("page");
   url.search = "";
+  if (staticDemo && page) url.searchParams.set("page", page);
   url.searchParams.set(
     state.example ? "example" : "analysis",
     state.example || state.analysis.id,
@@ -147,7 +150,7 @@ function updateURL(push = false) {
   history[push ? "pushState" : "replaceState"]({}, "", url);
 }
 async function readJSON(url, options = {}) {
-  const response = await fetch(url, options);
+  const response = await fetch(apiURL(url), options);
   let result;
   try {
     result = await response.json();
@@ -194,6 +197,9 @@ async function load(url, example, index, push) {
   }
 }
 function accept(a, example, index = 0, push = false) {
+  $("monitor").checked = false;
+  $("monitor-control").hidden = staticDemo || a.request.mode !== "current";
+  $("monitor-next").textContent = "";
   state.analysis = a;
   state.example = example;
   state.selected = normalizeWindow(index, a.windows.length);
@@ -208,9 +214,8 @@ function accept(a, example, index = 0, push = false) {
   readyStatus();
 }
 function render() {
-  tips.hide();
   const a = state.analysis,
-    [, title, summary] = conclusion(a);
+    [, title] = conclusion(a);
   for (const id of [
     "conclusion",
     "comparison-panel",
@@ -219,22 +224,8 @@ function render() {
   ])
     $(id).hidden = false;
   $("conclusion-title").textContent = title;
-  $("fullscreen-decision").innerHTML =
-    `<strong>${esc(title)}</strong>${infoButton(summary, "О заключении")}`;
-  $("conclusion-text").textContent = summary;
-  $("why").dataset.tip = summary + " Открыть основания сравнения.";
-  $("plan-condition").textContent =
-    `${a.request.task_name || "Работа за бортом станции"} · ${numeric(a.request.duration_hours, 1)} ч · ${a.request.requires_sunlight ? "нужен солнечный свет" : "освещение не ограничивает план"} · ${modes[a.request.mode]}`;
-
-  $("plan-info").innerHTML = infoButton(
-    $("plan-condition").textContent,
-    "О плане",
-  );
-
+  $("fullscreen-decision").textContent = title;
   $("conclusion").dataset.outcome = a.comparison.outcome;
-  $("result-label").textContent = state.example
-    ? "СОХРАНЁННЫЙ РАСЧЁТ / " + modes[a.request.mode].toUpperCase()
-    : "ЗАКЛЮЧЕНИЕ / " + modes[a.request.mode].toUpperCase();
   $("context-date").textContent = dateLabel(a.request.start);
   $("plan-duration").textContent =
     `${numeric(a.request.duration_hours, 1)} ч / UTC`;
@@ -268,37 +259,7 @@ function renderWindows() {
           return p ? `<i style="left:${p.left}%;width:${p.width}%"></i>` : "";
         })
         .join("");
-      const offset =
-        i === 0
-          ? "Исходное начало"
-          : "Перенос на " +
-            numeric(
-              (Date.parse(w.window.start) - Date.parse(a.request.start)) /
-                3600000,
-              1,
-            ) +
-            " ч";
-      const tip = `${dateLabel(w.window.start)}, ${clock(w.window.start)}–${clock(w.window.end)} UTC. ${offset}.\n${role}.\nПогода: ${weather ? factorValue(weather) : "Нет данных"}.\nТень: ${light ? factorValue(light) : "Нет данных"}.${light && !light.decision_eligible ? " Справочная геометрия — не влияет на выбор." : ""}`;
-      const symbol = dominated
-        ? "−"
-        : a.comparison.outcome === "preferred"
-          ? "✓"
-          : a.comparison.outcome === "tradeoff"
-            ? "↔"
-            : a.comparison.outcome === "insufficient"
-              ? "!"
-              : "=";
-      const weatherNumber =
-        weather?.state === "insufficient"
-          ? "—"
-          : Number.isFinite(weather?.forecast_probability_percent)
-            ? numeric(weather.forecast_probability_percent, 1) + "%"
-            : "—";
-      const lightNumber =
-        !light || ["insufficient", "not_requested"].includes(light.state)
-          ? "—"
-          : numeric(light.overlap_minutes, 1);
-      return `<div class="window-entry"><button class="window-card ${dominated ? "dominated" : ""}" data-window="${i}" data-tip="${esc(tip)}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time"><span class="window-state" aria-hidden="true">${symbol}</span>${clock(w.window.start)}–${clock(w.window.end)}</span>${w.window.start.slice(0, 10) !== a.request.start.slice(0, 10) ? `<span class="window-day">${esc(dateLabel(w.window.start))}</span>` : ""}</span><span class="window-value"><strong>${weatherNumber}</strong></span><span class="window-value ${light?.decision_eligible ? "" : "reference-value"}"><strong>${lightNumber}</strong>${light && !light.decision_eligible ? '<span class="reference-mark" aria-hidden="true">*</span>' : ""}<span class="shadow-mini" aria-hidden="true">${shadow}</span></span></button>${infoButton(tip, "Об окне " + clock(w.window.start))}</div>`;
+      return `<button class="window-card ${dominated ? "dominated" : ""}" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time">${clock(w.window.start)}–${clock(w.window.end)}</span><span class="window-day">${w.window.start.slice(0, 10) !== a.request.start.slice(0, 10) ? esc(dateLabel(w.window.start)) : ""}</span><span class="window-offset">${i === 0 ? "Исходное начало" : "Перенос +" + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 1) + " ч"}</span><span class="window-role">${esc(role)}</span></span><span class="compare-weather"><strong>${weather ? esc(factorValue(weather)) : "Нет данных"}</strong><small>${weather?.decision_eligible ? "" : "Вне сравнения"}</small></span><span><strong>${!light || light.state === "insufficient" ? "Нет данных" : light.state === "not_requested" ? "Не задано" : numeric(light.overlap_minutes, 1) + " мин"}</strong><span class="shadow-mini" aria-hidden="true">${shadow}</span><small>${light?.decision_eligible ? "" : "Справочно"}</small></span></button>`;
     })
     .join("");
 }
@@ -332,10 +293,10 @@ function renderSelected() {
   $("scene-empty").textContent =
     "Нет подходящих орбитальных элементов для этого окна.";
   $("selected-factors").innerHTML = w.factors
-    .filter((f) => f.mechanism === "conjunctions")
+    .filter((f) => f.mechanism !== "lighting")
     .map(
       (f) =>
-        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}" data-tip="${esc(factorValue(f) + ". " + eligibility(f))}" aria-label="Сближения: открыть данные"><span>Сближения</span><strong>${Number.isFinite(f.comparison_value) ? esc(factorValue(f)) : "—"} <span aria-hidden="true">›</span></strong></button></div>`,
+        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}">${esc(f.mechanism === "space_weather" ? "Протонное событие за сутки" : names[f.mechanism])} <span aria-hidden="true">›</span></button><div><strong class="${f.state === "attention" ? "attention" : ""}">${esc(factorValue(f))}</strong>${!f.decision_eligible ? "<small>Вне сравнения</small>" : ""}</div></div>`,
     )
     .join("");
   renderTimeline(w);
@@ -364,7 +325,6 @@ function renderTimeline(w) {
         .map((e) => interval(e.event.valid_start, e.event.valid_end, "weather"))
         .join("");
       text = missing ? "Неполное покрытие" : factorValue(f);
-      hint = "Суточный прогноз";
     } else if (f.mechanism === "lighting") {
       const intervals = f.evidence.flatMap((e) => e.intervals || []);
       marks = intervals.map((i) => interval(i.start, i.end, "shadow")).join("");
@@ -373,7 +333,7 @@ function renderTimeline(w) {
         : f.state === "not_requested"
           ? "Условие не задано"
           : factorValue(f);
-      hint = f.decision_eligible ? "Условие плана" : "Вне сравнения";
+      hint = f.decision_eligible ? "" : "Вне сравнения";
     } else {
       marks = f.evidence
         .filter((e) => e.event?.tca)
@@ -385,9 +345,9 @@ function renderTimeline(w) {
         })
         .join("");
       text = missing ? "Нет полных актуальных данных" : factorValue(f);
-      hint = f.decision_eligible ? "Сводка сближений МКС" : "Вне сравнения";
+      hint = f.decision_eligible ? "" : "Вне сравнения";
     }
-    return `<div class="timeline-row"><button class="lane-label" data-tip="${esc(hint)}" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}</button><div class="track ${missing ? "unknown" : ""}" role="img" tabindex="0" data-tip="${esc(text + ". " + hint)}" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}${missing ? '<span class="track-text">—</span>' : ""}<span class="track-cursor"></span></div><button class="detail-button" data-tip="${esc(text + ". " + hint)}" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
+    return `<div class="timeline-row"><button class="lane-label" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}${hint ? `<small>${esc(hint)}</small>` : ""}</button><div class="track ${missing ? "unknown" : ""}" role="img" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}<span class="track-text">${esc(text)}</span><span class="track-cursor"></span></div><button class="detail-button" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
   });
   $("timeline").innerHTML =
     `<div class="timeline-axis">${[0, 0.25, 0.5, 0.75, 1].map((p) => `<span>${clock(lo + p * (hi - lo))}</span>`).join("")}</div>` +
@@ -404,7 +364,6 @@ function setSample(index) {
     $("orbit-time").textContent = "–";
     $("orbit-meta").textContent = "Геометрия недоступна";
     $("sample-label").textContent = "Нет точек";
-    $("orbit-info").dataset.tip = "Нет подходящей орбиты для этого времени.";
     $$(".track-cursor").forEach((e) => (e.hidden = true));
     return;
   }
@@ -421,15 +380,7 @@ function setSample(index) {
     e.hidden = false;
     e.style.left = `${Math.min(99.8, pct)}%`;
   });
-  $("scrub").setAttribute(
-    "aria-valuetext",
-    stamp(s.at) + ". " + $("sample-label").textContent,
-  );
-  $("orbit-info").dataset.tip =
-    $("orbit-meta").textContent +
-    ". " +
-    $("sample-label").textContent +
-    ". Размер МКС увеличен; ориентация условная.";
+  $("scrub").setAttribute("aria-valuetext", stamp(s.at));
 }
 function stop() {
   clearInterval(state.timer);
@@ -478,7 +429,6 @@ function renderReplay() {
     "Историческая орбита и сближения показаны как реконструкция. Если время публикации элементов не доказано, они не меняют строгую рекомендацию.";
 }
 function drawer(title, html) {
-  tips.hide();
   stop();
   $("drawer-title").textContent = title;
   $("drawer-body").innerHTML = html;
@@ -489,15 +439,15 @@ function grid(items) {
   return `<dl class="evidence-grid">${items.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>`;
 }
 function sourceBlock(r) {
-  const tip = `${sourceNames[r.source] || r.source}.\nОпубликовано: ${stamp(r.published_at)}\nПолучено: ${stamp(r.retrieved_at)}\n${label(r.cache_state)}. ${publicationLabel(r.publication_basis)}.`;
-  return `<article class="evidence-block"><div class="source-record-head"><span>${esc(stamp(r.published_at || r.retrieved_at))}</span>${infoButton(tip, "О записи источника")}${link(r.url, "Источник")}</div><details><summary>Метаданные</summary>${grid(
+  return `<article class="evidence-block"><h3>${esc(sourceNames[r.source] || r.source)}</h3>${grid(
     [
-      ["Источник", sourceNames[r.source] || r.source],
       ["Опубликовано", stamp(r.published_at)],
       ["Получено", stamp(r.retrieved_at)],
-      ["Статус", label(r.cache_state)],
+      ["Состояние записи", label(r.cache_state)],
+      ["Основание времени", publicationLabel(r.publication_basis)],
     ],
-  )}<pre>${esc(r.id)}\nSHA-256 ${esc(r.content_sha256)}\n${esc(r.publication_basis)}</pre></details></article>`;
+  )}${link(r.url)}<details><summary>Идентификатор и контрольная сумма</summary><pre>${esc(r.source)}\n${esc(r.id)}\nSHA-256 ${esc(r.content_sha256)}
+${esc(r.publication_basis)}</pre></details></article>`;
 }
 function showSources() {
   if (!state.analysis) {
@@ -506,7 +456,7 @@ function showSources() {
   }
   drawer(
     "Источники расчёта",
-    `${infoButton(state.example ? "Записи сохранённого примера, не текущие данные." : "Исходные записи именно этого расчёта.", "О происхождении записей")}${state.analysis.source_records.map(sourceBlock).join("") || "<p>Исходные записи отсутствуют.</p>"}`,
+    `<p class="evidence-intro">${state.example ? "Это записи сохранённого исследовательского примера. Они не являются текущими данными." : "Происхождение данных именно этого расчёта. Время получения не заменяет время публикации."}</p>${state.analysis.source_records.map(sourceBlock).join("") || "<p>Исходные записи отсутствуют.</p>"}`,
   );
 }
 function showWhy() {
@@ -515,7 +465,7 @@ function showWhy() {
   const rows = decisionRows(a);
   drawer(
     conclusion(a)[1],
-    `${infoButton(conclusion(a)[2], "О результате сравнения")}<div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th>Условие</th>${a.windows.map((w) => `<th>${clock(w.window.start)}<small>${esc(dateLabel(w.window.start))}</small></th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr><th>${esc(r.title)}</th>${r.values.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}<tr><th>Выбор</th>${a.windows.map((w, i) => `<td>${esc(windowRole(a, i))}</td>`).join("")}</tr></tbody></table></div>${infoButton(`Длительность каждого варианта: ${numeric(a.request.duration_hours, 1)} ч. Вариант уступает, если другой не хуже по всем условиям и лучше хотя бы по одному.\nВне сравнения: ${a.comparison.excluded_mechanisms.map((f) => names[f.mechanism]).join(", ") || "нет"}.`, "О правилах сравнения")}<div class="evidence-actions">${rows.map((r) => `<button class="outline" data-factor="${esc(r.name)}">${esc(names[r.name])}</button>`).join("")}</div><details><summary>Метод и точные правила</summary><p>${a.comparison.reasons.map(esc).join(" ")}</p><pre>${esc(JSON.stringify(a.comparison, null, 2))}</pre></details>`,
+    `<p class="evidence-intro">${esc(conclusion(a)[2])}</p><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th>Условие</th>${a.windows.map((w) => `<th>${clock(w.window.start)}<small>${esc(dateLabel(w.window.start))}</small></th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr><th>${esc(r.title)}</th>${r.values.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}<tr><th>Выбор</th>${a.windows.map((w, i) => `<td>${esc(windowRole(a, i))}</td>`).join("")}</tr></tbody></table></div><p>Сравниваем одинаковую длительность: ${numeric(a.request.duration_hours, 1)} ч. Вариант уступает, если другой не хуже по всем учитываемым условиям и лучше хотя бы по одному.</p>${a.comparison.excluded_mechanisms.length ? `<p class="eligibility">Справочно, вне выбора: ${a.comparison.excluded_mechanisms.map((f) => esc(names[f.mechanism])).join(", ")}. ${a.request.mode === "replay" ? "Время публикации исторической орбиты не подтверждено." : "Полнота исторического каталога сближений не подтверждена."}</p>` : ""}<div class="evidence-actions">${rows.map((r) => `<button class="outline" data-factor="${esc(r.name)}">${esc(r.title)}</button>`).join("")}</div><details><summary>Метод и точные правила</summary><p>${a.comparison.reasons.map(esc).join(" ")}</p><pre>${esc(JSON.stringify(a.comparison, null, 2))}</pre></details>`,
   );
 }
 function showFactor(mechanism) {
@@ -579,16 +529,38 @@ function showFactor(mechanism) {
     .join("");
   drawer(
     names[mechanism],
-    `<div class="evidence-overview"><strong>${esc(factorValue(f))}</strong>${infoButton(context + "\n" + eligibility(f) + "\nПокрытие: " + numeric(f.covered_minutes) + " мин. " + label(f.completeness) + ". " + label(f.freshness), "О значении и применимости")}</div><details class="evidence-disclosure"><summary>События и интервалы</summary>${blocks || "<p>Нет записей для этого интервала.</p>"}</details><details class="evidence-disclosure"><summary>Источники</summary>${
-      state.analysis.source_records
-        .filter(
-          (r) =>
-            records.has(r.id) ||
-            (mechanism === "conjunctions" && r.source === "socrates_current"),
-        )
-        .map(sourceBlock)
-        .join("") || "<p>Нет исходных записей.</p>"
-    }</details><details class="evidence-disclosure"><summary>Метод и ограничения</summary><p>${esc(context)}</p><p>${esc(eligibility(f))}</p><ul class="evidence-list">${f.limitations.map((x) => `<li>${esc(x)}</li>`).join("")}</ul><pre>${esc(JSON.stringify(f, null, 2))}</pre></details>`,
+    `<p class="evidence-intro">${esc(factorValue(f))}. ${mechanism === "space_weather" ? "Внешний прогноз NOAA/USAF за указанные сутки." : mechanism === "lighting" ? "Пересечение работы с тенью, рассчитанное командой." : "Сближения станции в охвате выбранного источника."}</p>${grid(
+      [
+        [
+          "Выбранный вариант",
+          "с " + clock(w.window.start) + " до " + clock(w.window.end) + " UTC",
+        ],
+        ["Результат", factorValue(f)],
+        ["Состояние", label(f.state)],
+        [
+          "Покрытие",
+          numeric(f.covered_minutes) + " мин, " + label(f.completeness),
+        ],
+        ["Источник / свежесть", label(f.freshness)],
+        [
+          "Участие в сравнении",
+          !f.decision_eligible
+            ? "Не участвует"
+            : f.state === "insufficient"
+              ? "Не хватает данных"
+              : "Допустим для решения",
+        ],
+      ],
+    )}${!f.decision_eligible ? `<div class="eligibility">${esc(eligibility(f))}</div>` : ""}${blocks}${state.analysis.source_records
+      .filter(
+        (r) =>
+          records.has(r.id) ||
+          (mechanism === "conjunctions" && r.source === "socrates_current"),
+      )
+      .map(sourceBlock)
+      .join(
+        "",
+      )}<details><summary>Технические ограничения источника (${f.limitations.length})</summary><ul class="evidence-list">${f.limitations.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details><details><summary>Модель и исходные поля</summary><p>${context}</p><pre>${esc(JSON.stringify(f, null, 2))}</pre></details>`,
   );
 }
 function download(text, type, name) {
@@ -610,7 +582,8 @@ function report() {
   toast("Отчёт подготовлен для скачивания");
 }
 
-async function calculate(refresh = false) {
+async function calculate(refresh = false, automatic = false) {
+  if (staticDemo) return openPlan();
   if (state.busy) return;
   $("start").setCustomValidity("");
   $("cutoff").setCustomValidity("");
@@ -653,8 +626,14 @@ async function calculate(refresh = false) {
       signal: controller.signal,
     });
     if (controller !== state.controller) return;
+    if (automatic && (!$("monitor").checked || $("plan-dialog").open)) {
+      readyStatus();
+      return;
+    }
     navigate("planner", false);
-    accept(a, null, 0, true);
+    accept(a, null, automatic ? state.selected : 0, !automatic);
+    $("monitor").checked = request.mode === "current";
+    scheduleMonitor();
   } catch (e) {
     if (controller !== state.controller) return;
     status(
@@ -853,10 +832,9 @@ function rememberAnalysis(a, example) {
   }
 }
 function currentPage() {
-  return location.pathname.split("/")[1] || "planner";
+  return (staticDemo ? new URLSearchParams(location.search).get("page") : location.pathname.split("/")[1]) || "planner";
 }
 function applyRoute() {
-  tips.hide();
   const page = pages[currentPage()] ? currentPage() : "planner";
   document.body.dataset.route = page;
   document.title = pages[page] + " – Орбитальный риск";
@@ -877,17 +855,21 @@ function applyRoute() {
   if (page === "archive") renderArchive();
   if (page === "sources") loadProviderHealth();
   if (page === "planner") requestAnimationFrame(() => scene.draw());
+  if (page !== "planner") $("monitor").checked = false;
 }
 function navigate(page, push = true) {
   if (!pages[page]) return;
-  const url = new URL(location.href);
-  url.pathname = "/" + page;
+  const url = routeURL(page);
+  for (const key of ["example", "analysis", "window"]) {
+    const value = new URLSearchParams(location.search).get(key);
+    if (value !== null) url.searchParams.set(key, value);
+  }
   history[push ? "pushState" : "replaceState"]({}, "", url);
   applyRoute();
   window.scrollTo(0, 0);
 }
 function openPlan() {
-  tips.hide();
+  if (staticDemo) return toast("Новые расчёты доступны при запуске сервера. Здесь можно выбрать сохранённый пример.");
   $("form-status").textContent = "";
   $("plan-dialog").showModal();
 }
@@ -895,13 +877,13 @@ function archiveRow(row, example = false) {
   const title = example
     ? examples[row.name]
     : row.task_name || "Работа " + clock(row.start);
-  const url = new URL("/planner", location.origin);
+  const url = routeURL("planner");
   url.searchParams.set(
     example ? "example" : "analysis",
     example ? row.name : row.id,
   );
-  const tip = `${modes[row.mode]}. ${numeric(row.duration, 1)} ч. ${row.result || ""}`;
-  return `<a class="archive-row" href="${esc(url.pathname + url.search)}" data-open-analysis data-tip="${esc(tip)}"><span class="row-icon"><svg><use href="#i-${example ? "orbit" : "plan"}"/></svg></span><span><strong>${esc(title)}</strong></span><span class="row-meta row-date">${esc(dateLabel(row.start))}<br>${clock(row.start)} UTC</span><span class="row-meta row-duration">${numeric(row.duration, 1)} ч</span><span class="row-arrow" aria-hidden="true">›</span></a>`;
+  const detail = `${dateLabel(row.start)} / ${numeric(row.duration, 1)} ч`;
+  return `<a class="archive-row" href="${esc(url.pathname + url.search)}" data-open-analysis><span class="row-icon"><svg><use href="#i-${example ? "orbit" : "plan"}"/></svg></span><span><strong>${esc(title)}</strong><small>${esc(detail)}</small><small>${esc(row.result || "")}</small></span><span class="row-meta row-date">${clock(row.start)} UTC</span><span class="row-meta row-mode">${esc(modes[row.mode])}</span><span class="row-arrow" aria-hidden="true">›</span></a>`;
 }
 function renderArchive() {
   const query = $("archive-search").value.trim().toLocaleLowerCase();
@@ -909,7 +891,7 @@ function renderArchive() {
     `${example ? examples[r.name] : r.task_name || "Работа"} ${r.result || ""} ${r.start} ${dateLabel(r.start)} ${modes[r.mode]}`
       .toLocaleLowerCase()
       .includes(query);
-  const recent = remembered().filter((r) => matches(r, false));
+  const recent = staticDemo ? [] : remembered().filter((r) => matches(r, false));
   const samples = archiveExamples.filter((r) => matches(r, true));
   $("archive-count").textContent = `Найдено: ${recent.length + samples.length}`;
   $("archive-list").innerHTML =
@@ -956,10 +938,6 @@ function renderSourcesPage() {
     : `Расчёт ${dateLabel(a.request.start)}, ${clock(a.request.start)} UTC`;
   $("source-summary").textContent =
     `${modes[a.request.mode]}. Исходных записей: ${a.source_records.length}. Сохранено ${stamp(a.created_at)}.`;
-  $("sources-context").dataset.tip =
-    $("sources-context").textContent + ". " + $("source-summary").textContent;
-  $("sources-context").textContent = "Данные расчёта";
-  $("sources-context").tabIndex = 0;
   const groups = Map.groupBy
     ? Map.groupBy(a.source_records, (r) => r.source)
     : a.source_records.reduce(
@@ -970,7 +948,7 @@ function renderSourcesPage() {
     [...groups]
       .map(
         ([name, records]) =>
-          `<details class="source-group"><summary><span>${esc(sourceNames[name] || name)}</span><span class="source-count">${records.length}</span></summary><div class="source-records">${records.map(sourceBlock).join("")}</div></details>`,
+          `<details class="source-group"><summary><span>${esc(sourceNames[name] || name)}<small>${esc([...new Set(records.map((r) => label(r.cache_state)))].join(", "))}</small></span><span class="source-count">Записей: ${records.length}</span></summary><div class="source-records">${records.map(sourceBlock).join("")}</div></details>`,
       )
       .join("") ||
     '<p class="empty-state">Нет исходных записей для этого расчёта.</p>';
@@ -1007,7 +985,7 @@ async function fromURL() {
   applyRoute();
   const p = new URLSearchParams(location.search),
     index = Number(p.get("window") || 0);
-  if (p.has("analysis") && /^[a-f0-9]{32}$/.test(p.get("analysis")))
+  if (!staticDemo && p.has("analysis") && /^[a-f0-9]{32}$/.test(p.get("analysis")))
     await load("/api/analyses/" + p.get("analysis"), null, index, false);
   else await loadExample(p.get("example") || "sunlight", index, false);
 }
@@ -1026,6 +1004,7 @@ $("present").addEventListener("click", () => {
   scene.draw();
 });
 async function loadProviderHealth(refresh = false) {
+  if (staticDemo) return;
   const button = $("refresh-providers");
   if (button.disabled) return;
   button.disabled = true;
@@ -1049,12 +1028,12 @@ async function loadProviderHealth(refresh = false) {
     $("provider-health").innerHTML = Object.entries(data)
       .map(
         ([name, p]) =>
-          `<article class="provider-row"><strong>${esc({ noaa_current: "NOAA", iss_current: "МКС · TLE", socrates_current: "SOCRATES" }[name] || name)}</strong><span class="provider-state" data-state="${esc(p.state)}">${esc({ cache_fresh: "Актуален", cache_stale: "Старый кеш", source_stale: "Устарел", missing: "Нет данных", disabled: "Отключён", invalid: "Ошибка", truncated: "Неполный" }[p.state] || "Неизвестно")}</span>${infoButton(`${states[p.state] || "Состояние неизвестно"}.\nВыпуск: ${stamp(p.source_data_at || p.last_successful_record?.published_at)}\nПолучен: ${stamp(p.last_successful_record?.retrieved_at)}\nПокрытие проверяется для каждого плана.`, "О состоянии " + name)}</article>`,
+          `<article class="provider-row"><strong>${esc(sourceNames[name] || name)}</strong><span>${esc(states[p.state] || "Состояние неизвестно")}</span><small>Выпуск: ${stamp(p.source_data_at || p.last_successful_record?.published_at)}<br>Получен: ${stamp(p.last_successful_record?.retrieved_at)}</small></article>`,
       )
       .join("");
-    $("provider-status").textContent = refresh ? "Источники обновлены" : "";
-    $("refresh-providers").dataset.tip =
-      "Получить новые выпуски. Сохранённый расчёт не изменится; обновлённые данные используются при новом расчёте.";
+    $("provider-status").textContent = refresh
+      ? "Состояние источников обновлено. Сохранённый расчёт не изменён; новый план использует новые данные."
+      : "Состояние кеша на сервере. Пригодность и покрытие проверяются для каждого плана.";
   } catch (e) {
     $("provider-status").textContent =
       "Не удалось проверить источники. Повторите обновление. " + e.message;
@@ -1068,9 +1047,8 @@ $("refresh-providers").addEventListener("click", () =>
 async function loadValidation() {
   try {
     const d = await readJSON("/api/validation");
-    const tip = `Выбор только по освещению. ${d.windows} окон, ${d.cases} планов. База — исходное начало.\nРазница сеток: средняя ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 3)} мин.\nПроверка одной модели тени, не точности погоды.`;
     $("validation-summary").innerHTML =
-      `<div class="validation-numbers"><span><strong>${d.windows}</strong>окон</span><span><strong>${d.improved_cases}/${d.cases}</strong>улучшено</span><span><strong>${d.worse_cases}</strong>ухудшений</span></div><div class="validation-actions">${infoButton(tip, "О проверке освещения")}<a href="/api/validation" target="_blank" rel="noopener">Результаты</a></div>`;
+      `<p>Выбор только по освещению. <strong>${d.cases} планов, ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="${apiURL("/api/validation")}" target="_blank" rel="noopener">Полные результаты</a></p>`;
   } catch {
     $("validation-summary").textContent =
       "Отчёт проверки пока недоступен. Команда воспроизведения: python scripts/validate_planning.py";
@@ -1085,7 +1063,7 @@ $("export-bundle").addEventListener("click", async () => {
     const url = state.example
       ? `/api/examples/${state.example}/bundle.zip`
       : `/api/analyses/${state.analysis.id}/bundle.zip`;
-    const response = await fetch(url);
+    const response = await fetch(apiURL(url));
     if (!response.ok)
       throw Error("Исходные байты недоступны или не прошли проверку.");
     download(
@@ -1099,3 +1077,28 @@ $("export-bundle").addEventListener("click", async () => {
     button.disabled = false;
   }
 });
+
+let monitorTimer;
+function scheduleMonitor() {
+  clearTimeout(monitorTimer);
+  const active = $("monitor").checked && state.analysis?.request.mode === "current";
+  $("monitor-next").textContent = active ? "(следующая проверка " + clock(Date.now() + 300000) + " UTC)" : "";
+  if (!active) return;
+  monitorTimer = setTimeout(async () => {
+    if ($("monitor").checked && state.analysis?.request.mode === "current" && !document.hidden && currentPage() === "planner" && !state.busy && !$("plan-dialog").open) {
+      let unchanged = false;
+      try { unchanged = sameRequest(formRequest(), state.analysis.request); } catch {}
+      if (unchanged) await calculate(false, true);
+    }
+    scheduleMonitor();
+  }, 300000);
+}
+$("monitor").addEventListener("change", scheduleMonitor);
+
+async function loadWeatherValidation() {
+  try {
+    const d = await readJSON("/api/validation/weather");
+    $("weather-validation").innerHTML = `<h3>Погодные предупреждения</h3><p>${numeric(d.labelled_days)} суток по сводкам NOAA SGAS. Порог внимания ${numeric(d.alert_threshold_percent)}%.</p><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div><p class="small">Проверка по текстовым сводкам, не по непрерывному потоку частиц. Один неоднозначный день исключён. <a href="${apiURL("/api/validation/weather")}" target="_blank" rel="noopener">Даты, источники и ошибки</a></p>`;
+  } catch { $("weather-validation").textContent = "Погодная проверка недоступна."; }
+}
+loadWeatherValidation();

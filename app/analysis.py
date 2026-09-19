@@ -88,7 +88,7 @@ def weather_assessment(window: Window, events, status, cutoff=None):
 
 
 def conjunction_assessment(window: Window, events, status, coverage=None, reconstruction_meta=None,
-                           strict_replay=False, source_as_of: datetime | None = None):
+                           strict_replay=False, source_as_of: datetime | None = None, assessed_at: datetime | None = None):
     total = window.duration.total_seconds() / 60
     unavailable = status in {"stale", "disabled", "missing", "invalid", "truncated"}
     historical = reconstruction_meta is not None
@@ -97,14 +97,16 @@ def conjunction_assessment(window: Window, events, status, coverage=None, recons
     supports_next_6h_horizon = None
     forecast_semantics = None
     if not historical and coverage and source_as_of is not None:
+        reference_time = assessed_at or window.start
         forecast_horizon_hours = max(0.0, (coverage[1] - source_as_of).total_seconds() / 3600)
         supports_next_6h_horizon = (
             status in {"fresh", "cached"}
-            and coverage[0] <= source_as_of
-            and coverage[1] >= source_as_of + timedelta(hours=6)
+            and coverage[0] <= reference_time
+            and coverage[1] >= reference_time + timedelta(hours=6)
         )
         forecast_semantics = {
             "source_as_of": source_as_of.isoformat(),
+            "assessed_at": reference_time.isoformat(),
             "forecast_interval_start": coverage[0].isoformat(),
             "forecast_interval_end": coverage[1].isoformat(),
             "forecast_horizon_hours": forecast_horizon_hours,
@@ -256,12 +258,13 @@ def lighting_assessment(window: Window, states, requires_sunlight, provider_stat
 def evaluate(window: Window, events, weather_status, orbit_mode, current_orbit=None, cutoff=None,
              requires_sunlight=False, orbit_status="current", conjunction_events=None,
              conjunction_status="missing", conjunction_coverage=None, conjunction_meta=None,
-             strict_replay=False, conjunction_source_as_of: datetime | None = None):
+             strict_replay=False, conjunction_source_as_of: datetime | None = None,
+             assessed_at: datetime | None = None):
     states = trajectory(window, orbit_mode, current_orbit)
     factors = [weather_assessment(window, events, weather_status, cutoff),
                conjunction_assessment(window, conjunction_events or [], conjunction_status,
                                       conjunction_coverage, conjunction_meta, strict_replay,
-                                      conjunction_source_as_of),
+                                      conjunction_source_as_of, assessed_at),
                lighting_assessment(window, states, requires_sunlight, orbit_status, strict_replay)]
     limitation = (
         "Историческая орбита и сближения — реконструкция; их доступность на момент cutoff не подтверждена. "
@@ -371,6 +374,7 @@ def compare(windows: list[WindowAssessment]) -> Comparison:
 
 
 def run(request: AnalysisRequest):
+    assessed_at = datetime.now(timezone.utc)
     starts = [request.start]
     starts += [request.start + timedelta(hours=request.search_hours / 2),
                request.start + timedelta(hours=request.search_hours)]
@@ -428,7 +432,7 @@ def run(request: AnalysisRequest):
         w, weather[0], weather[1], request.mode.value, orbit_input,
         weather[2], request.requires_sunlight, orbit_status,
         conjunction_events=conj[0], conjunction_status=conj[1], conjunction_coverage=conj[2], conjunction_meta=conj[3],
-        strict_replay=request.mode.value == "replay", conjunction_source_as_of=conj[4],
+        strict_replay=request.mode.value == "replay", conjunction_source_as_of=conj[4], assessed_at=assessed_at,
     ) for w, weather, conj in zip(windows, weather_by_window, conjunction_by_window)]
     records = weather_records + orbit_records + conjunction_records
     deduplicated_records = list({record.id: record for record in records}.values())

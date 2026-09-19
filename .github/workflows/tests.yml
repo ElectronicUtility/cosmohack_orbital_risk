@@ -19,3 +19,4 @@ jobs:
         with:
           node-version: '20'
       - run: npm test
+      - run: python scripts/build_pages.py

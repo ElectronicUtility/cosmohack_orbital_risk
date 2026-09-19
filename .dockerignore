@@ -1,0 +1,10 @@
+.git
+.venv
+.pytest_cache
+**/__pycache__
+**/*.db
+**/*.db-*
+.env
+.env.*
+tmp
+.playwright-cli

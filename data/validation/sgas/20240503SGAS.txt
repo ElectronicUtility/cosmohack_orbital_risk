@@ -1,0 +1,32 @@
+:Product: 0503SGAS.txt
+:Issued: 2024 May 03 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 124 Issued at 0245Z on 03 May 2024
+This report is compiled from data received at SWO on 02 May
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0207 0217 0224  3663 N25E23 M1.0  1n                               
+ 0236 0237 0237                       1000                          
+ 1848 1856 1905  3664 S20E64 C4.0  Sf 140                           
+ 2052 2057 2101  3664        M2.7     1500                          
+ 2140 2140 2140                       100                           
+ 2312 2319 2323  3664 S21E59 C5.0  Sf 220                           
+B.  Proton Events:  None
+C.  Geomagnetic Activity Summary:  The geomagnetic field reached
+strong levels with a Kp of 7m observed during the 1500-1800 UTC
+periods on 02 May. This was likely due to CME effects.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 142  SSN 125  Afr/Ap 024/056   X-ray Background C1.1
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 3.4e+06   GT 10 MeV 1.8e+04 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 1.20e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 2 2 3 4 5 6 5 4 Planetary 2 1 3 4 5 7 8 4 
+F.  Comments:  None

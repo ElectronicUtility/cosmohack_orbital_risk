@@ -15,16 +15,16 @@
   "missed_shadow_windows_vs_1m": 0,
   "orbit_reference": {
     "case": "Vallado 00005, epoch +360 min",
-    "position_error_km": 5.92581677749258e-09,
+    "position_error_km": 5.92646143560647e-09,
     "expected_teme_km": [
       -7154.03120202,
       -3783.17682504,
       -3536.19412294
     ],
     "actual_teme_km": [
-      -7154.031202015707,
-      -3783.176825036568,
-      -3536.1941229422155
+      -7154.031202015704,
+      -3783.1768250365712,
+      -3536.194122942217
     ],
     "scope": "SGP4 propagation reference, not validation of ISS element accuracy or shadow model"
   },

@@ -137,19 +137,22 @@ export function conclusion(a) {
   const excludedLight =
     a.request.requires_sunlight && !c.decision_mechanisms.includes("lighting");
   if (c.outcome === "insufficient") {
-    const missing = [
-      ...new Set(
-        a.windows.flatMap((w) =>
-          w.factors
-            .filter((f) => f.decision_eligible && f.state === "insufficient")
-            .map((f) => names[f.mechanism]),
-        ),
-      ),
-    ];
+    const missing = [...new Set(a.windows.flatMap((w) => w.factors
+      .filter((f) => f.decision_eligible && (f.state === "insufficient" || f.comparison_value == null))
+      .map((f) => {
+        const title = names[f.mechanism];
+        if (f.freshness === "disabled") return title + ": источник отключён на сервере";
+        if (f.freshness === "stale") return title + ": выпуск устарел, нужен новый выпуск источника";
+        if (f.freshness === "truncated") return title + ": источник вернул неполную сводку";
+        if (f.freshness === "invalid") return title + ": ответ источника не прошёл проверку";
+        if (f.completeness === "complete" && f.comparison_value == null)
+          return title + ": окно пересекает разные суточные вероятности, единого значения нет";
+        return title + ": нет покрытия выбранного периода";
+      })))];
     return [
       "!",
       "Для выбора нужны данные",
-      `${missing.join(", ") || "Один из факторов"}: нет полного актуального покрытия. Обновите источники или измените период.`,
+      `${missing.join(". ") || "Величины факторов несовместимы между окнами"}. Подробности в источниках.`,
     ];
   }
   if (c.outcome === "preferred") {

@@ -1,0 +1,26 @@
+:Product: 0614SGAS.txt
+:Issued: 2024 Jun 14 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 166 Issued at 0245Z on 14 Jun 2024
+This report is compiled from data received at SWO on 13 Jun
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0141 0141 0141                       1600                          
+ 1634 1645 1655  3713 S16E59 M3.2  1n                               
+B.  Proton Events:  None.
+C.  Geomagnetic Activity Summary:  The geomagnetic field was quiet.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 170  SSN 124  Afr/Ap 005/003   X-ray Background C1.4
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 5.8e+06   GT 10 MeV 4.2e+05 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 1.20e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 1 0 0 1 2 3 1 1 Planetary 1 0 0 0 2 2 1 1 
+F.  Comments:  None.

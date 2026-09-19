@@ -1,5 +1,5 @@
 {
-  "id": "97b96e74a47941e0bbe1b28e0f196d51",
+  "id": "561453d2095a4719a89ba9b04fb4d519",
   "request": {
     "task_name": "",
     "mode": "replay",
@@ -69,7 +69,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "conjunctions",
@@ -166,7 +166,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "lighting",
@@ -209,7 +209,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         }
       ],
       "orbit": [
@@ -218,7 +218,7 @@
           "position_teme_km": [
             -1577.1967092371672,
             -3957.5550572698126,
-            5279.00250571223
+            5279.002505712231
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -240,9 +240,9 @@
         {
           "at": "2024-05-05T01:10:00Z",
           "position_teme_km": [
-            2864.9744475346224,
-            -4178.618254002228,
-            4511.784486678286
+            2864.9744475346215,
+            -4178.618254002227,
+            4511.784486678284
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -252,7 +252,7 @@
         {
           "at": "2024-05-05T01:15:00Z",
           "position_teme_km": [
-            4721.81468507751,
+            4721.814685077509,
             -3569.6352579082663,
             3318.6901055967846
           ],
@@ -265,7 +265,7 @@
           "at": "2024-05-05T01:20:00Z",
           "position_teme_km": [
             6041.949731547886,
-            -2554.9245893173315,
+            -2554.924589317331,
             1747.3244610039333
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
@@ -290,7 +290,7 @@
           "position_teme_km": [
             6550.355090170527,
             197.35385952555106,
-            -1791.1890804969996
+            -1791.1890804969998
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -301,7 +301,7 @@
           "at": "2024-05-05T01:35:00Z",
           "position_teme_km": [
             5682.455002360029,
-            1622.1575440081474,
+            1622.1575440081476,
             -3355.466476708607
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
@@ -336,7 +336,7 @@
         {
           "at": "2024-05-05T01:50:00Z",
           "position_teme_km": [
-            -40.469189730613174,
+            -40.46918973061307,
             4272.53565423439,
             -5288.34424821806
           ],
@@ -350,7 +350,7 @@
           "position_teme_km": [
             -2265.261454352998,
             4282.0743861114815,
-            -4770.470960741526
+            -4770.470960741525
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -360,8 +360,8 @@
         {
           "at": "2024-05-05T02:00:00Z",
           "position_teme_km": [
-            -4234.396229671399,
-            3808.4353620909733,
+            -4234.3962296714,
+            3808.4353620909724,
             -3712.7913113256304
           ],
           "epoch": "2024-05-05T00:59:41.479584Z",
@@ -432,7 +432,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "conjunctions",
@@ -529,7 +529,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "lighting",
@@ -578,7 +578,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         }
       ],
       "orbit": [
@@ -599,7 +599,7 @@
           "position_teme_km": [
             -4149.209356140175,
             -2821.3533445303065,
-            4568.720998580984
+            4568.720998580985
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -609,9 +609,9 @@
         {
           "at": "2024-05-05T07:10:00Z",
           "position_teme_km": [
-            -2164.709089364215,
-            -3762.4847239300316,
-            5213.48237925165
+            -2164.7090893642153,
+            -3762.484723930032,
+            5213.482379251652
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -621,9 +621,9 @@
         {
           "at": "2024-05-05T07:15:00Z",
           "position_teme_km": [
-            65.46684064481968,
-            -4276.600305842751,
-            5264.870135542823
+            65.46684064481965,
+            -4276.60030584275,
+            5264.870135542821
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -633,9 +633,9 @@
         {
           "at": "2024-05-05T07:20:00Z",
           "position_teme_km": [
-            2288.192574687834,
-            -4305.231674736174,
-            4716.891727341591
+            2288.1925746878346,
+            -4305.231674736176,
+            4716.891727341593
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -645,9 +645,9 @@
         {
           "at": "2024-05-05T07:25:00Z",
           "position_teme_km": [
-            4250.984812900246,
-            -3844.8498408665405,
-            3631.627176071955
+            4250.984812900243,
+            -3844.8498408665428,
+            3631.627176071958
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -657,9 +657,9 @@
         {
           "at": "2024-05-05T07:30:00Z",
           "position_teme_km": [
-            5730.599390843034,
-            -2947.474640118512,
-            2132.4380363400223
+            5730.599390843035,
+            -2947.474640118513,
+            2132.438036340023
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -669,9 +669,9 @@
         {
           "at": "2024-05-05T07:35:00Z",
           "position_teme_km": [
-            6558.713144186223,
-            -1715.005349373372,
-            390.1259368723128
+            6558.713144186225,
+            -1715.0053493733722,
+            390.12593687231293
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -705,9 +705,9 @@
         {
           "at": "2024-05-05T07:50:00Z",
           "position_teme_km": [
-            4623.506161265742,
-            2499.7609463988097,
-            -4309.02010115289
+            4623.506161265743,
+            2499.760946398808,
+            -4309.020101152889
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -718,7 +718,7 @@
           "at": "2024-05-05T07:55:00Z",
           "position_teme_km": [
             2753.7261324589413,
-            3544.605501157719,
+            3544.6055011577178,
             -5105.092558434934
           ],
           "epoch": "2024-05-05T04:11:15.266400Z",
@@ -801,7 +801,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "conjunctions",
@@ -898,7 +898,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         },
         {
           "mechanism": "lighting",
@@ -947,7 +947,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.5.0"
+          "algorithm_version": "0.6.0"
         }
       ],
       "orbit": [
@@ -967,8 +967,8 @@
           "at": "2024-05-05T13:05:00Z",
           "position_teme_km": [
             -6624.1303346513105,
-            364.8040410554591,
-            1458.1776093325013
+            364.8040410554671,
+            1458.1776093324916
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -978,7 +978,7 @@
         {
           "at": "2024-05-05T13:10:00Z",
           "position_teme_km": [
-            -5950.730856673715,
+            -5950.730856673716,
             -1107.0198017617952,
             3075.7835143235056
           ],
@@ -990,8 +990,8 @@
         {
           "at": "2024-05-05T13:15:00Z",
           "position_teme_km": [
-            -4601.7825191887105,
-            -2453.1720145070753,
+            -4601.78251918871,
+            -2453.172014507076,
             4343.22463183101
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
@@ -1002,8 +1002,8 @@
         {
           "at": "2024-05-05T13:20:00Z",
           "position_teme_km": [
-            -2730.49938799969,
-            -3520.879839844353,
+            -2730.4993879996905,
+            -3520.879839844352,
             5116.288188977827
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
@@ -1015,7 +1015,7 @@
           "at": "2024-05-05T13:25:00Z",
           "position_teme_km": [
             -549.3366825160273,
-            -4189.009489183042,
+            -4189.009489183043,
             5307.064128604397
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
@@ -1038,9 +1038,9 @@
         {
           "at": "2024-05-05T13:35:00Z",
           "position_teme_km": [
-            3745.2412277819826,
-            -4076.7095328903283,
-            3923.1058916399425
+            3745.2412277819744,
+            -4076.7095328903315,
+            3923.1058916399497
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -1051,8 +1051,8 @@
           "at": "2024-05-05T13:40:00Z",
           "position_teme_km": [
             5370.687004940942,
-            -3308.4858415895196,
-            2505.3874547202413
+            -3308.48584158952,
+            2505.3874547202417
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -1087,8 +1087,8 @@
           "at": "2024-05-05T13:55:00Z",
           "position_teme_km": [
             6206.06562968629,
-            704.4096316421764,
-            -2674.5655930845887
+            704.4096316421766,
+            -2674.565593084589
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
           "source_url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
@@ -1098,8 +1098,8 @@
         {
           "at": "2024-05-05T14:00:00Z",
           "position_teme_km": [
-            5034.147857969867,
-            2102.8624215509894,
+            5034.147857969868,
+            2102.862421550989,
             -4052.507454840552
           ],
           "epoch": "2024-05-05T12:05:33.299232Z",
@@ -1137,17 +1137,17 @@
         "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
       }
     ],
-    "algorithm_version": "0.5.0"
+    "algorithm_version": "0.6.0"
   },
-  "created_at": "2026-09-19T18:39:50.161033Z",
-  "algorithm_version": "0.5.0",
+  "created_at": "2026-09-19T19:14:02.811623Z",
+  "algorithm_version": "0.6.0",
   "source_records": [
     {
       "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
       "source": "noaa_archive",
       "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
       "content_sha256": "b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-      "retrieved_at": "2026-09-19T18:39:47.191973Z",
+      "retrieved_at": "2026-09-19T19:14:01.665577Z",
       "published_at": "2024-05-04T22:00:00Z",
       "archive_last_modified_at": "2024-05-04T22:00:10Z",
       "publication_basis": "Issued plus retrospective matching HTTP Last-Modified; no signed historical snapshot",
@@ -1162,7 +1162,7 @@
       "source": "iss_history_extract",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-      "retrieved_at": "2026-09-19T18:39:47.196886Z",
+      "retrieved_at": "2026-09-19T19:14:01.666536Z",
       "published_at": null,
       "archive_last_modified_at": null,
       "publication_basis": "unknown",
@@ -1177,7 +1177,7 @@
       "source": "conjunction_tle_history",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89",
-      "retrieved_at": "2026-09-19T18:13:50.457091Z",
+      "retrieved_at": "2026-09-19T17:24:30.748169Z",
       "published_at": null,
       "archive_last_modified_at": null,
       "publication_basis": "Individual element publication timestamps are unavailable; historical reconstruction only",
