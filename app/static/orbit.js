@@ -1,4 +1,4 @@
-import { shadowAt } from "./model.js?v=20260919-6";
+import { shadowAt } from "./model.js?v=20260919-7";
 import * as THREE from "./vendor/three/three.module.min.js";
 import { GLTFLoader } from "./vendor/three/GLTFLoader.js";
 import { DRACOLoader } from "./vendor/three/DRACOLoader.js";
