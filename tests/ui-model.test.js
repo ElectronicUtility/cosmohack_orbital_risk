@@ -23,7 +23,7 @@ const example = JSON.parse(
 test("HTML export includes the exact displayed snapshot and preserves replay semantics", () => {
   const report = buildReport(example, "window_demo");
   assert.ok(report.includes("Сохранённый исследовательский пример"));
-  assert.ok(report.includes("Окна равнозначны"));
+  assert.ok(report.includes("Варианты равнозначны"));
   assert.ok(report.includes("25 мин в тени"));
   assert.ok(report.includes(esc(JSON.stringify(example, null, 2))));
   const untrusted = structuredClone(example);
@@ -35,7 +35,7 @@ test("HTML export includes the exact displayed snapshot and preserves replay sem
 });
 
 test("archived replay cannot imply an improvement from excluded lighting", () => {
-  assert.equal(conclusion(example)[1], "Окна равнозначны");
+  assert.equal(conclusion(example)[1], "Варианты равнозначны");
   assert.deepEqual(
     example.windows.map((w) =>
       factorValue(w.factors.find((f) => f.mechanism === "lighting")),
@@ -56,7 +56,7 @@ test("equivalent Pareto subset is not described as all windows equivalent", () =
     ...example,
     comparison: { ...example.comparison, pareto_frontier_indices: [0, 1] },
   };
-  assert.equal(conclusion(a)[1], "Равнозначны окна A, B");
+  assert.equal(conclusion(a)[1], "Равнозначны варианты с 2024-05-05 01:00 UTC до 2024-05-05 02:00 UTC, с 2024-05-05 07:00 UTC до 2024-05-05 08:00 UTC");
 });
 test("timeline clips intervals to the selected window, including a UTC day boundary", () => {
   const w = { start: "2024-05-01T23:00Z", end: "2024-05-02T01:00Z" };

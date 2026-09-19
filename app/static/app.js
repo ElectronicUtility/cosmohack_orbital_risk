@@ -16,9 +16,9 @@ import {
   normalizeWindow,
   shadowAt,
   eligibility,
-} from "./model.js?v=20260919-2";
-import { OrbitScene } from "./orbit.js?v=20260919-2";
-import { buildReport } from "./report.js?v=20260919-2";
+} from "./model.js?v=20260919-5";
+import { OrbitScene } from "./orbit.js?v=20260919-5";
+import { buildReport } from "./report.js?v=20260919-5";
 
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
@@ -72,7 +72,7 @@ function modeUI() {
   $("cutoff").setCustomValidity("");
   $("mode-help").textContent = {
     replay:
-      "Только сведения, доступные к моменту отсечения. Геометрия — отдельно.",
+      "Только сведения, доступные к моменту отсечения. Геометрия показана отдельно.",
     reconstruction:
       "Восстанавливаем условия мая–июня 2024. Это не прогноз из прошлого.",
     current:
@@ -109,7 +109,7 @@ function dirty() {
   $("restore").hidden = !changed;
   if (changed)
     status(
-      "Параметры изменены. На экране предыдущий результат — пересчитайте окна.",
+      "Параметры изменены. На экране предыдущий результат. Пересчитайте варианты.",
       "dirty",
     );
   else readyStatus();
@@ -118,7 +118,7 @@ function readyStatus() {
   const a = state.analysis;
   if (!a) return;
   status(
-    `${state.example ? "Сохранённый пример «" + examples[state.example] + "»" : "Расчёт сохранён"} · ${stamp(a.request.start)} · ${numeric(a.request.duration_hours, 1)} ч · ${modes[a.request.mode]}.`,
+    `${state.example ? "Сохранённый пример «" + examples[state.example] + "»" : "Расчёт сохранён"}, ${stamp(a.request.start)}, ${numeric(a.request.duration_hours, 1)} ч, ${modes[a.request.mode]}.`,
   );
 }
 function updateURL(push = false) {
@@ -195,7 +195,7 @@ function accept(a, example, index = 0, push = false) {
 }
 function render() {
   const a = state.analysis,
-    [icon, title, summary] = conclusion(a);
+    [, title, summary] = conclusion(a);
   for (const id of [
     "conclusion",
     "comparison-panel",
@@ -203,7 +203,6 @@ function render() {
     "source-strip",
   ])
     $(id).hidden = false;
-  $("conclusion-icon").textContent = icon;
   $("conclusion-title").textContent = title;
   $("conclusion-text").textContent =
     {
@@ -220,14 +219,16 @@ function render() {
   $("plan-duration").textContent =
     `${numeric(a.request.duration_hours, 1)} ч / UTC`;
   $("scenario").value = state.example || "custom";
-  $("mode-badge").textContent = modes[a.request.mode];
-  $("equal-duration").textContent =
-    `Длительность ${numeric(a.request.duration_hours, 1)} ч. Время в UTC.`;
+  $("mode-badge").textContent = {
+    replay: "Архивный прогноз",
+    reconstruction: "Реконструкция",
+    current: "Текущий прогноз",
+  }[a.request.mode];
   $$("[data-example]").forEach((b) =>
     b.setAttribute("aria-pressed", String(b.dataset.example === state.example)),
   );
   $("source-summary").textContent =
-    `${a.source_records.length} исходных записей · алгоритм ${a.algorithm_version} · результат от ${stamp(a.created_at)}`;
+    `${a.source_records.length} исходных записей, алгоритм ${a.algorithm_version}, результат от ${stamp(a.created_at)}`;
   renderWindows();
   renderSelected();
   renderReplay();
@@ -245,7 +246,7 @@ function renderWindows() {
             return p ? `<i style="left:${p.left}%;width:${p.width}%"></i>` : "";
           })
           .join("") || "";
-      return `<button class="window-card" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать окно ${String.fromCharCode(65 + i)}: ${stamp(w.window.start)} — ${clock(w.window.end)} UTC"><span class="window-id">${String.fromCharCode(65 + i)}</span><span><span class="window-time">${clock(w.window.start)} — ${clock(w.window.end)}</span><span class="window-day">${esc(dateLabel(w.window.start))}${w.window.start.slice(0, 10) !== w.window.end.slice(0, 10) ? " — " + esc(dateLabel(w.window.end)) : ""}${a.comparison.preferred_index === i ? " · Предпочтительно" : ""}</span></span><span><span class="shadow-value">${!f || f.state === "insufficient" ? "Нет данных" : f.state === "not_requested" ? "Не задано" : numeric(f.overlap_minutes) + " мин"}</span><span class="shadow-mini" aria-hidden="true">${shadow}</span></span></button>`;
+      return `<button class="window-card" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time">с ${clock(w.window.start)} до ${clock(w.window.end)}</span><span class="window-offset">${i === 0 ? "Исходное начало" : "Перенос +" + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 2) + " ч"}</span><span class="window-day">${esc(dateLabel(w.window.start))}${w.window.start.slice(0, 10) !== w.window.end.slice(0, 10) ? " по " + esc(dateLabel(w.window.end)) : ""}${a.comparison.preferred_index === i ? ", Предпочтительно" : ""}</span></span><span><span class="shadow-value">${!f || f.state === "insufficient" ? "Нет данных" : f.state === "not_requested" ? "Не задано" : numeric(f.overlap_minutes) + " мин"}</span><span class="shadow-mini" aria-hidden="true">${shadow}</span></span></button>`;
     })
     .join("");
 }
@@ -267,9 +268,9 @@ function selectWindow(index) {
 function renderSelected() {
   const w = state.analysis.windows[state.selected];
   $("timeline-window").textContent =
-    "Окно " + String.fromCharCode(65 + state.selected);
+    `с ${clock(w.window.start)} до ${clock(w.window.end)}`;
   $("scene-title").textContent =
-    `Орбита МКС / ${String.fromCharCode(65 + state.selected)}`;
+    "Орбита МКС";
   $("scrub").max = Math.max(0, w.orbit.length - 1);
   $("scrub").value = 0;
   $("scrub").disabled = !w.orbit.length;
@@ -349,7 +350,7 @@ function setSample(index) {
   const s = w.orbit[state.sample];
   scene.setData(state.analysis.windows, state.selected, state.sample);
   if (!s) {
-    $("orbit-time").textContent = "—";
+    $("orbit-time").textContent = "–";
     $("orbit-meta").textContent = "Геометрия недоступна";
     $("sample-label").textContent = "Нет точек";
     $$(".track-cursor").forEach((e) => (e.hidden = true));
@@ -373,7 +374,7 @@ function setSample(index) {
 function stop() {
   clearInterval(state.timer);
   state.timer = null;
-  $("play").textContent = "▶";
+  $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-play" /></svg>';
   $("play").setAttribute("aria-label", "Воспроизвести траекторию");
   $("play").setAttribute("aria-pressed", "false");
 }
@@ -385,7 +386,7 @@ function play() {
   const count = state.analysis?.windows[state.selected]?.orbit.length;
   if (!count || count < 2) return;
   if (state.sample === count - 1) setSample(0);
-  $("play").textContent = "Ⅱ";
+  $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-pause" /></svg>';
   $("play").setAttribute("aria-label", "Остановить воспроизведение");
   $("play").setAttribute("aria-pressed", "true");
   state.timer = setInterval(() => {
@@ -511,7 +512,7 @@ function showFactor(mechanism) {
       }
       for (const id of e.orbit_records || []) records.add(id);
       if (e.intervals)
-        return `<article class="evidence-block"><h3>Интервалы в тени Земли</h3><p>${e.intervals.length ? e.intervals.map((i) => `${clock(i.start)}–${clock(i.end)} UTC · ${numeric(i.minutes)} мин`).join("<br>") : "В рассчитанных интервалах тень не отмечена."}</p>${grid(
+        return `<article class="evidence-block"><h3>Интервалы в тени Земли</h3><p>${e.intervals.length ? e.intervals.map((i) => `${clock(i.start)}–${clock(i.end)} UTC, ${numeric(i.minutes)} мин`).join("<br>") : "В рассчитанных интервалах тень не отмечена."}</p>${grid(
           [
             ["Суммарно", numeric(e.value) + " мин"],
             ["Эпоха элементов", (e.orbit_epochs || []).map(stamp).join(", ")],
@@ -524,11 +525,9 @@ function showFactor(mechanism) {
     names[mechanism],
     `<p class="evidence-intro">${context}</p>${grid([
       [
-        "Выбранное окно",
-        String.fromCharCode(65 + state.selected) +
-          " · " +
-          clock(w.window.start) +
-          "–" +
+        "Выбранный вариант",
+        "с " + clock(w.window.start) +
+          " до " +
           clock(w.window.end) +
           " UTC",
       ],
@@ -536,7 +535,7 @@ function showFactor(mechanism) {
       ["Состояние", label(f.state)],
       [
         "Покрытие",
-        numeric(f.covered_minutes) + " мин · " + label(f.completeness),
+        numeric(f.covered_minutes) + " мин, " + label(f.completeness),
       ],
       ["Источник / свежесть", label(f.freshness)],
       [
@@ -684,6 +683,42 @@ $("play").addEventListener("click", play);
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) stop();
 });
+const orbitPanel = $("orbit-panel");
+let fullscreenFallback = false;
+function syncOrbitFullscreen() {
+  const expanded = document.fullscreenElement === orbitPanel || fullscreenFallback;
+  orbitPanel.classList.toggle("scene-fullscreen", expanded);
+  document.body.classList.toggle("orbit-expanded", expanded);
+  $("orbit-fullscreen").setAttribute("aria-pressed", String(expanded));
+  $("orbit-fullscreen").setAttribute("aria-label", expanded ? "Выйти из полноэкранного 3D" : "Развернуть 3D на весь экран");
+  $("orbit-fullscreen").title = expanded ? "Выйти из полного экрана" : "На весь экран";
+  $("orbit-fullscreen").innerHTML = `<svg aria-hidden="true"><use href="#i-${expanded ? "minimize" : "maximize"}" /></svg>`;
+  requestAnimationFrame(() => scene.draw());
+}
+$("orbit-fullscreen").addEventListener("click", async () => {
+  if (document.fullscreenElement === orbitPanel) {
+    await document.exitFullscreen();
+  } else if (fullscreenFallback) {
+    fullscreenFallback = false;
+  } else {
+    try {
+      if (!orbitPanel.requestFullscreen) throw new Error("Fullscreen unavailable");
+      await orbitPanel.requestFullscreen();
+    } catch {
+      // iPhone and embedded browsers may only support fullscreen video.
+      fullscreenFallback = true;
+    }
+  }
+  syncOrbitFullscreen();
+});
+document.addEventListener("fullscreenchange", syncOrbitFullscreen);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && fullscreenFallback) {
+    fullscreenFallback = false;
+    syncOrbitFullscreen();
+    $("orbit-fullscreen").focus();
+  }
+});
 $("rotate-left").addEventListener("click", () => scene.rotate(-0.3));
 $("rotate-right").addEventListener("click", () => scene.rotate(0.3));
 $("reset-camera").addEventListener("click", () => scene.reset());
@@ -716,7 +751,7 @@ $("copy-link").addEventListener("click", async () => {
     toast(
       state.example
         ? "Ссылка на исследовательский пример скопирована"
-        : "Ссылка на расчёт скопирована · доступна на этом сервере",
+        : "Ссылка на расчёт скопирована, доступна на этом сервере",
     );
   } catch {
     drawer(
@@ -724,16 +759,6 @@ $("copy-link").addEventListener("click", async () => {
       `<p class="evidence-intro">Скопируйте адрес:</p><input readonly value="${esc(location.href)}" aria-label="Адрес расчёта">`,
     );
   }
-});
-$("present").addEventListener("click", () => {
-  const on = document.body.classList.toggle("presenting");
-  $("present").setAttribute("aria-pressed", String(on));
-  $("present").setAttribute(
-    "aria-label",
-    on ? "Выйти из режима показа" : "Режим показа",
-  );
-  $("present").title = on ? "Выйти из режима показа" : "Режим показа";
-  scene.draw();
 });
 const pages = {
   planner: "Планирование",
@@ -782,7 +807,7 @@ function currentPage() {
 }
 function applyRoute() {
   const page = pages[currentPage()] ? currentPage() : "planner";
-  document.title = pages[page] + " — Орбитальный риск";
+  document.title = pages[page] + " – Орбитальный риск";
   $("page-title").textContent = pages[page];
   $("breadcrumb").textContent = pages[page];
   $$("[data-page]").forEach((el) => (el.hidden = el.dataset.page !== page));
@@ -790,13 +815,12 @@ function applyRoute() {
     if (el.dataset.route === page) el.setAttribute("aria-current", "page");
     else el.removeAttribute("aria-current");
   });
-  $("present").hidden = page !== "planner";
   $("export").hidden = page === "archive" || page === "method";
   if (page !== "planner") {
     stop();
-    document.body.classList.remove("presenting");
-    $("present").setAttribute("aria-pressed", "false");
-    $("present").setAttribute("aria-label", "Режим показа");
+    fullscreenFallback = false;
+    if (document.fullscreenElement === orbitPanel) document.exitFullscreen();
+    syncOrbitFullscreen();
   }
   if (page === "archive") renderArchive();
   if (page === "planner") requestAnimationFrame(() => scene.draw());
@@ -856,15 +880,15 @@ async function loadArchiveExamples() {
       '<p class="empty-state">Не удалось загрузить примеры. <button class="text-link" id="retry-archive">Повторить</button></p>';
 }
 const sourceNames = {
-  noaa_archive: "NOAA · прогноз космической погоды",
-  iss_history_extract: "МКС · орбитальные элементы",
-  conjunction_tle_history: "Каталог объектов · исторические TLE",
-  noaa: "NOAA · космическая погода",
-  noaa_current: "NOAA · текущий прогноз",
-  iss_current: "МКС · текущие элементы",
-  socrates_current: "SOCRATES · текущие сближения",
-  celestrak: "CelesTrak · орбитальные элементы",
-  socrates: "SOCRATES · сближения",
+  noaa_archive: "NOAA: прогноз космической погоды",
+  iss_history_extract: "МКС: орбитальные элементы",
+  conjunction_tle_history: "Каталог объектов: исторические TLE",
+  noaa: "NOAA: космическая погода",
+  noaa_current: "NOAA: текущий прогноз",
+  iss_current: "МКС: текущие элементы",
+  socrates_current: "SOCRATES: текущие сближения",
+  celestrak: "CelesTrak: орбитальные элементы",
+  socrates: "SOCRATES: сближения",
 };
 function renderSourcesPage() {
   const a = state.analysis;
