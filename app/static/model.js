@@ -46,7 +46,7 @@ export const esc = (s) =>
         c
       ],
   );
-export const label = (s) => statuses[s] || names[s] || modes[s] || s || "—";
+export const label = (s) => statuses[s] || names[s] || modes[s] || s || "–";
 Object.assign(statuses, {
   archived: "Архивная запись",
   archived_local_extract: "Архивная выборка",
@@ -79,7 +79,7 @@ export const dateLabel = (t) =>
 export const numeric = (n, d = 0) =>
   Number.isFinite(n)
     ? n.toLocaleString("ru-RU", { maximumFractionDigits: d })
-    : "—";
+    : "–";
 export function safeURL(value) {
   try {
     const u = new URL(value);
@@ -116,23 +116,23 @@ export function conclusion(a) {
   ) {
     return [
       "=",
-      "Равнозначны окна " +
+      "Равнозначны варианты " +
         c.pareto_frontier_indices
-          .map((i) => String.fromCharCode(65 + i))
+          .map((i) => `с ${stamp(a.windows[i].window.start)} до ${stamp(a.windows[i].window.end)}`)
           .join(", "),
-      "Эти варианты равнозначны в пределах допусков. Остальные уступают по учитываемым условиям; подробности — в основаниях.",
+      "Эти варианты равнозначны в пределах допусков. Остальные уступают по учитываемым условиям; подробности в основаниях.",
     ];
   }
   return (
     {
       preferred: [
         "↗",
-        `Предпочтительно окно ${String.fromCharCode(65 + (c.preferred_index ?? 0))}`,
+        `Предпочтительно начало ${stamp(a.windows[c.preferred_index ?? 0].window.start)}`,
         "По факторам, допустимым для этого режима. Откройте основания, чтобы проверить выбор.",
       ],
       equivalent: [
         "=",
-        "Окна равнозначны",
+        "Варианты равнозначны",
         "По доступным для решения факторам различий недостаточно. Геометрические условия показаны отдельно.",
       ],
       insufficient: [
