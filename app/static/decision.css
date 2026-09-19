@@ -1,0 +1,357 @@
+/* The decision and its three comparable columns lead; orbit stays linked context. */
+:root {
+  --muted: #526173;
+  --line: #d9e0e8;
+}
+.page-heading {
+  margin-bottom: 18px;
+}
+[data-page="planner"] > .conclusion {
+  margin: 14px 0 0;
+  padding: 18px 0 12px;
+  border: 0;
+}
+#conclusion-title {
+  font-size: clamp(24px, 2.5vw, 34px);
+  line-height: 1.2;
+  font-weight: 650;
+  letter-spacing: -0.7px;
+}
+#conclusion-text {
+  font-size: 15px;
+  line-height: 1.55;
+  max-width: 88ch;
+  color: var(--ink);
+  margin: 10px 0;
+}
+.plan-condition {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+.planning-board {
+  grid-template-columns: minmax(280px, 0.9fr) minmax(430px, 1.1fr);
+}
+.scene:not(.scene-fullscreen .scene) {
+  height: 310px;
+  min-height: 260px;
+}
+.window-column-head,
+.window-card {
+  grid-template-columns: minmax(135px, 1.3fr) minmax(104px, 1fr) minmax(
+      70px,
+      0.7fr
+    );
+  gap: 12px;
+}
+.window-column-head {
+  font-size: 12px;
+}
+.window-card {
+  padding: 14px 12px;
+  align-items: center;
+}
+.window-card > span {
+  min-width: 0;
+}
+.window-card strong {
+  font-size: 15px;
+  font-weight: 600;
+}
+.window-card small {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.window-time {
+  font-size: 17px;
+}
+.window-day,
+.window-offset {
+  font-size: 12px;
+}
+.window-role {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: var(--blue);
+}
+.window-card.dominated .window-role {
+  color: var(--muted);
+}
+.window-card.dominated {
+  background: #f6f7f9;
+}
+.window-card[aria-pressed="true"] {
+  background: var(--blue-soft);
+}
+.shadow-mini {
+  width: 100%;
+  min-width: 50px;
+  margin-top: 8px;
+}
+.shadow-mini i {
+  background: #a36416;
+}
+.shadow-line-key {
+  display: inline-block;
+  width: 18px;
+  border-top: 3px dashed #a36416;
+  margin-right: 6px;
+}
+.timeline-panel {
+  margin-top: 24px;
+}
+.timeline-row {
+  min-height: 48px;
+}
+.track-text,
+.scrub-labels,
+.scene-caption {
+  font-size: 12px;
+}
+.track .shadow {
+  background: repeating-linear-gradient(
+    135deg,
+    #f3dfbc,
+    #f3dfbc 5px,
+    #dab57b 5px,
+    #dab57b 6px
+  );
+}
+.comparison-table-wrap {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.comparison-table th,
+.comparison-table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.comparison-table th {
+  font-weight: 600;
+}
+.comparison-table small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+}
+.evidence-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+.provider-panel {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.provider-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.3fr;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.provider-row small {
+  color: var(--muted);
+  line-height: 1.6;
+}
+#provider-status {
+  margin: 12px 0;
+}
+.method-process {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0 0 32px;
+  border-bottom: 2px solid var(--blue);
+  gap: 24px;
+  padding-bottom: 20px;
+}
+.method-process span {
+  font-size: 18px;
+  font-weight: 600;
+}
+.method-process small {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  margin-top: 10px;
+  color: var(--muted);
+}
+.validation-panel {
+  padding: 22px;
+  background: var(--canvas);
+  margin-bottom: 28px;
+}
+.validation-panel p {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+#plan-dialog {
+  width: 520px;
+}
+#form {
+  padding: 20px 24px;
+}
+#plan-fields {
+  gap: 14px;
+}
+#task-name {
+  font-size: 14px;
+}
+body.presentation .sidebar {
+  display: none;
+}
+body.presentation .shell {
+  margin-left: 0;
+}
+body.presentation #workspace {
+  max-width: 1600px;
+  padding-top: 12px;
+}
+body.presentation .page-heading {
+  display: none;
+}
+body.presentation #conclusion-title {
+  font-size: 36px;
+}
+body.presentation .window-card strong {
+  font-size: 20px;
+}
+body.presentation .window-time {
+  font-size: 21px;
+}
+body.presentation .scene {
+  height: 340px;
+}
+.fullscreen-decision {
+  display: none;
+  padding: 12px 24px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.5;
+}
+.scene-fullscreen .fullscreen-decision {
+  display: block;
+}
+.scene-fullscreen .fullscreen-decision strong {
+  font-size: 20px;
+}
+.scene-fullscreen .fullscreen-decision p {
+  max-width: 90ch;
+}
+@media (max-width: 1050px) {
+  .planning-board {
+    grid-template-columns: 1fr;
+  }
+  .scene:not(.scene-fullscreen .scene) {
+    height: 280px;
+  }
+  .window-card {
+    grid-template-columns: 1.3fr 1fr 0.7fr;
+  }
+  .selected-factors {
+    margin-top: 8px;
+  }
+  .scene-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+@media (max-width: 600px) {
+  .window-card,
+  .window-column-head {
+    grid-template-columns: 1.2fr 1fr 0.7fr;
+    gap: 8px;
+  }
+  .window-card {
+    padding: 12px 7px;
+  }
+  .window-time {
+    font-size: 15px;
+  }
+  .window-card strong {
+    font-size: 13px;
+  }
+  .window-column-head {
+    font-size: 11px;
+  }
+  .provider-row,
+  .method-process {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  #conclusion-title,
+  body.presentation #conclusion-title {
+    font-size: 26px;
+  }
+  .conclusion p {
+    display: block;
+  }
+  .plan-condition {
+    font-size: 13px;
+  }
+  .page-heading {
+    flex-wrap: wrap;
+  }
+  .top-actions {
+    gap: 8px;
+  }
+  .fullscreen-decision {
+    padding: 10px;
+  }
+}
+
+body[data-route="planner"] #workspace {
+  padding-top: 18px;
+}
+body[data-route="planner"] .page-heading {
+  margin-bottom: 12px;
+  justify-content: flex-end;
+}
+body[data-route="planner"] #page-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.plan-toolbar {
+  margin-bottom: 0;
+}
+[data-page="planner"] > .conclusion {
+  margin-top: 0;
+  padding-top: 14px;
+}
+.plan-condition {
+  margin-bottom: 14px;
+}
+.window-card small:empty,
+.window-day:empty {
+  display: none;
+}
+.window-card {
+  padding-block: 11px;
+}
+body.presentation .plan-toolbar {
+  padding-top: 6px;
+}
+@media (max-width: 1050px) {
+  .windows-panel {
+    order: -1;
+  }
+  body.presentation .shell {
+    padding-top: 0;
+  }
+}

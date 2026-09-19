@@ -6,8 +6,9 @@
     <meta name="theme-color" content="#ffffff" />
     <title>Планирование – Орбитальный риск</title>
     <link rel="icon" href="/static/favicon.svg" />
-    <link rel="stylesheet" href="/static/styles.css?v=20260919-5" />
-    <script type="module" src="/static/app.js?v=20260919-5"></script>
+    <link rel="stylesheet" href="/static/styles.css?v=20260919-6" />
+    <link rel="stylesheet" href="/static/decision.css?v=20260919-6" />
+    <script type="module" src="/static/app.js?v=20260919-6"></script>
   </head>
   <body>
     <svg
@@ -18,93 +19,101 @@
       <!-- Lucide icons: https://lucide.dev; license in /static/LUCIDE-LICENSE -->
       <defs>
         <symbol id="i-orbit" viewBox="0 0 24 24">
-  <path d="M20.341 6.484A10 10 0 0 1 10.266 21.85" />
-  <path d="M3.659 17.516A10 10 0 0 1 13.74 2.152" />
-  <circle cx="12" cy="12" r="3" />
-  <circle cx="19" cy="5" r="2" />
-  <circle cx="5" cy="19" r="2" />
-</symbol>
+          <path d="M20.341 6.484A10 10 0 0 1 10.266 21.85" />
+          <path d="M3.659 17.516A10 10 0 0 1 13.74 2.152" />
+          <circle cx="12" cy="12" r="3" />
+          <circle cx="19" cy="5" r="2" />
+          <circle cx="5" cy="19" r="2" />
+        </symbol>
         <symbol id="i-plan" viewBox="0 0 24 24">
-  <path d="M8 2v3" />
-  <path d="M16 2v3" />
-  <rect x="3" y="3" width="18" height="18" rx="2" />
-  <path d="M3 9h18" />
-  <path d="M8 13h.01" />
-  <path d="M12 13h.01" />
-  <path d="M16 13h.01" />
-  <path d="M8 17h.01" />
-  <path d="M12 17h.01" />
-  <path d="M16 17h.01" />
-</symbol>
+          <path d="M8 2v3" />
+          <path d="M16 2v3" />
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <path d="M3 9h18" />
+          <path d="M8 13h.01" />
+          <path d="M12 13h.01" />
+          <path d="M16 13h.01" />
+          <path d="M8 17h.01" />
+          <path d="M12 17h.01" />
+          <path d="M16 17h.01" />
+        </symbol>
         <symbol id="i-archive" viewBox="0 0 24 24">
-  <rect width="20" height="5" x="2" y="3" rx="1" />
-  <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
-  <path d="M10 12h4" />
-</symbol>
+          <rect width="20" height="5" x="2" y="3" rx="1" />
+          <path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8" />
+          <path d="M10 12h4" />
+        </symbol>
         <symbol id="i-data" viewBox="0 0 24 24">
-  <ellipse cx="12" cy="5" rx="9" ry="3" />
-  <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-  <path d="M3 12A9 3 0 0 0 21 12" />
-</symbol>
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+          <path d="M3 12A9 3 0 0 0 21 12" />
+        </symbol>
         <symbol id="i-book" viewBox="0 0 24 24">
-  <path d="M12 5v16" />
-  <path d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z" />
-</symbol>
+          <path d="M12 5v16" />
+          <path
+            d="M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z"
+          />
+        </symbol>
         <symbol id="i-plus" viewBox="0 0 24 24">
-  <path d="M5 12h14" />
-  <path d="M12 5v14" />
-</symbol>
+          <path d="M5 12h14" />
+          <path d="M12 5v14" />
+        </symbol>
         <symbol id="i-download" viewBox="0 0 24 24">
-  <path d="M12 15V3" />
-  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-  <path d="m7 10 5 5 5-5" />
-</symbol>
+          <path d="M12 15V3" />
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <path d="m7 10 5 5 5-5" />
+        </symbol>
         <symbol id="i-link" viewBox="0 0 24 24">
-  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-</symbol>
+          <path
+            d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
+          />
+          <path
+            d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
+          />
+        </symbol>
         <symbol id="i-close" viewBox="0 0 24 24">
-  <path d="M18 6 6 18" />
-  <path d="m6 6 12 12" />
-</symbol>
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </symbol>
         <symbol id="i-search" viewBox="0 0 24 24">
-  <path d="m21 21-4.34-4.34" />
-  <circle cx="11" cy="11" r="8" />
-</symbol>
+          <path d="m21 21-4.34-4.34" />
+          <circle cx="11" cy="11" r="8" />
+        </symbol>
         <symbol id="i-rotate-left" viewBox="0 0 24 24">
-  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-  <path d="M3 3v5h5" />
-</symbol>
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+        </symbol>
         <symbol id="i-rotate-right" viewBox="0 0 24 24">
-  <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
-  <path d="M21 3v5h-5" />
-</symbol>
+          <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
+          <path d="M21 3v5h-5" />
+        </symbol>
         <symbol id="i-reset" viewBox="0 0 24 24">
-  <circle cx="12" cy="12" r="10" />
-  <line x1="22" x2="18" y1="12" y2="12" />
-  <line x1="6" x2="2" y1="12" y2="12" />
-  <line x1="12" x2="12" y1="6" y2="2" />
-  <line x1="12" x2="12" y1="22" y2="18" />
-</symbol>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="22" x2="18" y1="12" y2="12" />
+          <line x1="6" x2="2" y1="12" y2="12" />
+          <line x1="12" x2="12" y1="6" y2="2" />
+          <line x1="12" x2="12" y1="22" y2="18" />
+        </symbol>
         <symbol id="i-play" viewBox="0 0 24 24">
-  <path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" />
-</symbol>
+          <path
+            d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"
+          />
+        </symbol>
         <symbol id="i-pause" viewBox="0 0 24 24">
-  <rect x="14" y="3" width="5" height="18" rx="1" />
-  <rect x="5" y="3" width="5" height="18" rx="1" />
-</symbol>
+          <rect x="14" y="3" width="5" height="18" rx="1" />
+          <rect x="5" y="3" width="5" height="18" rx="1" />
+        </symbol>
         <symbol id="i-maximize" viewBox="0 0 24 24">
-  <path d="M8 3H5a2 2 0 0 0-2 2v3" />
-  <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
-  <path d="M3 16v3a2 2 0 0 0 2 2h3" />
-  <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
-</symbol>
+          <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+          <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+          <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+          <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+        </symbol>
         <symbol id="i-minimize" viewBox="0 0 24 24">
-  <path d="M8 3v3a2 2 0 0 1-2 2H3" />
-  <path d="M21 8h-3a2 2 0 0 1-2-2V3" />
-  <path d="M3 16h3a2 2 0 0 1 2 2v3" />
-  <path d="M16 21v-3a2 2 0 0 1 2-2h3" />
-</symbol>
+          <path d="M8 3v3a2 2 0 0 1-2 2H3" />
+          <path d="M21 8h-3a2 2 0 0 1-2-2V3" />
+          <path d="M3 16h3a2 2 0 0 1 2 2v3" />
+          <path d="M16 21v-3a2 2 0 0 1 2-2h3" />
+        </symbol>
       </defs>
     </svg>
     <a class="skip" href="#workspace">К содержимому</a>
@@ -151,15 +160,17 @@
       <header class="topbar">
         <span id="breadcrumb">Планирование</span>
         <div class="top-actions">
-          <span class="prototype">Прототип</span
+          <button id="present" class="quiet" aria-pressed="false">
+            Для защиты</button
+          ><span class="prototype">Прототип</span
           ><button
             id="copy-link"
             class="icon-button"
             title="Копировать ссылку"
             aria-label="Копировать ссылку"
           >
-            <svg><use href="#i-link" /></svg></button
-          >
+            <svg><use href="#i-link" /></svg>
+          </button>
         </div>
       </header>
       <main id="workspace" tabindex="-1">
@@ -186,19 +197,35 @@
             <label class="scenario-select"
               ><span class="sr-only">Сохранённый пример</span
               ><select id="scenario">
-                <option value="window_demo">Пример: свет и тень</option>
+                <option value="sunlight">Работа на свету</option>
+                <option value="tradeoff">Свет или погодный прогноз</option>
+                <option value="window_demo">Проверка прошлого решения</option>
                 <option value="event">Пример: солнечное событие</option>
                 <option value="control">Пример: контрольный период</option>
                 <option value="custom" hidden>Свой расчёт</option>
               </select></label
             >
           </div>
+          <section class="conclusion" id="conclusion" hidden>
+            <div class="conclusion-heading">
+              <h3 id="conclusion-title">–</h3>
+            </div>
+            <p id="conclusion-text"></p>
+            <button class="text-link" id="why">Основания сравнения</button
+            ><span id="result-label" class="sr-only"></span>
+          </section>
+          <p class="plan-condition" id="plan-condition"></p>
           <div class="planning-board">
-            <section id="orbit-panel" class="scene-panel" aria-labelledby="scene-title">
+            <section
+              id="orbit-panel"
+              class="scene-panel"
+              aria-labelledby="scene-title"
+            >
               <div class="scene-heading">
                 <h2 id="scene-title">Орбита МКС</h2>
                 <span class="subtle-badge" id="mode-badge">Загрузка</span>
               </div>
+              <div class="fullscreen-decision" id="fullscreen-decision"></div>
               <div class="scene" id="scene">
                 <canvas
                   id="orbit-canvas"
@@ -206,14 +233,24 @@
                   role="img"
                 ></canvas>
                 <span class="station-label" id="station-label" hidden>МКС</span>
-                <div class="orbit-render-status" id="orbit-render-status" role="status" hidden></div>
+                <div
+                  class="orbit-render-status"
+                  id="orbit-render-status"
+                  role="status"
+                  hidden
+                ></div>
                 <div class="scene-empty" id="scene-empty">Загрузка орбиты…</div>
                 <div class="scene-coordinate">
                   <strong id="orbit-time">–</strong
                   ><span id="orbit-meta">–</span>
                 </div>
                 <div class="scene-controls">
-                  <button id="orbit-fullscreen" title="На весь экран" aria-label="Развернуть 3D на весь экран" aria-pressed="false">
+                  <button
+                    id="orbit-fullscreen"
+                    title="На весь экран"
+                    aria-label="Развернуть 3D на весь экран"
+                    aria-pressed="false"
+                  >
                     <svg aria-hidden="true"><use href="#i-maximize" /></svg>
                   </button>
                   <button
@@ -221,13 +258,17 @@
                     title="Повернуть влево"
                     aria-label="Повернуть сцену влево"
                   >
-                    <svg aria-hidden="true"><use href="#i-rotate-left" /></svg></button
+                    <svg aria-hidden="true">
+                      <use href="#i-rotate-left" />
+                    </svg></button
                   ><button
                     id="reset-camera"
                     title="Исходный ракурс"
                     aria-label="Сбросить ракурс"
                   >
-                    <svg aria-hidden="true"><use href="#i-reset" /></svg></button
+                    <svg aria-hidden="true">
+                      <use href="#i-reset" />
+                    </svg></button
                   ><button
                     id="rotate-right"
                     title="Повернуть вправо"
@@ -237,9 +278,9 @@
                   </button>
                 </div>
                 <div class="scene-caption">
-                  <span><i class="line-key"></i>Траектория</span
-                  ><span><i class="point-key"></i>МКС</span
-                  >
+                  <span><i class="line-key"></i>На свету</span
+                  ><span><i class="shadow-line-key"></i>В тени</span
+                  ><span><i class="point-key"></i>МКС</span>
                 </div>
               </div>
               <div class="playback">
@@ -275,18 +316,11 @@
                 <button class="quiet" id="edit-plan">Изменить</button>
               </div>
               <div class="window-column-head" aria-hidden="true">
-                <span>Время выхода, UTC</span
+                <span>Начало, UTC</span><span>Протонное событие / сутки</span
                 ><span>В тени</span>
               </div>
               <div id="window-cards"></div>
-              <section class="conclusion" id="conclusion" hidden>
-                <div class="conclusion-heading">
-                  <h3 id="conclusion-title">–</h3>
-                </div>
-                <p id="conclusion-text"></p>
-                <button class="text-link" id="why">Основания сравнения</button
-                ><span id="result-label" class="sr-only"></span>
-              </section>
+
               <div class="selected-factors" id="selected-factors"></div>
             </section>
           </div>
@@ -315,20 +349,51 @@
           <div id="archive-list"></div>
         </section>
         <section class="page" data-page="sources" hidden>
+          <section class="provider-panel">
+            <div class="section-heading">
+              <h2>Текущие источники</h2>
+              <button id="refresh-providers" class="outline">
+                Обновить источники
+              </button>
+            </div>
+            <p id="provider-status" role="status" class="small">
+              Проверяем сохранённые записи…
+            </p>
+            <div id="provider-health"></div>
+          </section>
           <div class="source-context">
             <h2 id="sources-context">Источники выбранного расчёта</h2>
             <p id="source-summary" class="small"></p>
           </div>
           <div id="source-table"></div>
           <div class="source-strip" id="source-strip" hidden>
-            <button id="export-json" class="outline">Скачать JSON</button
+            <button id="export-bundle" class="outline">
+              Исходные данные ZIP</button
+            ><button id="export-json" class="outline">Скачать JSON</button
             ><button id="sources" class="quiet">Все записи подробно</button>
           </div>
         </section>
         <section class="page method-page" data-page="method" hidden>
+          <div class="method-process">
+            <span
+              >Внешние данные<small>Прогноз и орбитальные элементы</small></span
+            ><span
+              >Наш расчёт<small>Траектория и пересечение с работой</small></span
+            ><span>Ваш выбор<small>Варианты и причины различий</small></span>
+          </div>
+          <section class="validation-panel">
+            <h2>Проверка расчёта</h2>
+            <p>
+              <a href="/static/briefing.html" target="_blank" rel="noopener"
+                >Слайды для защиты →</a
+              >
+            </p>
+            <div id="validation-summary">Загрузка результатов…</div>
+          </section>
           <p class="method-lead">
-            Три варианта начала: заданное время, половина допустимого переноса
-            и максимальный перенос. Длительность выхода одинакова для всех вариантов.
+            Три варианта начала: заданное время, половина допустимого переноса и
+            максимальный перенос. Длительность выхода одинакова для всех
+            вариантов.
           </p>
           <div class="method-grid">
             <article>
@@ -347,8 +412,8 @@
             <article>
               <h2>Сближения</h2>
               <p>
-                Текущий режим использует сводку CelesTrak SOCRATES. Исторический режим:
-                геометрическая реконструкция по TLE. Отсутствие события в
+                Текущий режим использует сводку CelesTrak SOCRATES. Исторический
+                режим: геометрическая реконструкция по TLE. Отсутствие события в
                 выборке не доказывает безопасность.
               </p>
               <a
@@ -377,11 +442,33 @@
           </div>
           <section class="scene-sources">
             <h2>3D-визуализация</h2>
-            <p>Земля: <a href="https://svs.gsfc.nasa.gov/2915/" target="_blank" rel="noopener noreferrer">NASA Blue Marble</a>,
-              <a href="https://svs.gsfc.nasa.gov/2916/" target="_blank" rel="noopener noreferrer">NASA Earth at Night</a>.
-              МКС: <a href="https://science.nasa.gov/3d-resources/international-space-station-iss-a/" target="_blank" rel="noopener noreferrer">NASA / Ames Research Center</a>.</p>
-            <p>Освещение и вращение рассчитаны для выбранного времени UTC. Текстура Земли является спутниковой мозаикой, без текущей облачности.
-              Размер МКС увеличен для видимости; ориентация модели условная.</p>
+            <p>
+              Земля:
+              <a
+                href="https://svs.gsfc.nasa.gov/2915/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NASA Blue Marble</a
+              >,
+              <a
+                href="https://svs.gsfc.nasa.gov/2916/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NASA Earth at Night</a
+              >. МКС:
+              <a
+                href="https://science.nasa.gov/3d-resources/international-space-station-iss-a/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >NASA / Ames Research Center</a
+              >.
+            </p>
+            <p>
+              Освещение и вращение рассчитаны для выбранного времени UTC.
+              Текстура Земли является спутниковой мозаикой, без текущей
+              облачности. Размер МКС увеличен для видимости; ориентация модели
+              условная.
+            </p>
           </section>
           <section class="replay-panel" id="replay-panel" hidden>
             <h2>Отсечение выбранного расчёта</h2>
@@ -417,9 +504,15 @@
       <form id="form">
         <fieldset id="plan-fields">
           <label
+            >Название работы<input
+              id="task-name"
+              maxlength="80"
+              placeholder="Например, осмотр внешнего оборудования"
+          /></label>
+          <label
             >Режим<select id="mode">
-              <option value="replay">Прогноз из прошлого</option>
-              <option value="reconstruction">Историческая реконструкция</option>
+              <option value="replay">Что было известно тогда</option>
+              <option value="reconstruction">Восстановить условия</option>
               <option value="current">Текущая обстановка</option>
             </select></label
           >
@@ -427,7 +520,9 @@
           <label
             >Начало, UTC<input
               id="start"
-              type="datetime-local"
+              type="text"
+              placeholder="ДД.ММ.ГГГГ ЧЧ:ММ"
+              autocomplete="off"
               required
               step="60"
           /></label>
@@ -453,9 +548,11 @@
             /></label>
           </div>
           <label id="cutoff-label"
-            >Отсечение, UTC<input
+            >Известно к моменту, UTC<input
               id="cutoff"
-              type="datetime-local"
+              type="text"
+              placeholder="ДД.ММ.ГГГГ ЧЧ:ММ"
+              autocomplete="off"
               required
               step="60" /></label
           ><label class="checkbox-label"

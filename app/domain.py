@@ -20,6 +20,7 @@ class Mode(StrEnum):
 
 
 class AnalysisRequest(BaseModel):
+    task_name: str = Field(default="", max_length=80)
     mode: Mode
     start: datetime
     duration_hours: float = Field(ge=1, le=8)
