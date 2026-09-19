@@ -1,31 +1,328 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Планирование ВКД · исследовательский прототип</title>
-<style>
-*{box-sizing:border-box}:root{font-family:system-ui,sans-serif;color:#e9f1fb;background:#101b2b}body{max-width:1100px;margin:auto;padding:20px}h1{font-size:1.9rem}p{line-height:1.5;color:#b8c9dd;overflow-wrap:anywhere}.panel{background:#192a40;border:1px solid #35506f;border-radius:12px;padding:18px;margin:14px 0}label{display:block;margin:10px 0;font-weight:600;min-width:0}[hidden]{display:none!important}input,select,button{font:inherit;border-radius:6px;border:1px solid #738ba5;padding:8px;background:#102035;color:#fff;max-width:100%}label>input:not([type=checkbox]),label>select{display:block;width:100%;margin-top:5px}button{background:#237e9a;cursor:pointer;margin-top:12px}button:hover{background:#3098b6}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:10px;min-width:0}.muted{color:#a7bad2}.alert{color:#ffc479}.bad{color:#ff9b97}.ok{color:#9bdfc8}a{color:#88d6f1;overflow-wrap:anywhere}details{background:#13253a;padding:10px;margin:8px 0;border-radius:6px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.8rem}.bar{height:10px;border-radius:6px;background:#35506f;overflow:hidden}.bar span{display:block;height:100%;background:#e9a95c}.small{font-size:.9rem}#status{min-height:1.4rem}
-</style></head><body>
-<h1>ВКД · внешние условия и сравнение окон</h1>
-<p>Исследовательская поддержка решения для аналитика. Результат описывает только выбранные факторы и не является разрешением на выход.</p>
-<form id="form" class="panel"><div class="grid">
-<label>Режим<select id="mode"><option value="current">Текущая обстановка</option><option value="reconstruction">Историческая реконструкция</option><option value="replay">Прогноз из прошлого</option></select></label>
-<label>Начало ВКД, UTC<input id="start" type="datetime-local" required></label>
-<label>Длительность, часы<input id="duration" type="number" min="1" max="8" step="0.5" value="6" required></label>
-<label>Допустимый перенос старта, часы<input id="search" type="number" min="0.5" max="24" step="0.5" value="12" required></label>
-<label id="cutoff-label" hidden>Момент отсечения, UTC<input id="cutoff" type="datetime-local"></label>
-<label>Требуется прямой солнечный свет<input id="sunlight" type="checkbox" checked></label>
-</div><button type="submit">Рассчитать и сохранить</button> <button type="button" id="refresh">Обновить источники и рассчитать</button><p id="status" role="status"></p></form>
-<main id="result"></main>
-<script>
-const $=id=>document.getElementById(id), fmt=t=>new Date(t).toISOString().replace('T',' ').slice(0,16)+' UTC';
-const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const labels={space_weather:'Космическая погода',lighting:'Освещённость',attention:'Требует внимания',insufficient:'Недостаточно данных',forecast_below_experimental_threshold:'Ниже экспериментального порога',no_restriction_detected:'Ограничение не выявлено',complete:'Полное покрытие',partial_or_absent:'Неполное покрытие',fresh:'Актуальный ответ',cached:'Кеш',stale:'Устаревший кеш',archive:'Архив',current:'Текущая орбита',historical_reconstruction:'Историческая реконструкция'};
-const label=s=>escapeHTML(labels[s]||s);
-const utcValue=d=>new Date(d).toISOString().slice(0,16);
-$('start').value=utcValue(Date.now()+3600000);
-$('cutoff').value=utcValue(Date.now());
-$('mode').addEventListener('change',()=>{let h=$('mode').value!=='current';$('cutoff-label').hidden=$('mode').value!=='replay';if(h&&$('start').value.slice(0,4)!=='2024'){$('start').value='2024-05-10T06:00';$('cutoff').value='2024-05-10T00:00'}if(!h&&$('start').value.slice(0,4)==='2024')$('start').value=utcValue(Date.now()+3600000)});
-function utc(s){return s+':00Z'}
-function factor(f,duration){let color=f.state==='insufficient'?'bad':f.state==='attention'?'alert':'ok';let width=f.overlap_minutes===null?0:Math.min(100,100*f.overlap_minutes/duration);return `<div class="panel"><b>${label(f.mechanism)}</b> · <span class="${color}">${label(f.state)}</span><p>Покрытие ${f.covered_minutes.toFixed(0)} мин · пересечение ${f.overlap_minutes===null?'неизвестно':f.overlap_minutes.toFixed(0)+' мин'} · ${label(f.completeness)} · ${label(f.freshness)}</p><div class="bar" aria-label="Доля окна с отмеченным условием"><span style="width:${width}%"></span></div>${f.evidence.map(e=>`<details><summary>Исходные данные и правило</summary><pre>${escapeHTML(JSON.stringify(e,null,2))}</pre></details>`).join('')}<details><summary>Ограничения</summary>${f.limitations.map(s=>`<p>${escapeHTML(s)}</p>`).join('')}</details></div>`}
-function render(a){let c=a.comparison;let title=c.outcome==='preferred'?`Предпочтительно окно ${c.preferred_index+1}`:c.outcome==='equivalent'?'Окна равнозначны':c.outcome==='insufficient'?'Недостаточно данных для выбора':'Компромисс между факторами';$('result').innerHTML=`<div class="panel"><h2>${title}</h2><p>${c.reasons.map(escapeHTML).join(' ')}</p><p class="small">Версия расчёта ${escapeHTML(a.algorithm_version)} · сохранено ${fmt(a.created_at)}</p><a href="/api/analyses/${a.id}/export.json">JSON</a> · <a href="/api/analyses/${a.id}/export.html">Читаемый отчёт</a> · <a href="/api/analyses/${a.id}">Открыть сохранённый расчёт</a></div>${a.windows.map((w,i)=>`<section><h2>Окно ${i+1}: ${fmt(w.window.start)} — ${fmt(w.window.end)}</h2><p>Траектория: ${w.orbit.length} точек; ${w.orbit.length?`эпоха элементов ${fmt(w.orbit[0].epoch)}, ${label(w.orbit[0].classification)}`:'подходящих элементов нет'}</p><div class="grid">${w.factors.map(f=>factor(f,(new Date(w.window.end)-new Date(w.window.start))/60000)).join('')}</div>${w.limitations.map(s=>`<p class="alert">${escapeHTML(s)}</p>`).join('')}</section>`).join('')}<div class="panel"><h2>Использованные записи</h2>${a.source_records.map(r=>`<p><a href="${escapeHTML(r.url)}">${escapeHTML(r.source)}</a> · опубликовано ${r.published_at?fmt(r.published_at):'неизвестно'} · получено ${fmt(r.retrieved_at)} · ${escapeHTML(r.cache_state)} · SHA-256 ${escapeHTML(r.content_sha256)}</p>`).join('')||'<p>Записей нет</p>'}</div>`}
-async function submit(refresh=false){$('status').textContent='Получаем данные и рассчитываем окна…';$('result').innerHTML='';try{let body={mode:$('mode').value,start:utc($('start').value),duration_hours:Number($('duration').value),search_hours:Number($('search').value),requires_sunlight:$('sunlight').checked,refresh};if(body.mode==='replay')body.cutoff=utc($('cutoff').value);let r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});let a=await r.json();if(!r.ok)throw Error(JSON.stringify(a.detail));render(a);$('status').textContent='Расчёт сохранён.'}catch(e){$('status').textContent='Ошибка: '+e.message}}
-$('form').addEventListener('submit',e=>{e.preventDefault();submit()});$('refresh').onclick=()=>submit(true);
-</script></body></html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#101515" />
+    <title>Орбитальный риск · Пульт ВКД</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23101515'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23d5f985' stroke-width='2'/%3E%3Cpath d='M3 23L29 9' stroke='%23d5f985' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script type="module" src="/static/app.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">К анализу</a>
+    <aside class="rail" aria-label="Навигация">
+      <a class="brand-mark" href="#workspace" aria-label="Орбитальный риск"
+        ><svg viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="11" />
+          <ellipse
+            cx="20"
+            cy="20"
+            rx="21"
+            ry="6"
+            transform="rotate(-35 20 20)"
+          />
+          <circle class="logo-dot" cx="31" cy="9" r="3" /></svg></a
+      ><a
+        href="#workspace"
+        class="rail-link active"
+        aria-label="Обзор миссии"
+        title="Обзор миссии"
+        >▦</a
+      ><a
+        href="#timeline-panel"
+        class="rail-link"
+        aria-label="Временная шкала"
+        title="Временная шкала"
+        >⌁</a
+      ><button
+        class="rail-link"
+        id="sources-nav"
+        aria-label="Источники данных"
+        title="Источники"
+      >
+        ◫</button
+      ><span class="rail-bottom">ВКД<br />01</span>
+    </aside>
+    <div class="shell">
+      <header class="topbar">
+        <div class="wordmark">ОРБИТАЛЬНЫЙ РИСК <span>/ ПУЛЬТ ВКД</span></div>
+        <div class="top-actions">
+          <span class="prototype">Исследовательский прототип</span
+          ><button id="present" class="quiet" aria-pressed="false">
+            Режим показа ↗
+          </button>
+        </div>
+      </header>
+      <main id="workspace">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">MISSION WORKSPACE / 01</p>
+            <h1>За пределами станции.<br /><span>В пределах данных.</span></h1>
+          </div>
+          <div class="context">
+            <span>Объект планирования</span
+            ><strong>МКС <span class="dot">•</span> ISS / 25544</strong
+            ><span id="context-date">Время расчётов — UTC</span>
+          </div>
+        </div>
+        <div class="scenario-bar">
+          <span class="eyebrow">ИССЛЕДОВАТЬ СЦЕНАРИЙ</span>
+          <div class="scenario-buttons">
+            <button data-example="window_demo" aria-pressed="false">
+              <span>01</span> Свет и тень</button
+            ><button data-example="event" aria-pressed="false">
+              <span>02</span> Солнечное событие</button
+            ><button data-example="control" aria-pressed="false">
+              <span>03</span> Контрольный период
+            </button>
+          </div>
+          <span class="archive-note">Сохранённые расчёты · май 2024</span>
+        </div>
+        <div class="workspace-grid">
+          <section class="scene-panel panel" aria-labelledby="scene-title">
+            <div class="scene-heading">
+              <div>
+                <p class="eyebrow">ОРБИТАЛЬНАЯ ГЕОМЕТРИЯ</p>
+                <h2 id="scene-title">Траектория выбранного окна</h2>
+              </div>
+              <span class="pill" id="mode-badge">Загрузка</span>
+            </div>
+            <div class="scene" id="scene">
+              <canvas
+                id="orbit-canvas"
+                aria-label="Схематическая проекция Земли и рассчитанной траектории МКС. Числа и управление временем доступны под сценой."
+                role="img"
+              ></canvas>
+              <div class="scene-empty" id="scene-empty">
+                Загружаем сохранённый расчёт…
+              </div>
+              <div class="scene-coordinate">
+                <span>ПОЛОЖЕНИЕ В МОМЕНТ</span><strong id="orbit-time">—</strong
+                ><span id="orbit-meta">Система координат TEME</span>
+              </div>
+              <div class="scene-controls">
+                <button id="rotate-left" aria-label="Повернуть сцену влево">
+                  ↶</button
+                ><button id="rotate-right" aria-label="Повернуть сцену вправо">
+                  ↷</button
+                ><button id="reset-camera" aria-label="Сбросить ракурс">
+                  ⌖
+                </button>
+              </div>
+              <div class="scene-caption">
+                <span class="line-key"></span> Траектория МКС
+                <span class="scene-hint">Перетащите, чтобы повернуть</span>
+              </div>
+            </div>
+            <div class="playback">
+              <button
+                id="play"
+                aria-label="Воспроизвести траекторию"
+                aria-pressed="false"
+                disabled
+              >
+                ▶
+              </button>
+              <div class="scrub-wrap">
+                <label for="scrub"
+                  >Момент на траектории <span id="sample-label">—</span></label
+                ><input
+                  id="scrub"
+                  type="range"
+                  min="0"
+                  max="0"
+                  value="0"
+                  disabled
+                />
+                <div class="scrub-labels">
+                  <span id="orbit-start">—</span><span>UTC · точки расчёта</span
+                  ><span id="orbit-end">—</span>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="planner panel" aria-labelledby="plan-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">ПАРАМЕТРЫ МИССИИ</p>
+                <h2 id="plan-title">Спланировать выход</h2>
+              </div>
+              <span class="step-number">01—03</span>
+            </div>
+            <form id="form">
+              <fieldset id="plan-fields">
+                <label
+                  >Режим анализа<select id="mode">
+                    <option value="replay">Прогноз из прошлого</option>
+                    <option value="reconstruction">
+                      Историческая реконструкция
+                    </option>
+                    <option value="current">Текущая обстановка</option>
+                  </select></label
+                >
+                <p class="field-help" id="mode-help">
+                  Учитываем только сведения, доступные к моменту отсечения.
+                </p>
+                <label
+                  >Начало работ <span>UTC</span
+                  ><input id="start" type="datetime-local" required step="60"
+                /></label>
+                <div class="field-pair">
+                  <label
+                    >Длительность, ч<input
+                      id="duration"
+                      type="number"
+                      min="1"
+                      max="8"
+                      step="0.5"
+                      value="1"
+                      required /></label
+                  ><label
+                    >Перенос до, ч<input
+                      id="search"
+                      type="number"
+                      min="0.5"
+                      max="24"
+                      step="0.5"
+                      value="12"
+                      required
+                  /></label>
+                </div>
+                <label id="cutoff-label"
+                  >Момент отсечения <span>UTC</span
+                  ><input
+                    id="cutoff"
+                    type="datetime-local"
+                    required
+                    step="60" /></label
+                ><label class="checkbox-label"
+                  ><input id="sunlight" type="checkbox" checked /><span
+                    >Работе нужен солнечный свет<small
+                      >Освещение как условие плана</small
+                    ></span
+                  ></label
+                >
+              </fieldset>
+              <button class="primary" id="calculate" type="submit">
+                Рассчитать окна <span>↗</span></button
+              ><button class="refresh-btn" id="refresh" type="button">
+                ↻ Обновить источники и рассчитать
+              </button>
+            </form>
+          </section>
+        </div>
+        <div class="statusbar" id="statusbar">
+          <span class="status-dot"></span>
+          <p id="status" role="status" aria-live="polite">
+            Загрузка исследовательского примера…
+          </p>
+          <button id="restore" class="quiet" hidden>
+            Вернуть параметры результата
+          </button>
+        </div>
+        <section
+          class="conclusion panel"
+          id="conclusion"
+          aria-labelledby="conclusion-title"
+          hidden
+        >
+          <div class="conclusion-icon" id="conclusion-icon">=</div>
+          <div class="conclusion-copy">
+            <p class="eyebrow" id="result-label">ЗАКЛЮЧЕНИЕ ПО СРАВНЕНИЮ</p>
+            <h2 id="conclusion-title">—</h2>
+            <p id="conclusion-text"></p>
+          </div>
+          <button id="why" class="outline">
+            Почему такой вывод <span>↗</span>
+          </button>
+        </section>
+        <section id="comparison-panel" class="comparison-section" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ОДИН ПЛАН / ТРИ ВАРИАНТА</p>
+              <h2>Сравните окна работ</h2>
+            </div>
+            <p class="small" id="equal-duration"></p>
+          </div>
+          <div id="window-cards" class="window-cards"></div>
+        </section>
+        <section class="timeline-panel panel" id="timeline-panel" hidden>
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">ВРЕМЕННАЯ КАРТИНА</p>
+              <h2 id="timeline-title">Условия выбранного окна</h2>
+            </div>
+            <span class="pill" id="timeline-window">Окно A</span>
+          </div>
+          <div id="timeline"></div>
+          <p class="timeline-note">
+            Полосы показывают интервалы применимости данных и условия работ.
+            Пробелы не означают благоприятную обстановку.
+          </p>
+        </section>
+        <section class="replay-panel panel" id="replay-panel" hidden>
+          <div>
+            <p class="eyebrow">ВРЕМЕННАЯ ЧЕСТНОСТЬ</p>
+            <h2>Что было известно тогда?</h2>
+            <p>Доступность данных и условия на орбите — разные вещи.</p>
+          </div>
+          <div class="cutoff-flow">
+            <div>
+              <small>ИСПОЛЬЗОВАННЫЙ ВЫПУСК</small
+              ><strong id="issue-time">—</strong>
+            </div>
+            <div class="cutoff-line"></div>
+            <div class="cutoff-point">
+              <small>ОТСЕЧЕНИЕ</small><strong id="cutoff-time">—</strong>
+            </div>
+            <div class="cutoff-line dashed"></div>
+            <div class="excluded">
+              <small>ПОСЛЕ ОТСЕЧЕНИЯ</small
+              ><strong>Не влияет на прогноз</strong>
+            </div>
+          </div>
+          <p id="replay-note" class="small"></p>
+        </section>
+        <section class="source-strip" id="source-strip" hidden>
+          <div>
+            <p class="eyebrow">ПРОВЕРЯЕМОЕ РЕШЕНИЕ</p>
+            <h2>От вывода — к первоисточнику.</h2>
+            <p id="source-summary"></p>
+          </div>
+          <div class="export-actions">
+            <button id="sources" class="outline">Источники ↗</button
+            ><button id="export" class="primary">Сохранить отчёт ↓</button
+            ><button id="export-json" class="quiet">JSON ↓</button
+            ><button id="copy-link" class="quiet">Ссылка ↗</button>
+          </div>
+        </section>
+        <footer>
+          <span>ОРБИТАЛЬНЫЙ РИСК / Исследовательская поддержка решений</span
+          ><span>Оценка выбранных факторов · не разрешение на ВКД</span>
+        </footer>
+      </main>
+    </div>
+    <dialog id="drawer" aria-labelledby="drawer-title">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow" id="drawer-eyebrow">ОСНОВАНИЯ РАСЧЁТА</p>
+          <h2 id="drawer-title">Доказательства</h2>
+        </div>
+        <button
+          id="close-drawer"
+          class="icon-button"
+          aria-label="Закрыть подробности"
+        >
+          ×
+        </button>
+      </div>
+      <div id="drawer-body"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <noscript><p>Для интерактивного пульта нужен JavaScript.</p></noscript>
+  </body>
+</html>
