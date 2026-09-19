@@ -23,7 +23,8 @@ import {
   publicationLabel,
   quantityLabel,
 } from "./model.js?v=20260919-7";
-import { OrbitScene } from "./orbit.js?v=20260919-7";
+import { OrbitScene } from "./orbit.js?v=20260919-9";
+import { interpolateOrbit } from "./orbit-math.js?v=20260919-9";
 import { buildReport } from "./report.js?v=20260919-7";
 
 import { initTooltips, infoButton } from "./tooltips.js?v=20260919-8";
@@ -396,9 +397,12 @@ function renderTimeline(w) {
 function setSample(index) {
   const w = state.analysis?.windows[state.selected];
   if (!w) return;
-  state.sample = normalizeWindow(Number(index), w.orbit.length);
+  state.sample = Math.max(
+    0,
+    Math.min(w.orbit.length - 1, Number.isFinite(index) ? index : 0),
+  );
   $("scrub").value = state.sample;
-  const s = w.orbit[state.sample];
+  const s = interpolateOrbit(w.orbit, state.sample);
   scene.setData(state.analysis.windows, state.selected, state.sample);
   if (!s) {
     $("orbit-time").textContent = "–";
@@ -408,7 +412,9 @@ function setSample(index) {
     $$(".track-cursor").forEach((e) => (e.hidden = true));
     return;
   }
-  $("orbit-time").textContent = clock(s.at) + " UTC";
+  const timeLabel = s.at.slice(11, 19) + " UTC";
+  if ($("orbit-time").textContent !== timeLabel)
+    $("orbit-time").textContent = timeLabel;
   const altitude = Math.hypot(...s.position_teme_km) - 6378.137;
   $("orbit-meta").textContent = `Высота ≈ ${numeric(altitude)} км`;
   const lighting = w.factors.find((f) => f.mechanism === "lighting");
@@ -432,7 +438,7 @@ function setSample(index) {
     ". Размер МКС увеличен; ориентация условная.";
 }
 function stop() {
-  clearInterval(state.timer);
+  cancelAnimationFrame(state.timer);
   state.timer = null;
   $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-play" /></svg>';
   $("play").setAttribute("aria-label", "Воспроизвести траекторию");
@@ -443,19 +449,32 @@ function play() {
     stop();
     return;
   }
-  const count = state.analysis?.windows[state.selected]?.orbit.length;
+  const orbit = state.analysis?.windows[state.selected]?.orbit || [];
+  const count = orbit.length;
   if (!count || count < 2) return;
   if (state.sample === count - 1) setSample(0);
   $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-pause" /></svg>';
   $("play").setAttribute("aria-label", "Остановить воспроизведение");
   $("play").setAttribute("aria-pressed", "true");
-  state.timer = setInterval(() => {
-    if (state.sample >= count - 1) {
-      stop();
-      return;
-    }
-    setSample(state.sample + 1);
-  }, 800);
+  const times = orbit.map((s) => Date.parse(s.at));
+  let at = Date.parse(interpolateOrbit(orbit, state.sample).at);
+  let previous = performance.now();
+  const tick = (now) => {
+    // Five simulated minutes per second, independent of refresh rate/sample spacing.
+    // Cap a long background pause so returning to the tab does not jump ahead.
+    at = Math.min(times.at(-1), at + Math.min(100, now - previous) * 300);
+    previous = now;
+    let index = Math.floor(state.sample);
+    while (index < count - 1 && times[index + 1] <= at) index++;
+    const fraction =
+      index < count - 1
+        ? (at - times[index]) / (times[index + 1] - times[index])
+        : 0;
+    setSample(index + fraction);
+    if (index === count - 1) stop();
+    else state.timer = requestAnimationFrame(tick);
+  };
+  state.timer = requestAnimationFrame(tick);
 }
 function renderReplay() {
   const a = state.analysis;
