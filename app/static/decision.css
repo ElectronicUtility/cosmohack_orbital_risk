@@ -17,19 +17,6 @@
   font-weight: 650;
   letter-spacing: -0.7px;
 }
-#conclusion-text {
-  font-size: 15px;
-  line-height: 1.55;
-  max-width: 88ch;
-  color: var(--ink);
-  margin: 10px 0;
-}
-.plan-condition {
-  font-size: 14px;
-  color: var(--muted);
-  margin: 0 0 22px;
-  line-height: 1.6;
-}
 .planning-board {
   grid-template-columns: minmax(280px, 0.9fr) minmax(430px, 1.1fr);
 }
@@ -299,9 +286,6 @@ body.presentation .scene {
   .conclusion p {
     display: block;
   }
-  .plan-condition {
-    font-size: 13px;
-  }
   .page-heading {
     flex-wrap: wrap;
   }
@@ -334,9 +318,6 @@ body[data-route="planner"] #page-title {
   margin-top: 0;
   padding-top: 14px;
 }
-.plan-condition {
-  margin-bottom: 14px;
-}
 .window-card small:empty,
 .window-day:empty {
   display: none;
@@ -365,3 +346,30 @@ body.presentation .plan-toolbar {
 }
 .validation-table { overflow-x: auto; }
 .validation-table th, .validation-table td { padding: 8px; text-align: left; }
+
+/* Whitespace groups sections; dividers remain in data tables. */
+[data-page="planner"] > .conclusion {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  padding-bottom: 20px;
+}
+.playback, .timeline-row, .source-group, .source-group:last-child,
+.provider-panel, .provider-row, .replay-panel, .scene-sources,
+.source-strip, .method-process {
+  border-top: 0;
+  border-bottom: 0;
+}
+body[data-static-demo] [data-new],
+body[data-static-demo] #edit-plan,
+body[data-static-demo] #refresh,
+body[data-static-demo] .provider-panel,
+body[data-static-demo] .archive-group:nth-child(2) {
+  display: none;
+}
+.demo-label {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}

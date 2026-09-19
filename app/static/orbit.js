@@ -123,14 +123,14 @@ export class OrbitScene {
   }
   async loadAssets() {
     const draco = new DRACOLoader();
-    draco.setDecoderPath("/static/vendor/three/draco/");
+    draco.setDecoderPath(new URL("./vendor/three/draco/", import.meta.url).href);
     const loader = new GLTFLoader().setDRACOLoader(draco);
     const results = await Promise.allSettled([
       new THREE.TextureLoader().loadAsync(
-        "/static/assets/earth-blue-marble.png",
+        new URL("./assets/earth-blue-marble.png", import.meta.url).href,
       ),
-      loader.loadAsync("/static/assets/iss.glb"),
-      new THREE.TextureLoader().loadAsync("/static/assets/earth-night.png"),
+      loader.loadAsync(new URL("./assets/iss.glb", import.meta.url).href),
+      new THREE.TextureLoader().loadAsync(new URL("./assets/earth-night.png", import.meta.url).href),
     ]);
     if (results[0].status === "fulfilled") {
       const texture = results[0].value;

@@ -1,3 +1,4 @@
+import { staticDemo, apiURL, routeURL } from "./runtime.js";
 import {
   names,
   modes,
@@ -37,6 +38,10 @@ const state = {
   controller: null,
   timer: null,
 };
+if (staticDemo) {
+  document.body.dataset.staticDemo = "true";
+  for (const link of $$("a[data-route]")) link.href = routeURL(link.dataset.route);
+}
 const scene = new OrbitScene($("orbit-canvas"));
 const examples = {
   sunlight: "Работа на свету",
@@ -134,7 +139,9 @@ function readyStatus() {
 function updateURL(push = false) {
   if (!state.analysis) return;
   const url = new URL(location.href);
+  const page = url.searchParams.get("page");
   url.search = "";
+  if (staticDemo && page) url.searchParams.set("page", page);
   url.searchParams.set(
     state.example ? "example" : "analysis",
     state.example || state.analysis.id,
@@ -143,7 +150,7 @@ function updateURL(push = false) {
   history[push ? "pushState" : "replaceState"]({}, "", url);
 }
 async function readJSON(url, options = {}) {
-  const response = await fetch(url, options);
+  const response = await fetch(apiURL(url), options);
   let result;
   try {
     result = await response.json();
@@ -191,7 +198,7 @@ async function load(url, example, index, push) {
 }
 function accept(a, example, index = 0, push = false) {
   $("monitor").checked = false;
-  $("monitor-control").hidden = a.request.mode !== "current";
+  $("monitor-control").hidden = staticDemo || a.request.mode !== "current";
   $("monitor-next").textContent = "";
   state.analysis = a;
   state.example = example;
@@ -208,7 +215,7 @@ function accept(a, example, index = 0, push = false) {
 }
 function render() {
   const a = state.analysis,
-    [, title, summary] = conclusion(a);
+    [, title] = conclusion(a);
   for (const id of [
     "conclusion",
     "comparison-panel",
@@ -217,16 +224,8 @@ function render() {
   ])
     $(id).hidden = false;
   $("conclusion-title").textContent = title;
-  $("fullscreen-decision").innerHTML =
-    `<strong>${esc(title)}</strong><p>${esc(summary)}</p>`;
-  $("conclusion-text").textContent = summary;
-  $("plan-condition").textContent =
-    `${a.request.task_name || "Работа за бортом станции"}, ${numeric(a.request.duration_hours, 1)} ч, ${a.request.requires_sunlight ? "нужен солнечный свет" : "освещение не ограничивает план"}, ${modes[a.request.mode]}`;
-
+  $("fullscreen-decision").textContent = title;
   $("conclusion").dataset.outcome = a.comparison.outcome;
-  $("result-label").textContent = state.example
-    ? "СОХРАНЁННЫЙ РАСЧЁТ / " + modes[a.request.mode].toUpperCase()
-    : "ЗАКЛЮЧЕНИЕ / " + modes[a.request.mode].toUpperCase();
   $("context-date").textContent = dateLabel(a.request.start);
   $("plan-duration").textContent =
     `${numeric(a.request.duration_hours, 1)} ч / UTC`;
@@ -584,6 +583,7 @@ function report() {
 }
 
 async function calculate(refresh = false, automatic = false) {
+  if (staticDemo) return openPlan();
   if (state.busy) return;
   $("start").setCustomValidity("");
   $("cutoff").setCustomValidity("");
@@ -832,7 +832,7 @@ function rememberAnalysis(a, example) {
   }
 }
 function currentPage() {
-  return location.pathname.split("/")[1] || "planner";
+  return (staticDemo ? new URLSearchParams(location.search).get("page") : location.pathname.split("/")[1]) || "planner";
 }
 function applyRoute() {
   const page = pages[currentPage()] ? currentPage() : "planner";
@@ -859,13 +859,17 @@ function applyRoute() {
 }
 function navigate(page, push = true) {
   if (!pages[page]) return;
-  const url = new URL(location.href);
-  url.pathname = "/" + page;
+  const url = routeURL(page);
+  for (const key of ["example", "analysis", "window"]) {
+    const value = new URLSearchParams(location.search).get(key);
+    if (value !== null) url.searchParams.set(key, value);
+  }
   history[push ? "pushState" : "replaceState"]({}, "", url);
   applyRoute();
   window.scrollTo(0, 0);
 }
 function openPlan() {
+  if (staticDemo) return toast("Новые расчёты доступны при запуске сервера. Здесь можно выбрать сохранённый пример.");
   $("form-status").textContent = "";
   $("plan-dialog").showModal();
 }
@@ -873,7 +877,7 @@ function archiveRow(row, example = false) {
   const title = example
     ? examples[row.name]
     : row.task_name || "Работа " + clock(row.start);
-  const url = new URL("/planner", location.origin);
+  const url = routeURL("planner");
   url.searchParams.set(
     example ? "example" : "analysis",
     example ? row.name : row.id,
@@ -887,7 +891,7 @@ function renderArchive() {
     `${example ? examples[r.name] : r.task_name || "Работа"} ${r.result || ""} ${r.start} ${dateLabel(r.start)} ${modes[r.mode]}`
       .toLocaleLowerCase()
       .includes(query);
-  const recent = remembered().filter((r) => matches(r, false));
+  const recent = staticDemo ? [] : remembered().filter((r) => matches(r, false));
   const samples = archiveExamples.filter((r) => matches(r, true));
   $("archive-count").textContent = `Найдено: ${recent.length + samples.length}`;
   $("archive-list").innerHTML =
@@ -981,7 +985,7 @@ async function fromURL() {
   applyRoute();
   const p = new URLSearchParams(location.search),
     index = Number(p.get("window") || 0);
-  if (p.has("analysis") && /^[a-f0-9]{32}$/.test(p.get("analysis")))
+  if (!staticDemo && p.has("analysis") && /^[a-f0-9]{32}$/.test(p.get("analysis")))
     await load("/api/analyses/" + p.get("analysis"), null, index, false);
   else await loadExample(p.get("example") || "sunlight", index, false);
 }
@@ -1000,6 +1004,7 @@ $("present").addEventListener("click", () => {
   scene.draw();
 });
 async function loadProviderHealth(refresh = false) {
+  if (staticDemo) return;
   const button = $("refresh-providers");
   if (button.disabled) return;
   button.disabled = true;
@@ -1043,7 +1048,7 @@ async function loadValidation() {
   try {
     const d = await readJSON("/api/validation");
     $("validation-summary").innerHTML =
-      `<p>Выбор только по освещению. <strong>${d.cases} планов, ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="/api/validation" target="_blank" rel="noopener">Полные результаты</a></p>`;
+      `<p>Выбор только по освещению. <strong>${d.cases} планов, ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="${apiURL("/api/validation")}" target="_blank" rel="noopener">Полные результаты</a></p>`;
   } catch {
     $("validation-summary").textContent =
       "Отчёт проверки пока недоступен. Команда воспроизведения: python scripts/validate_planning.py";
@@ -1058,7 +1063,7 @@ $("export-bundle").addEventListener("click", async () => {
     const url = state.example
       ? `/api/examples/${state.example}/bundle.zip`
       : `/api/analyses/${state.analysis.id}/bundle.zip`;
-    const response = await fetch(url);
+    const response = await fetch(apiURL(url));
     if (!response.ok)
       throw Error("Исходные байты недоступны или не прошли проверку.");
     download(
@@ -1093,7 +1098,7 @@ $("monitor").addEventListener("change", scheduleMonitor);
 async function loadWeatherValidation() {
   try {
     const d = await readJSON("/api/validation/weather");
-    $("weather-validation").innerHTML = `<h3>Погодные предупреждения</h3><p>${numeric(d.labelled_days)} суток по сводкам NOAA SGAS. Порог внимания ${numeric(d.alert_threshold_percent)}%.</p><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div><p class="small">Проверка по текстовым сводкам, не по непрерывному потоку частиц. Один неоднозначный день исключён. <a href="/api/validation/weather" target="_blank" rel="noopener">Даты, источники и ошибки</a></p>`;
+    $("weather-validation").innerHTML = `<h3>Погодные предупреждения</h3><p>${numeric(d.labelled_days)} суток по сводкам NOAA SGAS. Порог внимания ${numeric(d.alert_threshold_percent)}%.</p><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div><p class="small">Проверка по текстовым сводкам, не по непрерывному потоку частиц. Один неоднозначный день исключён. <a href="${apiURL("/api/validation/weather")}" target="_blank" rel="noopener">Даты, источники и ошибки</a></p>`;
   } catch { $("weather-validation").textContent = "Погодная проверка недоступна."; }
 }
 loadWeatherValidation();
