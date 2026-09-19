@@ -313,7 +313,6 @@ function renderTimeline(w) {
         .map((e) => interval(e.event.valid_start, e.event.valid_end, "weather"))
         .join("");
       text = missing ? "Неполное покрытие" : factorValue(f);
-      hint = "Суточный прогноз";
     } else if (f.mechanism === "lighting") {
       const intervals = f.evidence.flatMap((e) => e.intervals || []);
       marks = intervals.map((i) => interval(i.start, i.end, "shadow")).join("");
@@ -322,7 +321,7 @@ function renderTimeline(w) {
         : f.state === "not_requested"
           ? "Условие не задано"
           : factorValue(f);
-      hint = f.decision_eligible ? "Условие плана" : "Вне сравнения";
+      hint = f.decision_eligible ? "" : "Вне сравнения";
     } else {
       marks = f.evidence
         .filter((e) => e.event?.tca)
@@ -334,9 +333,9 @@ function renderTimeline(w) {
         })
         .join("");
       text = missing ? "Нет полных актуальных данных" : factorValue(f);
-      hint = f.decision_eligible ? "Сводка сближений МКС" : "Вне сравнения";
+      hint = f.decision_eligible ? "" : "Вне сравнения";
     }
-    return `<div class="timeline-row"><button class="lane-label" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}<small>${esc(hint)}</small></button><div class="track ${missing ? "unknown" : ""}" role="img" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}<span class="track-text">${esc(text)}</span><span class="track-cursor"></span></div><button class="detail-button" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
+    return `<div class="timeline-row"><button class="lane-label" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}${hint ? `<small>${esc(hint)}</small>` : ""}</button><div class="track ${missing ? "unknown" : ""}" role="img" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}<span class="track-text">${esc(text)}</span><span class="track-cursor"></span></div><button class="detail-button" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
   });
   $("timeline").innerHTML =
     `<div class="timeline-axis">${[0, 0.25, 0.5, 0.75, 1].map((p) => `<span>${clock(lo + p * (hi - lo))}</span>`).join("")}</div>` +
