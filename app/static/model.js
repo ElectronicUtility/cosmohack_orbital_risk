@@ -49,6 +49,7 @@ export const esc = (s) =>
 export const label = (s) => statuses[s] || names[s] || modes[s] || s || "—";
 Object.assign(statuses, {
   archived: "Архивная запись",
+  archived_local_extract: "Архивная выборка",
   unknown: "Неизвестно",
   historical_reconstruction_publication_unknown:
     "Реконструкция, публикация неизвестна",

@@ -65,9 +65,9 @@ export class OrbitScene {
     canvas.height = Math.round(h * dpr);
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
     c.clearRect(0, 0, w, h);
-    const r = Math.min(w * 0.265, h * 0.365),
-      cx = w * 0.55,
-      cy = h * 0.55,
+    const r = Math.min(w * 0.32, h * 0.345),
+      cx = w * 0.54,
+      cy = h * 0.54,
       sy = Math.sin(this.yaw),
       co = Math.cos(this.yaw),
       sp = Math.sin(this.pitch),
@@ -81,32 +81,6 @@ export class OrbitScene {
         z: z * sp + b * cp,
       };
     };
-    // Faint reticle conveys a coordinate frame rather than a geographical map.
-    c.strokeStyle = "#26382e";
-    c.lineWidth = 0.6;
-    c.setLineDash([3, 8]);
-    c.beginPath();
-    c.moveTo(cx - r * 1.5, cy);
-    c.lineTo(cx + r * 1.5, cy);
-    c.moveTo(cx, cy - r * 1.35);
-    c.lineTo(cx, cy + r * 1.35);
-    c.stroke();
-    c.setLineDash([]);
-    c.strokeStyle = "#314735";
-    c.beginPath();
-    c.arc(cx, cy, r * 1.19, 0, TAU);
-    c.stroke();
-    for (let i = 0; i < 72; i++) {
-      const a = (i * TAU) / 72;
-      const l = i % 6 ? 3 : 7;
-      c.beginPath();
-      c.moveTo(
-        cx + Math.cos(a) * (r * 1.19 - l),
-        cy + Math.sin(a) * (r * 1.19 - l),
-      );
-      c.lineTo(cx + Math.cos(a) * r * 1.19, cy + Math.sin(a) * r * 1.19);
-      c.stroke();
-    }
     const paths = this.windows.map((w) =>
       w.orbit.map((s) => project(s.position_teme_km)),
     );
@@ -128,7 +102,7 @@ export class OrbitScene {
       c.setLineDash([]);
     };
     paths.forEach((p, i) =>
-      line(p, i === this.selected ? "#82925c" : "#344439", true),
+      line(p, i === this.selected ? "#7595c3" : "#dce2ec", true),
     );
     const sphere = c.createRadialGradient(
       cx - r * 0.4,
@@ -138,14 +112,14 @@ export class OrbitScene {
       cy,
       r,
     );
-    sphere.addColorStop(0, "#345248");
-    sphere.addColorStop(0.5, "#203c32");
-    sphere.addColorStop(1, "#10251e");
+    sphere.addColorStop(0, "#fcfdff");
+    sphere.addColorStop(0.5, "#e5ebf3");
+    sphere.addColorStop(1, "#bbc9dc");
     c.fillStyle = sphere;
     c.beginPath();
     c.arc(cx, cy, r, 0, TAU);
     c.fill();
-    c.strokeStyle = "#5f8960";
+    c.strokeStyle = "#9dacc1";
     c.lineWidth = 1;
     c.stroke();
     const grid = (points) => {
@@ -161,7 +135,7 @@ export class OrbitScene {
       }
       c.stroke();
     };
-    c.strokeStyle = "#65846855";
+    c.strokeStyle = "#8a9db75c";
     c.lineWidth = 0.65;
     for (let lat = -75; lat <= 75; lat += 15) {
       const a = (lat * Math.PI) / 180;
@@ -189,54 +163,29 @@ export class OrbitScene {
         }),
       );
     }
-    // Subtle stippling on the visible sphere, deterministic and schematic.
-    c.fillStyle = "#b3cca529";
-    for (let lat = -70; lat <= 70; lat += 5)
-      for (let lon = 0; lon < 360; lon += 5) {
-        const a = (lat * Math.PI) / 180,
-          b = (lon * Math.PI) / 180,
-          p = project([
-            R * Math.cos(a) * Math.cos(b),
-            R * Math.cos(a) * Math.sin(b),
-            R * Math.sin(a),
-          ]);
-        if (p.z > 0) c.fillRect(p.x, p.y, 0.8, 0.8);
-      }
     paths.forEach((p, i) =>
-      line(p, i === this.selected ? "#d5f985" : "#729a6d66"),
+      line(p, i === this.selected ? "#245ac5" : "#9cacc266"),
     );
     const p = paths[this.selected]?.[this.sample];
     if (p) {
       const behind = p.z < 0 && Math.hypot(p.x - cx, p.y - cy) < r;
       c.setLineDash(behind ? [2, 3] : []);
-      c.strokeStyle = "#d5f985";
-      c.lineWidth = 1;
+      c.strokeStyle = "#c96a2b";
+      c.lineWidth = 1.5;
       c.beginPath();
       c.arc(p.x, p.y, 7, 0, TAU);
       c.stroke();
       c.setLineDash([]);
       if (!behind) {
-        c.fillStyle = "#e5ffa5";
+        c.fillStyle = "#c96a2b";
         c.beginPath();
         c.arc(p.x, p.y, 3, 0, TAU);
         c.fill();
       }
-      c.font = "10px Consolas,monospace";
-      c.fillStyle = "#e1eccb";
+      c.font = "12px Segoe UI, sans-serif";
+      c.fillStyle = "#364963";
       const tx = p.x > w * 0.7 ? p.x - 110 : p.x + 16;
-      c.fillText(
-        behind
-          ? "МКС · за Землёй"
-          : "МКС / " + String.fromCharCode(65 + this.selected),
-        tx,
-        p.y - 12,
-      );
+      c.fillText(behind ? "МКС · за Землёй" : "МКС", tx, p.y - 12);
     }
-    c.fillStyle = "#8ba18c";
-    c.font = "9px Consolas,monospace";
-    c.fillText("TEME / СХЕМА", 20, h - 40);
-    c.textAlign = "right";
-    c.fillText("R⊕ 6 378 км", w - 20, 26);
-    c.textAlign = "left";
   }
 }

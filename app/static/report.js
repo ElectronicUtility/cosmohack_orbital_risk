@@ -8,7 +8,7 @@ import {
   factorValue,
   label,
   safeURL,
-} from "./model.js";
+} from "./model.js?v=20260919-2";
 function link(url, text) {
   const safe = safeURL(url);
   return safe
