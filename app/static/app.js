@@ -26,7 +26,7 @@ import {
 import { OrbitScene } from "./orbit.js?v=20260919-7";
 import { buildReport } from "./report.js?v=20260919-7";
 
-import { initTooltips, infoButton } from "./tooltips.js?v=20260919-7";
+import { initTooltips, infoButton } from "./tooltips.js?v=20260919-8";
 const tips = initTooltips();
 
 const $ = (id) => document.getElementById(id),

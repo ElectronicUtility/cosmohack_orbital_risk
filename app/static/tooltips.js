@@ -16,7 +16,10 @@ export function initTooltips() {
   let trigger = null,
     timer,
     dismissed = null,
-    pinned = false;
+    pinned = false,
+    hoverPoint = null,
+    anchor = null,
+    frame = null;
   const selector = "[data-tip], button[title], button[aria-label]";
   const description = (el) =>
     el?.getAttribute("title") ||
@@ -28,6 +31,9 @@ export function initTooltips() {
     node instanceof Element ? node.closest(selector) : null;
   function hide() {
     clearTimeout(timer);
+    cancelAnimationFrame(frame);
+    frame = null;
+    anchor = null;
     if (trigger) {
       const ids = (trigger.getAttribute("aria-describedby") || "")
         .split(/\s+/)
@@ -47,22 +53,21 @@ export function initTooltips() {
       width = document.documentElement.clientWidth;
     const height = window.innerHeight,
       tip = bubble.getBoundingClientRect();
-    const left = Math.max(
-      12,
-      Math.min(
-        width - tip.width - 12,
-        box.left + box.width / 2 - tip.width / 2,
-      ),
-    );
-    const below = box.bottom + 9;
+    const preferredLeft = anchor
+      ? anchor.x + 16 + tip.width <= width - 12
+        ? anchor.x + 16
+        : anchor.x - tip.width - 16
+      : box.left + box.width / 2 - tip.width / 2;
+    const left = Math.max(12, Math.min(width - tip.width - 12, preferredLeft));
+    const below = anchor ? anchor.y + 16 : box.bottom + 9;
     const top =
       below + tip.height < height - 12
         ? below
-        : Math.max(12, box.top - tip.height - 9);
+        : Math.max(12, (anchor ? anchor.y - 16 : box.top - 9) - tip.height);
     bubble.style.left = `${left}px`;
     bubble.style.top = `${top}px`;
   }
-  function show(el, pin = false) {
+  function show(el, pin = false, point = null) {
     const text = description(el);
     if (!text || !el?.isConnected || el === dismissed || el.disabled) return;
     hide();
@@ -74,6 +79,7 @@ export function initTooltips() {
     }
     trigger = el;
     pinned = pin;
+    anchor = point;
     bubble.textContent = text;
     const ids = (el.getAttribute("aria-describedby") || "")
       .split(/\s+/)
@@ -92,8 +98,27 @@ export function initTooltips() {
     const el = find(e.target);
     if (!el || el.contains(e.relatedTarget) || !description(el)) return;
     dismissed = null;
+    hoverPoint = { el, x: e.clientX, y: e.clientY };
     clearTimeout(timer);
-    timer = setTimeout(() => show(el), 280);
+    timer = setTimeout(
+      () => show(el, false, hoverPoint?.el === el ? hoverPoint : null),
+      280,
+    );
+  });
+  document.addEventListener("pointermove", (e) => {
+    if (e.pointerType === "touch" || pinned) return;
+    const el = find(e.target);
+    if (!el || el !== hoverPoint?.el) return;
+    hoverPoint = { el, x: e.clientX, y: e.clientY };
+    // Freeze when leaving the trigger so the tooltip itself remains reachable.
+    // Keyboard and click-opened tooltips keep their element-based placement.
+    if (el !== trigger || !anchor) return;
+    anchor = hoverPoint;
+    if (frame === null)
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        place();
+      });
   });
   document.addEventListener("pointerout", (e) => {
     const el = find(e.target);
