@@ -164,3 +164,15 @@ test("decision excludes historical lighting in replay and distinguishes dominate
   a.request.task_name = "<img src=x onerror=alert(1)>";
   assert.equal(buildReport(a).includes("<img src=x"), false);
 });
+
+test("tooltip metadata cannot inject markup or break attribute boundaries", async () => {
+  const { infoButton } = await import("../app/static/tooltips.js");
+  const button = infoButton(
+    '<img src=x onerror="alert(1)">',
+    '" autofocus onfocus="alert(1)',
+  );
+  assert.equal(button.includes("<img"), false);
+  assert.equal(button.includes('aria-label="" autofocus'), false);
+  assert.ok(button.includes("&lt;img"));
+  assert.ok(button.includes('type="button"'));
+});
