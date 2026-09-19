@@ -1,13 +1,2 @@
-*.py text eol=lf
-*.md text eol=lf
-*.json text eol=lf
-*.txt text eol=lf
-*.html text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.parquet binary
-data/noaa/*/*.txt binary
-data/noaa/sep_catalog_*.html binary
-data/conjunctions/*.html binary
-data/iss_2024_may_june.json binary
-tests/fixtures/** binary
+# Evidence hashes must survive Windows checkouts with core.autocrlf enabled.
+data/** -text
