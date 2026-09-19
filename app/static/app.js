@@ -847,7 +847,7 @@ function applyRoute() {
   tips.hide();
   const page = pages[currentPage()] ? currentPage() : "planner";
   document.body.dataset.route = page;
-  document.title = pages[page] + " – Орбитальный риск";
+  document.title = pages[page] + ": Орбитальный риск";
   $("page-title").textContent = pages[page];
   $("breadcrumb").textContent = pages[page];
   $$("[data-page]").forEach((el) => (el.hidden = el.dataset.page !== page));
