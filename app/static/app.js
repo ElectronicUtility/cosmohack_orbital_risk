@@ -16,9 +16,15 @@ import {
   normalizeWindow,
   shadowAt,
   eligibility,
-} from "./model.js?v=20260919-5";
-import { OrbitScene } from "./orbit.js?v=20260919-5";
-import { buildReport } from "./report.js?v=20260919-5";
+  decisionRows,
+  windowRole,
+  parseUTC,
+  inputUTC,
+  publicationLabel,
+  quantityLabel,
+} from "./model.js?v=20260919-6";
+import { OrbitScene } from "./orbit.js?v=20260919-6";
+import { buildReport } from "./report.js?v=20260919-6";
 
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
@@ -33,7 +39,9 @@ const state = {
 };
 const scene = new OrbitScene($("orbit-canvas"));
 const examples = {
-  window_demo: "Свет и тень",
+  sunlight: "Работа на свету",
+  tradeoff: "Свет или погодный прогноз",
+  window_demo: "Проверка прошлого решения",
   event: "Солнечное событие",
   control: "Контрольный период",
 };
@@ -81,10 +89,11 @@ function modeUI() {
 }
 function fillForm(request) {
   $("mode").value = request.mode;
-  $("start").value = request.start.slice(0, 16);
+  $("start").value = inputUTC(request.start);
+  $("task-name").value = request.task_name || "";
   $("duration").value = request.duration_hours;
   $("search").value = request.search_hours;
-  $("cutoff").value = (request.cutoff || request.start).slice(0, 16);
+  $("cutoff").value = inputUTC(request.cutoff || request.start);
   $("sunlight").checked = request.requires_sunlight;
   modeUI();
   $("start").setCustomValidity("");
@@ -93,6 +102,7 @@ function fillForm(request) {
 function formRequest() {
   return requestFromValues({
     mode: $("mode").value,
+    task_name: $("task-name").value,
     start: $("start").value,
     duration: $("duration").value,
     search: $("search").value,
@@ -149,7 +159,7 @@ async function readJSON(url, options = {}) {
   return result;
 }
 async function loadExample(name, index = 0, push = true) {
-  if (!examples[name]) name = "window_demo";
+  if (!examples[name]) name = "sunlight";
   await load(`/api/examples/${name}`, name, index, push);
 }
 async function load(url, example, index, push) {
@@ -204,13 +214,12 @@ function render() {
   ])
     $(id).hidden = false;
   $("conclusion-title").textContent = title;
-  $("conclusion-text").textContent =
-    {
-      equivalent: "По факторам, включённым в сравнение.",
-      preferred: "По факторам, включённым в сравнение.",
-      insufficient: "Проверьте покрытие и актуальность источников.",
-      tradeoff: "Ни один вариант не лучше по всем факторам.",
-    }[a.comparison.outcome] || summary;
+  $("fullscreen-decision").innerHTML =
+    `<strong>${esc(title)}</strong><p>${esc(summary)}</p>`;
+  $("conclusion-text").textContent = summary;
+  $("plan-condition").textContent =
+    `${a.request.task_name || "Работа за бортом станции"} · ${numeric(a.request.duration_hours, 1)} ч · ${a.request.requires_sunlight ? "нужен солнечный свет" : "освещение не ограничивает план"} · ${modes[a.request.mode]}`;
+
   $("conclusion").dataset.outcome = a.comparison.outcome;
   $("result-label").textContent = state.example
     ? "СОХРАНЁННЫЙ РАСЧЁТ / " + modes[a.request.mode].toUpperCase()
@@ -237,16 +246,18 @@ function renderWindows() {
   const a = state.analysis;
   $("window-cards").innerHTML = a.windows
     .map((w, i) => {
-      const f = w.factors.find((f) => f.mechanism === "lighting");
-      const shadow =
-        f?.evidence
-          .flatMap((e) => e.intervals || [])
-          .map((t) => {
-            const p = intervalPercent(t.start, t.end, w.window);
-            return p ? `<i style="left:${p.left}%;width:${p.width}%"></i>` : "";
-          })
-          .join("") || "";
-      return `<button class="window-card" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time">с ${clock(w.window.start)} до ${clock(w.window.end)}</span><span class="window-offset">${i === 0 ? "Исходное начало" : "Перенос +" + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 2) + " ч"}</span><span class="window-day">${esc(dateLabel(w.window.start))}${w.window.start.slice(0, 10) !== w.window.end.slice(0, 10) ? " по " + esc(dateLabel(w.window.end)) : ""}${a.comparison.preferred_index === i ? ", Предпочтительно" : ""}</span></span><span><span class="shadow-value">${!f || f.state === "insufficient" ? "Нет данных" : f.state === "not_requested" ? "Не задано" : numeric(f.overlap_minutes) + " мин"}</span><span class="shadow-mini" aria-hidden="true">${shadow}</span></span></button>`;
+      const light = w.factors.find((f) => f.mechanism === "lighting"),
+        weather = w.factors.find((f) => f.mechanism === "space_weather");
+      const role = windowRole(a, i),
+        dominated = role === "Уступает другим";
+      const shadow = (light?.evidence || [])
+        .flatMap((e) => e.intervals || [])
+        .map((t) => {
+          const p = intervalPercent(t.start, t.end, w.window);
+          return p ? `<i style="left:${p.left}%;width:${p.width}%"></i>` : "";
+        })
+        .join("");
+      return `<button class="window-card ${dominated ? "dominated" : ""}" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time">${clock(w.window.start)}–${clock(w.window.end)}</span><span class="window-day">${w.window.start.slice(0, 10) !== a.request.start.slice(0, 10) ? esc(dateLabel(w.window.start)) : ""}</span><span class="window-offset">${i === 0 ? "Исходное начало" : "Перенос +" + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 1) + " ч"}</span><span class="window-role">${esc(role)}</span></span><span class="compare-weather"><strong>${weather ? esc(factorValue(weather)) : "Нет данных"}</strong><small>${weather?.decision_eligible ? "" : "Вне сравнения"}</small></span><span><strong>${!light || light.state === "insufficient" ? "Нет данных" : light.state === "not_requested" ? "Не задано" : numeric(light.overlap_minutes, 1) + " мин"}</strong><span class="shadow-mini" aria-hidden="true">${shadow}</span><small>${light?.decision_eligible ? "" : "Справочно"}</small></span></button>`;
     })
     .join("");
 }
@@ -269,8 +280,7 @@ function renderSelected() {
   const w = state.analysis.windows[state.selected];
   $("timeline-window").textContent =
     `с ${clock(w.window.start)} до ${clock(w.window.end)}`;
-  $("scene-title").textContent =
-    "Орбита МКС";
+  $("scene-title").textContent = "Орбита МКС";
   $("scrub").max = Math.max(0, w.orbit.length - 1);
   $("scrub").value = 0;
   $("scrub").disabled = !w.orbit.length;
@@ -284,7 +294,7 @@ function renderSelected() {
     .filter((f) => f.mechanism !== "lighting")
     .map(
       (f) =>
-        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])} <span aria-hidden="true">›</span></button><div><strong class="${f.state === "attention" ? "attention" : ""}">${esc(factorValue(f))}</strong>${!f.decision_eligible ? "<small>Вне сравнения</small>" : ""}</div></div>`,
+        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}">${esc(f.mechanism === "space_weather" ? "Протонное событие за сутки" : names[f.mechanism])} <span aria-hidden="true">›</span></button><div><strong class="${f.state === "attention" ? "attention" : ""}">${esc(factorValue(f))}</strong>${!f.decision_eligible ? "<small>Вне сравнения</small>" : ""}</div></div>`,
     )
     .join("");
   renderTimeline(w);
@@ -432,9 +442,10 @@ function sourceBlock(r) {
       ["Опубликовано", stamp(r.published_at)],
       ["Получено", stamp(r.retrieved_at)],
       ["Состояние записи", label(r.cache_state)],
-      ["Основание времени", label(r.publication_basis || "unknown")],
+      ["Основание времени", publicationLabel(r.publication_basis)],
     ],
-  )}${link(r.url)}<details><summary>Идентификатор и контрольная сумма</summary><pre>${esc(r.source)}\n${esc(r.id)}\nSHA-256 ${esc(r.content_sha256)}</pre></details></article>`;
+  )}${link(r.url)}<details><summary>Идентификатор и контрольная сумма</summary><pre>${esc(r.source)}\n${esc(r.id)}\nSHA-256 ${esc(r.content_sha256)}
+${esc(r.publication_basis)}</pre></details></article>`;
 }
 function showSources() {
   if (!state.analysis) {
@@ -449,21 +460,10 @@ function showSources() {
 function showWhy() {
   const a = state.analysis;
   if (!a) return;
+  const rows = decisionRows(a);
   drawer(
     conclusion(a)[1],
-    `<p class="evidence-intro">Сравниваются окна одинаковой длительности: ${numeric(a.request.duration_hours, 1)} ч. Факторы сравниваются отдельно, без общего балла риска.</p>${grid(
-      [
-        ["Режим", modes[a.request.mode]],
-        ["Начало плана", stamp(a.request.start)],
-        [
-          "Учитываемые механизмы",
-          a.comparison.decision_mechanisms
-            .map((s) => names[s] || s)
-            .join(", ") || "Недостаточно данных",
-        ],
-        ["Версия алгоритма", a.algorithm_version],
-      ],
-    )}<div class="evidence-block"><h3>Основания сравнения</h3>${a.comparison.reasons.map((r) => `<p>${esc(r)}</p>`).join("")}</div>${a.comparison.excluded_mechanisms.length ? `<div class="eligibility">Вне рекомендации: ${a.comparison.excluded_mechanisms.map((f) => esc(names[f.mechanism])).join(", ")}. Эти сведения доступны для исследования и не подменяют допустимые для решения данные.</div>` : ""}<details><summary>Точные правила и исключения из API</summary><pre>${esc(JSON.stringify(a.comparison, null, 2))}</pre></details>`,
+    `<p class="evidence-intro">${esc(conclusion(a)[2])}</p><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th>Условие</th>${a.windows.map((w) => `<th>${clock(w.window.start)}<small>${esc(dateLabel(w.window.start))}</small></th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr><th>${esc(r.title)}</th>${r.values.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}<tr><th>Выбор</th>${a.windows.map((w, i) => `<td>${esc(windowRole(a, i))}</td>`).join("")}</tr></tbody></table></div><p>Сравниваем одинаковую длительность: ${numeric(a.request.duration_hours, 1)} ч. Вариант уступает, если другой не хуже по всем учитываемым условиям и лучше хотя бы по одному.</p>${a.comparison.excluded_mechanisms.length ? `<p class="eligibility">Справочно, вне выбора: ${a.comparison.excluded_mechanisms.map((f) => esc(names[f.mechanism])).join(", ")}. ${a.request.mode === "replay" ? "Время публикации исторической орбиты не подтверждено." : "Полнота исторического каталога сближений не подтверждена."}</p>` : ""}<div class="evidence-actions">${rows.map((r) => `<button class="outline" data-factor="${esc(r.name)}">${esc(r.title)}</button>`).join("")}</div><details><summary>Метод и точные правила</summary><p>${a.comparison.reasons.map(esc).join(" ")}</p><pre>${esc(JSON.stringify(a.comparison, null, 2))}</pre></details>`,
   );
 }
 function showFactor(mechanism) {
@@ -494,10 +494,15 @@ function showFactor(mechanism) {
                   numeric(ev.min_separation_km, 3) + " км",
                 ],
                 ["Объект", ev.object_name || String(ev.object_norad_id)],
-                ["Классификация", ev.classification],
+                [
+                  "Классификация",
+                  ev.published_at
+                    ? "Сводка источника"
+                    : "Историческая геометрия",
+                ],
               ]
             : [
-                ["Величина", ev.quantity],
+                ["Величина", quantityLabel(ev.quantity)],
                 ["Значение", numeric(ev.value, 2) + " " + ev.unit],
                 ["Действует с", stamp(ev.valid_start)],
                 ["Действует до", stamp(ev.valid_end)],
@@ -507,7 +512,7 @@ function showFactor(mechanism) {
                   ev.observed_at ? stamp(ev.observed_at) : "Это прогноз",
                 ],
               ],
-        )}${link(ev.source_url)}${e.rule ? `<p>${esc(e.rule)}</p>` : ""}</article>`;
+        )}${link(ev.source_url)}</article>`;
       }
       for (const id of e.orbit_records || []) records.add(id);
       if (e.intervals)
@@ -522,30 +527,29 @@ function showFactor(mechanism) {
     .join("");
   drawer(
     names[mechanism],
-    `<p class="evidence-intro">${context}</p>${grid([
+    `<p class="evidence-intro">${esc(factorValue(f))}. ${mechanism === "space_weather" ? "Внешний прогноз NOAA/USAF за указанные сутки." : mechanism === "lighting" ? "Пересечение работы с тенью, рассчитанное командой." : "Сближения станции в охвате выбранного источника."}</p>${grid(
       [
-        "Выбранный вариант",
-        "с " + clock(w.window.start) +
-          " до " +
-          clock(w.window.end) +
-          " UTC",
+        [
+          "Выбранный вариант",
+          "с " + clock(w.window.start) + " до " + clock(w.window.end) + " UTC",
+        ],
+        ["Результат", factorValue(f)],
+        ["Состояние", label(f.state)],
+        [
+          "Покрытие",
+          numeric(f.covered_minutes) + " мин, " + label(f.completeness),
+        ],
+        ["Источник / свежесть", label(f.freshness)],
+        [
+          "Участие в сравнении",
+          !f.decision_eligible
+            ? "Не участвует"
+            : f.state === "insufficient"
+              ? "Не хватает данных"
+              : "Допустим для решения",
+        ],
       ],
-      ["Результат", factorValue(f)],
-      ["Состояние", label(f.state)],
-      [
-        "Покрытие",
-        numeric(f.covered_minutes) + " мин, " + label(f.completeness),
-      ],
-      ["Источник / свежесть", label(f.freshness)],
-      [
-        "Участие в сравнении",
-        !f.decision_eligible
-          ? "Не участвует"
-          : f.state === "insufficient"
-            ? "Не хватает данных"
-            : "Допустим для решения",
-      ],
-    ])}${!f.decision_eligible ? `<div class="eligibility">${esc(eligibility(f))}</div>` : ""}${blocks}${state.analysis.source_records
+    )}${!f.decision_eligible ? `<div class="eligibility">${esc(eligibility(f))}</div>` : ""}${blocks}${state.analysis.source_records
       .filter(
         (r) =>
           records.has(r.id) ||
@@ -554,7 +558,7 @@ function showFactor(mechanism) {
       .map(sourceBlock)
       .join(
         "",
-      )}<details><summary>Ограничения метода (${f.limitations.length})</summary><ul class="evidence-list">${f.limitations.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details><details><summary>Полные доказательства и правило из API</summary><pre>${esc(JSON.stringify(f, null, 2))}</pre></details>`,
+      )}<details><summary>Технические ограничения источника (${f.limitations.length})</summary><ul class="evidence-list">${f.limitations.map((x) => `<li>${esc(x)}</li>`).join("")}</ul></details><details><summary>Модель и исходные поля</summary><p>${context}</p><pre>${esc(JSON.stringify(f, null, 2))}</pre></details>`,
   );
 }
 function download(text, type, name) {
@@ -578,22 +582,26 @@ function report() {
 
 async function calculate(refresh = false) {
   if (state.busy) return;
-  const replay = $("mode").value === "replay";
-  $("cutoff").setCustomValidity(
-    replay && $("cutoff").value > $("start").value
-      ? "Отсечение не может быть позже начала работ."
-      : "",
-  );
-  const historical = $("mode").value !== "current";
-  $("start").setCustomValidity(
-    historical &&
-      ($("start").value < "2024-05-01T00:00" ||
-        $("start").value >= "2024-07-01T00:00")
-      ? "Для истории выберите дату в мае–июне 2024."
-      : "",
-  );
+  $("start").setCustomValidity("");
+  $("cutoff").setCustomValidity("");
+  let request;
+  try {
+    request = formRequest();
+  } catch (e) {
+    status(e.message, "error");
+    return;
+  }
+  if (request.mode === "replay" && request.cutoff > request.start)
+    $("cutoff").setCustomValidity(
+      "Этот момент должен быть не позже начала работы.",
+    );
+  if (
+    request.mode !== "current" &&
+    (request.start < "2024-05-01T00:00" || request.start >= "2024-07-01T00:00")
+  )
+    $("start").setCustomValidity("Доступен архив за май–июнь 2024.");
   if (!$("form").reportValidity()) return;
-  const request = formRequest();
+
   request.refresh = refresh;
   state.controller?.abort();
   state.controller = new AbortController();
@@ -647,17 +655,20 @@ $("form").addEventListener("input", () => {
   dirty();
 });
 $("mode").addEventListener("change", () => {
-  const history = $("mode").value !== "current";
-  if (history && $("start").value.slice(0, 4) !== "2024") {
-    $("start").value = "2024-05-10T06:00";
-    $("cutoff").value = "2024-05-10T00:00";
-  } else if (!history)
-    $("start").value = new Date(Date.now() + 3600000)
-      .toISOString()
-      .slice(0, 16);
+  if ($("mode").value === "current")
+    $("start").value = inputUTC(Date.now() + 3600000);
+  else {
+    try {
+      if (parseUTC($("start").value).slice(0, 4) !== "2024") throw Error();
+    } catch {
+      $("start").value = "05.05.2024 01:00";
+      $("cutoff").value = "04.05.2024 23:00";
+    }
+  }
   modeUI();
   dirty();
 });
+
 $("scenario").addEventListener("change", () => {
   if (!state.busy && examples[$("scenario").value])
     loadExample($("scenario").value);
@@ -685,13 +696,20 @@ document.addEventListener("visibilitychange", () => {
 const orbitPanel = $("orbit-panel");
 let fullscreenFallback = false;
 function syncOrbitFullscreen() {
-  const expanded = document.fullscreenElement === orbitPanel || fullscreenFallback;
+  const expanded =
+    document.fullscreenElement === orbitPanel || fullscreenFallback;
   orbitPanel.classList.toggle("scene-fullscreen", expanded);
   document.body.classList.toggle("orbit-expanded", expanded);
   $("orbit-fullscreen").setAttribute("aria-pressed", String(expanded));
-  $("orbit-fullscreen").setAttribute("aria-label", expanded ? "Выйти из полноэкранного 3D" : "Развернуть 3D на весь экран");
-  $("orbit-fullscreen").title = expanded ? "Выйти из полного экрана" : "На весь экран";
-  $("orbit-fullscreen").innerHTML = `<svg aria-hidden="true"><use href="#i-${expanded ? "minimize" : "maximize"}" /></svg>`;
+  $("orbit-fullscreen").setAttribute(
+    "aria-label",
+    expanded ? "Выйти из полноэкранного 3D" : "Развернуть 3D на весь экран",
+  );
+  $("orbit-fullscreen").title = expanded
+    ? "Выйти из полного экрана"
+    : "На весь экран";
+  $("orbit-fullscreen").innerHTML =
+    `<svg aria-hidden="true"><use href="#i-${expanded ? "minimize" : "maximize"}" /></svg>`;
   requestAnimationFrame(() => scene.draw());
 }
 $("orbit-fullscreen").addEventListener("click", async () => {
@@ -701,7 +719,8 @@ $("orbit-fullscreen").addEventListener("click", async () => {
     fullscreenFallback = false;
   } else {
     try {
-      if (!orbitPanel.requestFullscreen) throw new Error("Fullscreen unavailable");
+      if (!orbitPanel.requestFullscreen)
+        throw new Error("Fullscreen unavailable");
       await orbitPanel.requestFullscreen();
     } catch {
       // iPhone and embedded browsers may only support fullscreen video.
@@ -795,6 +814,8 @@ function rememberAnalysis(a, example) {
       start: a.request.start,
       duration: a.request.duration_hours,
       mode: a.request.mode,
+      task_name: a.request.task_name || "",
+      result: conclusion(a)[1],
     });
     localStorage.setItem(historyKey, JSON.stringify(rows.slice(0, 50)));
   } catch {
@@ -806,6 +827,7 @@ function currentPage() {
 }
 function applyRoute() {
   const page = pages[currentPage()] ? currentPage() : "planner";
+  document.body.dataset.route = page;
   document.title = pages[page] + " – Орбитальный риск";
   $("page-title").textContent = pages[page];
   $("breadcrumb").textContent = pages[page];
@@ -822,6 +844,7 @@ function applyRoute() {
     syncOrbitFullscreen();
   }
   if (page === "archive") renderArchive();
+  if (page === "sources") loadProviderHealth();
   if (page === "planner") requestAnimationFrame(() => scene.draw());
 }
 function navigate(page, push = true) {
@@ -837,19 +860,21 @@ function openPlan() {
   $("plan-dialog").showModal();
 }
 function archiveRow(row, example = false) {
-  const title = example ? examples[row.name] : "Выход " + clock(row.start);
+  const title = example
+    ? examples[row.name]
+    : row.task_name || "Работа " + clock(row.start);
   const url = new URL("/planner", location.origin);
   url.searchParams.set(
     example ? "example" : "analysis",
     example ? row.name : row.id,
   );
   const detail = `${dateLabel(row.start)} / ${numeric(row.duration, 1)} ч`;
-  return `<a class="archive-row" href="${esc(url.pathname + url.search)}" data-open-analysis><span class="row-icon"><svg><use href="#i-${example ? "orbit" : "plan"}"/></svg></span><span><strong>${esc(title)}</strong><small>${esc(detail)}</small></span><span class="row-meta row-date">${clock(row.start)} UTC</span><span class="row-meta row-mode">${esc(modes[row.mode])}</span><span class="row-arrow" aria-hidden="true">›</span></a>`;
+  return `<a class="archive-row" href="${esc(url.pathname + url.search)}" data-open-analysis><span class="row-icon"><svg><use href="#i-${example ? "orbit" : "plan"}"/></svg></span><span><strong>${esc(title)}</strong><small>${esc(detail)}</small><small>${esc(row.result || "")}</small></span><span class="row-meta row-date">${clock(row.start)} UTC</span><span class="row-meta row-mode">${esc(modes[row.mode])}</span><span class="row-arrow" aria-hidden="true">›</span></a>`;
 }
 function renderArchive() {
   const query = $("archive-search").value.trim().toLocaleLowerCase();
   const matches = (r, example) =>
-    `${example ? examples[r.name] : "Выход"} ${r.start} ${dateLabel(r.start)} ${modes[r.mode]}`
+    `${example ? examples[r.name] : r.task_name || "Работа"} ${r.result || ""} ${r.start} ${dateLabel(r.start)} ${modes[r.mode]}`
       .toLocaleLowerCase()
       .includes(query);
   const recent = remembered().filter((r) => matches(r, false));
@@ -866,6 +891,8 @@ async function loadArchiveExamples() {
         name,
         start: a.request.start,
         mode: a.request.mode,
+        task_name: a.request.task_name || "",
+        result: conclusion(a)[1],
         duration: a.request.duration_hours,
       };
     }),
@@ -913,7 +940,7 @@ function renderSourcesPage() {
     '<p class="empty-state">Нет исходных записей для этого расчёта.</p>';
 }
 document.addEventListener("click", (e) => {
-  const route = e.target.closest("[data-route]");
+  const route = e.target.closest("a[data-route]");
   if (route && !e.ctrlKey && !e.metaKey && !e.shiftKey) {
     e.preventDefault();
     navigate(route.dataset.route);
@@ -946,7 +973,92 @@ async function fromURL() {
     index = Number(p.get("window") || 0);
   if (p.has("analysis") && /^[a-f0-9]{32}$/.test(p.get("analysis")))
     await load("/api/analyses/" + p.get("analysis"), null, index, false);
-  else await loadExample(p.get("example") || "window_demo", index, false);
+  else await loadExample(p.get("example") || "sunlight", index, false);
 }
 window.addEventListener("popstate", fromURL);
 fromURL();
+loadValidation();
+
+$("drawer-body").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-factor]");
+  if (b) showFactor(b.dataset.factor);
+});
+$("present").addEventListener("click", () => {
+  const active = document.body.classList.toggle("presentation");
+  $("present").setAttribute("aria-pressed", String(active));
+  $("present").textContent = active ? "Рабочий вид" : "Для защиты";
+  scene.draw();
+});
+async function loadProviderHealth(refresh = false) {
+  const button = $("refresh-providers");
+  if (button.disabled) return;
+  button.disabled = true;
+  $("provider-status").textContent = refresh
+    ? "Получаем новые выпуски…"
+    : "Проверяем кеш источников…";
+  try {
+    const data = await readJSON(
+      refresh ? "/api/sources/refresh" : "/api/sources",
+      refresh ? { method: "POST" } : {},
+    );
+    const states = {
+      cache_fresh: "Кеш актуален",
+      cache_stale: "Обновите кеш",
+      source_stale: "Выпуск устарел",
+      missing: "Ещё не загружен",
+      disabled: "Источник отключён",
+      invalid: "Запись не прошла проверку",
+      truncated: "Сводка неполная",
+    };
+    $("provider-health").innerHTML = Object.entries(data)
+      .map(
+        ([name, p]) =>
+          `<article class="provider-row"><strong>${esc(sourceNames[name] || name)}</strong><span>${esc(states[p.state] || "Состояние неизвестно")}</span><small>Выпуск: ${stamp(p.source_data_at || p.last_successful_record?.published_at)}<br>Получен: ${stamp(p.last_successful_record?.retrieved_at)}</small></article>`,
+      )
+      .join("");
+    $("provider-status").textContent = refresh
+      ? "Состояние источников обновлено. Сохранённый расчёт не изменён; новый план использует новые данные."
+      : "Состояние кеша на сервере. Пригодность и покрытие проверяются для каждого плана.";
+  } catch (e) {
+    $("provider-status").textContent =
+      "Не удалось проверить источники. Повторите обновление. " + e.message;
+  } finally {
+    button.disabled = false;
+  }
+}
+$("refresh-providers").addEventListener("click", () =>
+  loadProviderHealth(true),
+);
+async function loadValidation() {
+  try {
+    const d = await readJSON("/api/validation");
+    $("validation-summary").innerHTML =
+      `<p>Выбор только по освещению. <strong>${d.cases} планов · ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 2)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="/api/validation" target="_blank" rel="noopener">Полные результаты</a></p>`;
+  } catch {
+    $("validation-summary").textContent =
+      "Отчёт проверки пока недоступен. Команда воспроизведения: python scripts/validate_planning.py";
+  }
+}
+
+$("export-bundle").addEventListener("click", async () => {
+  if (!state.analysis) return;
+  const button = $("export-bundle");
+  button.disabled = true;
+  try {
+    const url = state.example
+      ? `/api/examples/${state.example}/bundle.zip`
+      : `/api/analyses/${state.analysis.id}/bundle.zip`;
+    const response = await fetch(url);
+    if (!response.ok)
+      throw Error("Исходные байты недоступны или не прошли проверку.");
+    download(
+      await response.blob(),
+      "application/zip",
+      "orbital-risk-evidence.zip",
+    );
+  } catch (e) {
+    toast(e.message);
+  } finally {
+    button.disabled = false;
+  }
+});

@@ -1,6 +1,7 @@
 {
-  "id": "e1864746b2524c25a0759f8bfc29f6f0",
+  "id": "9951a29778cd4a16a7ffb506ad8fef21",
   "request": {
+    "task_name": "",
     "mode": "replay",
     "start": "2024-05-02T06:00:00Z",
     "duration_hours": 6.0,
@@ -68,7 +69,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "conjunctions",
@@ -165,7 +166,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "lighting",
@@ -174,154 +175,44 @@
           "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "attention",
           "covered_minutes": 360.0,
-          "overlap_minutes": 130.0,
+          "overlap_minutes": 126.8203125,
           "forecast_probability_percent": null,
           "forecast_horizon_hours": null,
           "supports_next_6h_horizon": null,
           "forecast_temporal_resolution": null,
           "forecast_basis": null,
-          "comparison_value": 130.0,
+          "comparison_value": 126.8203125,
           "comparison_unit": "minutes_of_plan_constraint",
           "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
           "comparison_direction": "lower_is_better",
-          "comparison_tolerance": 0.0,
+          "comparison_tolerance": 1.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
             {
               "quantity": "Earth-shadow interval",
               "unit": "minutes",
-              "value": 130.0,
+              "value": 126.8203125,
               "intervals": [
                 {
                   "start": "2024-05-02T06:00:00+00:00",
-                  "end": "2024-05-02T06:05:00+00:00",
-                  "minutes": 5.0
+                  "end": "2024-05-02T06:28:00.468750+00:00",
+                  "minutes": 28.0078125
                 },
                 {
-                  "start": "2024-05-02T06:05:00+00:00",
-                  "end": "2024-05-02T06:10:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T07:27:50.156250+00:00",
+                  "end": "2024-05-02T08:00:50.156250+00:00",
+                  "minutes": 33.0
                 },
                 {
-                  "start": "2024-05-02T06:10:00+00:00",
-                  "end": "2024-05-02T06:15:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T09:00:43.593750+00:00",
+                  "end": "2024-05-02T09:33:39.843750+00:00",
+                  "minutes": 32.9375
                 },
                 {
-                  "start": "2024-05-02T06:15:00+00:00",
-                  "end": "2024-05-02T06:20:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T06:20:00+00:00",
-                  "end": "2024-05-02T06:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T06:25:00+00:00",
-                  "end": "2024-05-02T06:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:25:00+00:00",
-                  "end": "2024-05-02T07:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:30:00+00:00",
-                  "end": "2024-05-02T07:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:35:00+00:00",
-                  "end": "2024-05-02T07:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:40:00+00:00",
-                  "end": "2024-05-02T07:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:45:00+00:00",
-                  "end": "2024-05-02T07:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:50:00+00:00",
-                  "end": "2024-05-02T07:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T07:55:00+00:00",
-                  "end": "2024-05-02T08:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:00:00+00:00",
-                  "end": "2024-05-02T09:05:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:05:00+00:00",
-                  "end": "2024-05-02T09:10:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:10:00+00:00",
-                  "end": "2024-05-02T09:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:15:00+00:00",
-                  "end": "2024-05-02T09:20:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:20:00+00:00",
-                  "end": "2024-05-02T09:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:25:00+00:00",
-                  "end": "2024-05-02T09:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T09:30:00+00:00",
-                  "end": "2024-05-02T09:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T10:35:00+00:00",
-                  "end": "2024-05-02T10:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T10:40:00+00:00",
-                  "end": "2024-05-02T10:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T10:45:00+00:00",
-                  "end": "2024-05-02T10:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T10:50:00+00:00",
-                  "end": "2024-05-02T10:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T10:55:00+00:00",
-                  "end": "2024-05-02T11:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T11:00:00+00:00",
-                  "end": "2024-05-02T11:05:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T10:33:37.031250+00:00",
+                  "end": "2024-05-02T11:06:29.531250+00:00",
+                  "minutes": 32.875
                 }
               ],
               "orbit_records": [
@@ -339,7 +230,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         }
       ],
       "orbit": [
@@ -1282,7 +1173,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "conjunctions",
@@ -1346,6 +1237,12 @@
                 "excluded_duplicate_state_objects": 11,
                 "duplicate_state_groups": [
                   [
+                    53239,
+                    54216,
+                    58146,
+                    58811
+                  ],
+                  [
                     49044,
                     58460,
                     58898,
@@ -1353,12 +1250,6 @@
                     59097,
                     59287,
                     59294
-                  ],
-                  [
-                    53239,
-                    54216,
-                    58146,
-                    58811
                   ]
                 ],
                 "excluded_known_iss_associations": [],
@@ -1379,7 +1270,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "lighting",
@@ -1388,164 +1279,44 @@
           "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "attention",
           "covered_minutes": 360.0,
-          "overlap_minutes": 140.0,
+          "overlap_minutes": 130.84375,
           "forecast_probability_percent": null,
           "forecast_horizon_hours": null,
           "supports_next_6h_horizon": null,
           "forecast_temporal_resolution": null,
           "forecast_basis": null,
-          "comparison_value": 140.0,
+          "comparison_value": 130.84375,
           "comparison_unit": "minutes_of_plan_constraint",
           "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
           "comparison_direction": "lower_is_better",
-          "comparison_tolerance": 0.0,
+          "comparison_tolerance": 1.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
             {
               "quantity": "Earth-shadow interval",
               "unit": "minutes",
-              "value": 140.0,
+              "value": 130.84375,
               "intervals": [
                 {
-                  "start": "2024-05-02T12:05:00+00:00",
-                  "end": "2024-05-02T12:10:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T12:06:31.406250+00:00",
+                  "end": "2024-05-02T12:39:19.218750+00:00",
+                  "minutes": 32.796875
                 },
                 {
-                  "start": "2024-05-02T12:10:00+00:00",
-                  "end": "2024-05-02T12:15:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T13:39:24.843750+00:00",
+                  "end": "2024-05-02T14:12:09.843750+00:00",
+                  "minutes": 32.75
                 },
                 {
-                  "start": "2024-05-02T12:15:00+00:00",
-                  "end": "2024-05-02T12:20:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T15:12:18.281250+00:00",
+                  "end": "2024-05-02T15:44:59.531250+00:00",
+                  "minutes": 32.6875
                 },
                 {
-                  "start": "2024-05-02T12:20:00+00:00",
-                  "end": "2024-05-02T12:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T12:25:00+00:00",
-                  "end": "2024-05-02T12:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T12:30:00+00:00",
-                  "end": "2024-05-02T12:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T12:35:00+00:00",
-                  "end": "2024-05-02T12:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T13:40:00+00:00",
-                  "end": "2024-05-02T13:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T13:45:00+00:00",
-                  "end": "2024-05-02T13:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T13:50:00+00:00",
-                  "end": "2024-05-02T13:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T13:55:00+00:00",
-                  "end": "2024-05-02T14:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T14:00:00+00:00",
-                  "end": "2024-05-02T14:05:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T14:05:00+00:00",
-                  "end": "2024-05-02T14:10:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T14:10:00+00:00",
-                  "end": "2024-05-02T14:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:10:00+00:00",
-                  "end": "2024-05-02T15:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:15:00+00:00",
-                  "end": "2024-05-02T15:20:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:20:00+00:00",
-                  "end": "2024-05-02T15:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:25:00+00:00",
-                  "end": "2024-05-02T15:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:30:00+00:00",
-                  "end": "2024-05-02T15:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:35:00+00:00",
-                  "end": "2024-05-02T15:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T15:40:00+00:00",
-                  "end": "2024-05-02T15:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T16:45:00+00:00",
-                  "end": "2024-05-02T16:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T16:50:00+00:00",
-                  "end": "2024-05-02T16:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T16:55:00+00:00",
-                  "end": "2024-05-02T17:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T17:00:00+00:00",
-                  "end": "2024-05-02T17:05:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T17:05:00+00:00",
-                  "end": "2024-05-02T17:10:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T17:10:00+00:00",
-                  "end": "2024-05-02T17:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T17:15:00+00:00",
-                  "end": "2024-05-02T17:20:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T16:45:12.656250+00:00",
+                  "end": "2024-05-02T17:17:49.218750+00:00",
+                  "minutes": 32.609375
                 }
               ],
               "orbit_records": [
@@ -1563,7 +1334,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         }
       ],
       "orbit": [
@@ -2506,7 +2277,7 @@
             "S1+ and RSGA Proton are distinct forecast quantities and cannot be compared as identical percentages.",
             "Attention threshold 30% is experimental, configurable, and not an EVA operating limit."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "conjunctions",
@@ -2604,7 +2375,7 @@
             "ISS and object elements are selected at the window start and held fixed through the window; element turnover inside the window is exposed as a sensitivity diagnostic, not converted into a probability.",
             "If no historical encounter is reconstructed inside the screen, no favorable comparison value is assigned."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         },
         {
           "mechanism": "lighting",
@@ -2613,159 +2384,44 @@
           "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
           "state": "attention",
           "covered_minutes": 360.0,
-          "overlap_minutes": 135.0,
+          "overlap_minutes": 129.75,
           "forecast_probability_percent": null,
           "forecast_horizon_hours": null,
           "supports_next_6h_horizon": null,
           "forecast_temporal_resolution": null,
           "forecast_basis": null,
-          "comparison_value": 135.0,
+          "comparison_value": 129.75,
           "comparison_unit": "minutes_of_plan_constraint",
           "comparison_quantity": "Earth-shadow minutes requiring direct sunlight",
           "comparison_direction": "lower_is_better",
-          "comparison_tolerance": 0.0,
+          "comparison_tolerance": 1.0,
           "completeness": "complete",
           "freshness": "historical_reconstruction",
           "evidence": [
             {
               "quantity": "Earth-shadow interval",
               "unit": "minutes",
-              "value": 135.0,
+              "value": 129.75,
               "intervals": [
                 {
-                  "start": "2024-05-02T18:15:00+00:00",
-                  "end": "2024-05-02T18:20:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T18:18:06.093750+00:00",
+                  "end": "2024-05-02T18:50:38.906250+00:00",
+                  "minutes": 32.546875
                 },
                 {
-                  "start": "2024-05-02T18:20:00+00:00",
-                  "end": "2024-05-02T18:25:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T19:51:00.468750+00:00",
+                  "end": "2024-05-02T20:23:28.593750+00:00",
+                  "minutes": 32.46875
                 },
                 {
-                  "start": "2024-05-02T18:25:00+00:00",
-                  "end": "2024-05-02T18:30:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T21:23:53.906250+00:00",
+                  "end": "2024-05-02T21:56:18.281250+00:00",
+                  "minutes": 32.40625
                 },
                 {
-                  "start": "2024-05-02T18:30:00+00:00",
-                  "end": "2024-05-02T18:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T18:35:00+00:00",
-                  "end": "2024-05-02T18:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T18:40:00+00:00",
-                  "end": "2024-05-02T18:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T18:45:00+00:00",
-                  "end": "2024-05-02T18:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T19:50:00+00:00",
-                  "end": "2024-05-02T19:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T19:55:00+00:00",
-                  "end": "2024-05-02T20:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T20:00:00+00:00",
-                  "end": "2024-05-02T20:05:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T20:05:00+00:00",
-                  "end": "2024-05-02T20:10:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T20:10:00+00:00",
-                  "end": "2024-05-02T20:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T20:15:00+00:00",
-                  "end": "2024-05-02T20:20:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T20:20:00+00:00",
-                  "end": "2024-05-02T20:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:25:00+00:00",
-                  "end": "2024-05-02T21:30:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:30:00+00:00",
-                  "end": "2024-05-02T21:35:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:35:00+00:00",
-                  "end": "2024-05-02T21:40:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:40:00+00:00",
-                  "end": "2024-05-02T21:45:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:45:00+00:00",
-                  "end": "2024-05-02T21:50:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T21:50:00+00:00",
-                  "end": "2024-05-02T21:55:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T22:55:00+00:00",
-                  "end": "2024-05-02T23:00:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:00:00+00:00",
-                  "end": "2024-05-02T23:05:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:05:00+00:00",
-                  "end": "2024-05-02T23:10:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:10:00+00:00",
-                  "end": "2024-05-02T23:15:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:15:00+00:00",
-                  "end": "2024-05-02T23:20:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:20:00+00:00",
-                  "end": "2024-05-02T23:25:00+00:00",
-                  "minutes": 5.0
-                },
-                {
-                  "start": "2024-05-02T23:25:00+00:00",
-                  "end": "2024-05-02T23:30:00+00:00",
-                  "minutes": 5.0
+                  "start": "2024-05-02T22:56:48.281250+00:00",
+                  "end": "2024-05-02T23:29:07.968750+00:00",
+                  "minutes": 32.328125
                 }
               ],
               "orbit_records": [
@@ -2783,7 +2439,7 @@
             "Illumination is an operational constraint, not a standalone claim of danger.",
             "Historical orbital elements have no verified publication time; geometry is reconstruction."
           ],
-          "algorithm_version": "0.4.0"
+          "algorithm_version": "0.5.0"
         }
       ],
       "orbit": [
@@ -3693,17 +3349,17 @@
         "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
       }
     ],
-    "algorithm_version": "0.4.0"
+    "algorithm_version": "0.5.0"
   },
-  "created_at": "2026-09-18T21:31:46.643919Z",
-  "algorithm_version": "0.4.0",
+  "created_at": "2026-09-19T18:39:47.131439Z",
+  "algorithm_version": "0.5.0",
   "source_records": [
     {
       "id": "noaa_archive:f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
       "source": "noaa_archive",
       "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240501RSGA.txt",
       "content_sha256": "f99890c568333103463e6c08de0cc5154378607d972c44d5e630f58f30ac217b",
-      "retrieved_at": "2026-09-18T21:31:35.341210Z",
+      "retrieved_at": "2026-09-19T18:39:32.622447Z",
       "published_at": "2024-05-01T22:00:00Z",
       "archive_last_modified_at": "2024-05-01T22:00:10Z",
       "publication_basis": "Issued plus retrospective matching HTTP Last-Modified; no signed historical snapshot",
@@ -3718,7 +3374,7 @@
       "source": "iss_history_extract",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-      "retrieved_at": "2026-09-18T21:31:35.348718Z",
+      "retrieved_at": "2026-09-19T18:39:32.627618Z",
       "published_at": null,
       "archive_last_modified_at": null,
       "publication_basis": "unknown",
@@ -3733,7 +3389,7 @@
       "source": "conjunction_tle_history",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "a735171ba5954a5c5b2e42e6cad72a566a8fb4ea7eef57e0220571f6fb2aad89",
-      "retrieved_at": "2026-09-18T19:43:43.154699Z",
+      "retrieved_at": "2026-09-19T18:13:50.457091Z",
       "published_at": null,
       "archive_last_modified_at": null,
       "publication_basis": "Individual element publication timestamps are unavailable; historical reconstruction only",

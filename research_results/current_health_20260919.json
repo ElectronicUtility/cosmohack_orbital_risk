@@ -1,0 +1,77 @@
+{
+  "noaa_current": {
+    "enabled": true,
+    "state": "cache_fresh",
+    "cache_age_minutes": 1.0906994166666666,
+    "expected_max_age_minutes": 60,
+    "validation_state": "valid",
+    "source_data_at": null,
+    "source_data_age_at_retrieval_minutes": null,
+    "source_expected_max_age_minutes": null,
+    "last_successful_record": {
+      "id": "noaa_current:66e2f859ba8abd0531db3346c4a77c853faeee23454b5335d746dac995d9dc92",
+      "source": "noaa_current",
+      "url": "https://services.swpc.noaa.gov/text/3-day-forecast.txt",
+      "content_sha256": "66e2f859ba8abd0531db3346c4a77c853faeee23454b5335d746dac995d9dc92",
+      "retrieved_at": "2026-09-19T18:47:27.652141Z",
+      "published_at": "2026-09-19T12:30:00Z",
+      "archive_last_modified_at": null,
+      "publication_basis": "unknown",
+      "artifact_path": null,
+      "source_revision": null,
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "fresh"
+    }
+  },
+  "iss_current": {
+    "enabled": true,
+    "state": "cache_fresh",
+    "cache_age_minutes": 1.0799566166666668,
+    "expected_max_age_minutes": 120,
+    "validation_state": "valid",
+    "source_data_at": "2026-09-19T07:17:41.839007+00:00",
+    "source_data_age_at_retrieval_minutes": 689.7742950333334,
+    "source_expected_max_age_minutes": 2880,
+    "last_successful_record": {
+      "id": "iss_current:cedb015de4cc9a6fb945d99311728c0b9d7557a9ab244494a3f2f28b891e1c46",
+      "source": "iss_current",
+      "url": "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=TLE",
+      "content_sha256": "cedb015de4cc9a6fb945d99311728c0b9d7557a9ab244494a3f2f28b891e1c46",
+      "retrieved_at": "2026-09-19T18:47:28.296709Z",
+      "published_at": null,
+      "archive_last_modified_at": null,
+      "publication_basis": "unknown",
+      "artifact_path": null,
+      "source_revision": null,
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "fresh"
+    }
+  },
+  "socrates_current": {
+    "enabled": true,
+    "state": "source_stale",
+    "cache_age_minutes": 1.0749811666666667,
+    "expected_max_age_minutes": 360,
+    "validation_state": "valid",
+    "source_data_at": "2026-09-18T22:16:38+00:00",
+    "source_data_age_at_retrieval_minutes": 1230.8432539333332,
+    "source_expected_max_age_minutes": 720,
+    "last_successful_record": {
+      "id": "socrates_current:18b858b55d96f776ea1619336240126da5481e3b8871740234d5ab50f7c6afd7",
+      "source": "socrates_current",
+      "url": "https://celestrak.org/SOCRATES/table-socrates.php?CATNR=25544,&ORDER=MINRANGE&MAX=100",
+      "content_sha256": "18b858b55d96f776ea1619336240126da5481e3b8871740234d5ab50f7c6afd7",
+      "retrieved_at": "2026-09-19T18:47:28.595236Z",
+      "published_at": "2026-09-18T22:16:38Z",
+      "archive_last_modified_at": null,
+      "publication_basis": "SOCRATES 'Data current as of' timestamp; current-feed provenance, not strict historical publication proof",
+      "artifact_path": null,
+      "source_revision": null,
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "fresh"
+    }
+  }
+}

@@ -6,8 +6,8 @@ export const names = {
 };
 export const modes = {
   current: "Текущая обстановка",
-  reconstruction: "Реконструкция",
-  replay: "Прогноз из прошлого",
+  reconstruction: "Восстановленные условия",
+  replay: "Известно на момент решения",
 };
 export const statuses = {
   attention: "Требует внимания",
@@ -33,7 +33,7 @@ export const statuses = {
   disabled: "Источник отключён",
   invalid: "Ошибка данных",
   truncated: "Неполная сводка",
-  historical_reconstruction: "Реконструкция",
+  historical_reconstruction: "Восстановленные условия",
   historical_reconstruction_publication_unknown: "Время публикации не доказано",
   orbit_missing: "Нет подходящих элементов",
   current: "Текущие элементы",
@@ -59,7 +59,7 @@ export function eligibility(f) {
   if (f.mechanism === "lighting" && f.state === "not_requested")
     return "Требование прямого солнечного света не задано аналитиком.";
   if (f.mechanism === "lighting")
-    return "Время публикации исторических орбитальных элементов не подтверждено. В строгом replay освещение показывается отдельно и не меняет рекомендацию.";
+    return "Время публикации исторических орбитальных элементов не подтверждено. В режиме «Известно на момент решения» освещение показывается отдельно и не меняет рекомендацию.";
   if (f.mechanism === "conjunctions")
     return "Доступность исторических элементов и полнота каталога на момент решения не доказаны. Сближения показаны как реконструкция, вне рекомендации.";
   return f.eligibility_reason || "Фактор не включён в рекомендацию.";
@@ -91,13 +91,13 @@ export function safeURL(value) {
 export function factorValue(f) {
   if (f.state === "insufficient") return "Нет данных";
   if (f.mechanism === "space_weather")
-    return f.forecast_probability_percent === null
+    return !Number.isFinite(f.forecast_probability_percent)
       ? "Разные выпуски"
       : numeric(f.forecast_probability_percent, 1) + "% / сутки";
   if (f.mechanism === "lighting")
     return f.state === "not_requested"
       ? "Не задано"
-      : numeric(f.overlap_minutes) + " мин в тени";
+      : numeric(f.overlap_minutes, 1) + " мин в тени";
   if (f.state === "ambiguous_persistent_proximity") return "Неоднозначно";
   const events = f.evidence
     .map((e) => e.event)
@@ -105,49 +105,120 @@ export function factorValue(f) {
   return events.length
     ? numeric(Math.min(...events.map((e) => e.min_separation_km)), 2) + " км"
     : f.state === "no_reported_close_approach_within_screen"
-      ? "Нет в сводке"
-      : "Нет в выборке";
+      ? "Не найдено в сводке"
+      : "Полнота не подтверждена";
+}
+export function decisionRows(a) {
+  return a.comparison.decision_mechanisms.map((name) => ({
+    name,
+    title:
+      name === "space_weather" ? "Протонное событие за сутки" : names[name],
+    values: a.windows.map((w) =>
+      factorValue(w.factors.find((f) => f.mechanism === name)),
+    ),
+  }));
+}
+export function windowRole(a, i) {
+  const c = a.comparison;
+  if (c.outcome === "insufficient") return "Данных недостаточно";
+  if (c.preferred_index === i) return "Предпочтительно";
+  if (!c.pareto_frontier_indices.includes(i)) return "Уступает другим";
+  return c.outcome === "tradeoff" ? "Компромисс" : "Равнозначно";
 }
 export function conclusion(a) {
-  const c = a.comparison;
-  if (
-    c.outcome === "equivalent" &&
-    c.pareto_frontier_indices.length < a.windows.length
-  ) {
+  const c = a.comparison,
+    rows = decisionRows(a);
+  const details = rows
+    .map(
+      (r) =>
+        `${r.title}: ${[...new Set(c.pareto_frontier_indices.map((i) => r.values[i]))].join(" / ")}.`,
+    )
+    .join(" ");
+  const excludedLight =
+    a.request.requires_sunlight && !c.decision_mechanisms.includes("lighting");
+  if (c.outcome === "insufficient") {
+    const missing = [
+      ...new Set(
+        a.windows.flatMap((w) =>
+          w.factors
+            .filter((f) => f.decision_eligible && f.state === "insufficient")
+            .map((f) => names[f.mechanism]),
+        ),
+      ),
+    ];
     return [
-      "=",
-      "Равнозначны варианты " +
-        c.pareto_frontier_indices
-          .map((i) => `с ${stamp(a.windows[i].window.start)} до ${stamp(a.windows[i].window.end)}`)
-          .join(", "),
-      "Эти варианты равнозначны в пределах допусков. Остальные уступают по учитываемым условиям; подробности в основаниях.",
+      "!",
+      "Для выбора нужны данные",
+      `${missing.join(", ") || "Один из факторов"}: нет полного актуального покрытия. Обновите источники или измените период.`,
     ];
   }
-  return (
-    {
-      preferred: [
-        "↗",
-        `Предпочтительно начало ${stamp(a.windows[c.preferred_index ?? 0].window.start)}`,
-        "По факторам, допустимым для этого режима. Откройте основания, чтобы проверить выбор.",
-      ],
-      equivalent: [
-        "=",
-        "Варианты равнозначны",
-        "По доступным для решения факторам различий недостаточно. Геометрические условия показаны отдельно.",
-      ],
-      insufficient: [
-        "!",
-        "Недостаточно данных для выбора",
-        "Покрытие или качество одного из факторов не позволяет обосновать предпочтение. Проверьте источники.",
-      ],
-      tradeoff: [
-        "↔",
-        "Есть компромисс между факторами",
-        "Ни одно окно не лучше по всем учитываемым условиям. Сопоставьте различия и основания.",
-      ],
-    }[c.outcome] || ["↔", "Сравнение окон", c.reasons.join(" ")]
-  );
+  if (c.outcome === "preferred") {
+    const i = c.preferred_index,
+      w = a.windows[i];
+    const reasons = rows
+      .filter((r) => new Set(r.values).size > 1)
+      .map(
+        (r) =>
+          `${r.title}: ${r.values[i]}; в остальных вариантах ${[...new Set(r.values.filter((v, j) => j !== i))].join(" / ")}.`,
+      );
+    return [
+      "↗",
+      `Начать в ${clock(w.window.start)} UTC`,
+      `${dateLabel(w.window.start)} ${reasons.join(" ") || "Учитываемые условия не хуже, чем у остальных вариантов."}`,
+    ];
+  }
+  if (c.outcome === "tradeoff") {
+    const alternatives = c.pareto_frontier_indices
+      .map(
+        (i) =>
+          `${clock(a.windows[i].window.start)} UTC: ${rows.map((r) => r.values[i]).join(", ")}`,
+      )
+      .join("; ");
+    return [
+      "↔",
+      "Выберите приоритет работы",
+      `${alternatives}. Меньше тени или ниже суточная вероятность события — единственного лучшего варианта нет.`,
+    ];
+  }
+  const subset = c.pareto_frontier_indices.length < a.windows.length;
+  return [
+    "=",
+    subset ? "Есть равнозначные варианты" : "Варианты равнозначны",
+    `${subset ? "Равнозначны начала в " + c.pareto_frontier_indices.map((i) => clock(a.windows[i].window.start) + " UTC").join(" и ") + ". " : ""}${details} ${subset ? "Другие варианты уступают по учитываемым условиям. " : ""}${excludedLight ? "Тень рассчитана отдельно: время публикации исторической орбиты не подтверждено." : "Различия внутри этой группы не превышают допуски сравнения."}`,
+  ];
 }
+export function parseUTC(value) {
+  let text = String(value).trim();
+  const ru = text.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/);
+  if (ru) text = `${ru[3]}-${ru[2]}-${ru[1]}T${ru[4]}:${ru[5]}`;
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(text))
+    throw Error("Введите дату и время: ДД.ММ.ГГГГ ЧЧ:ММ, UTC.");
+  const date = new Date(text + "Z");
+  if (
+    !Number.isFinite(date.valueOf()) ||
+    date.toISOString().slice(0, 16) !== text
+  )
+    throw Error("Проверьте день, месяц и время.");
+  return date.toISOString();
+}
+export function inputUTC(value) {
+  const s = new Date(value).toISOString();
+  return `${s.slice(8, 10)}.${s.slice(5, 7)}.${s.slice(0, 4)} ${s.slice(11, 16)}`;
+}
+export function publicationLabel(value) {
+  if (!value || value === "unknown") return "Время публикации не подтверждено";
+  if (/Issued.*Last-Modified/i.test(value))
+    return "Дата выпуска сверена с архивной отметкой изменения";
+  return "Основание сохранено в исходной записи";
+}
+export function quantityLabel(value) {
+  if (/proton/i.test(value || ""))
+    return "Вероятность протонного события за сутки";
+  if (/S1/i.test(value || "")) return "Вероятность события S1+ за сутки";
+  if (/Kp/i.test(value || "")) return "Геомагнитный индекс Kp";
+  return "Величина из источника";
+}
+
 export function intervalPercent(start, end, window) {
   const lo = Date.parse(window.start),
     hi = Date.parse(window.end);
@@ -162,17 +233,19 @@ export function intervalPercent(start, end, window) {
 export function requestFromValues(v) {
   const body = {
     mode: v.mode,
-    start: new Date(v.start + "Z").toISOString(),
+    task_name: (v.task_name || "").trim(),
+    start: parseUTC(v.start),
     duration_hours: Number(v.duration),
     search_hours: Number(v.search),
     requires_sunlight: !!v.sunlight,
     refresh: false,
   };
-  if (v.mode === "replay") body.cutoff = new Date(v.cutoff + "Z").toISOString();
+  if (v.mode === "replay") body.cutoff = parseUTC(v.cutoff);
   return body;
 }
 export function sameRequest(a, b) {
   return (
+    (a.task_name || "") === (b.task_name || "") &&
     a.mode === b.mode &&
     Date.parse(a.start) === Date.parse(b.start) &&
     a.duration_hours === b.duration_hours &&

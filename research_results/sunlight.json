@@ -1,12 +1,12 @@
 {
-  "id": "97b96e74a47941e0bbe1b28e0f196d51",
+  "id": "7d6a020bea6f4bef83a723d6b8878c46",
   "request": {
-    "task_name": "",
-    "mode": "replay",
+    "task_name": "Осмотр оборудования при солнечном свете",
+    "mode": "reconstruction",
     "start": "2024-05-05T01:00:00Z",
     "duration_hours": 1.0,
     "search_hours": 12.0,
-    "cutoff": "2024-05-04T23:00:00Z",
+    "cutoff": null,
     "requires_sunlight": true,
     "refresh": false
   },
@@ -26,13 +26,13 @@
           "covered_minutes": 60.0,
           "overlap_minutes": null,
           "forecast_probability_percent": 15.0,
-          "forecast_horizon_hours": 74.0,
+          "forecast_horizon_hours": 71.5,
           "supports_next_6h_horizon": null,
-          "forecast_temporal_resolution": "1 UTC day",
-          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "forecast_temporal_resolution": "3 hours for planetary Kp context; 1 UTC day for solar-radiation probability",
+          "forecast_basis": "NOAA/USAF published solar-radiation probability; NOAA 3-hour planetary Kp is context-only",
           "comparison_value": 15.0,
           "comparison_unit": "daily_probability_percent",
-          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_quantity": "NOAA S1-or-greater forecast probability",
           "comparison_direction": "lower_is_better",
           "comparison_tolerance": 0.0,
           "completeness": "complete",
@@ -40,18 +40,18 @@
           "evidence": [
             {
               "event": {
-                "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377:0",
+                "id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb:0",
                 "mechanism": "space_weather",
                 "kind": "external_forecast",
-                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "quantity": "NOAA S1-or-greater forecast probability",
                 "value": 15.0,
                 "unit": "%",
                 "valid_start": "2024-05-05T00:00:00Z",
                 "valid_end": "2024-05-06T00:00:00Z",
-                "published_at": "2024-05-04T22:00:00Z",
+                "published_at": "2024-05-05T00:30:00Z",
                 "observed_at": null,
-                "raw_record_id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
+                "raw_record_id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405050030three_day_forecast.txt",
                 "limitations": [
                   "Daily probability is not an EVA dose or an event arrival time.",
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
@@ -59,6 +59,29 @@
               },
               "forecast_validity_overlap_minutes": 60.0,
               "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
+            },
+            {
+              "event": {
+                "id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb:kp:0:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast_context",
+                "quantity": "NOAA expected 3-hour planetary Kp",
+                "value": 3.67,
+                "unit": "Kp index",
+                "valid_start": "2024-05-05T00:00:00Z",
+                "valid_end": "2024-05-05T03:00:00Z",
+                "published_at": "2024-05-05T00:30:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405050030three_day_forecast.txt",
+                "limitations": [
+                  "Planetary Kp is geomagnetic forecast context, not an EVA dose or a direct astronaut-risk probability.",
+                  "Kp context is not counted as an additional independent risk factor or combined with S1 probability."
+                ]
+              },
+              "forecast_validity_overlap_minutes": 60.0,
+              "role": "forecast_context_only",
+              "rule": "Three-hour Kp expresses expected geomagnetic evolution. It is shown as forecast context and is not converted into EVA dose, treated as an independent factor, or added to the S1 probability."
             }
           ],
           "limitations": [
@@ -133,12 +156,6 @@
                 "excluded_duplicate_state_objects": 11,
                 "duplicate_state_groups": [
                   [
-                    53239,
-                    54216,
-                    58146,
-                    58811
-                  ],
-                  [
                     49044,
                     58460,
                     58898,
@@ -146,6 +163,12 @@
                     59097,
                     59287,
                     59294
+                  ],
+                  [
+                    53239,
+                    54216,
+                    58146,
+                    58811
                   ]
                 ],
                 "excluded_known_iss_associations": [],
@@ -171,8 +194,8 @@
         {
           "mechanism": "lighting",
           "role": "plan_constraint",
-          "decision_eligible": false,
-          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "no_restriction_detected",
           "covered_minutes": 60.0,
           "overlap_minutes": 0.0,
@@ -389,13 +412,13 @@
           "covered_minutes": 60.0,
           "overlap_minutes": null,
           "forecast_probability_percent": 15.0,
-          "forecast_horizon_hours": 74.0,
+          "forecast_horizon_hours": 71.5,
           "supports_next_6h_horizon": null,
-          "forecast_temporal_resolution": "1 UTC day",
-          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "forecast_temporal_resolution": "3 hours for planetary Kp context; 1 UTC day for solar-radiation probability",
+          "forecast_basis": "NOAA/USAF published solar-radiation probability; NOAA 3-hour planetary Kp is context-only",
           "comparison_value": 15.0,
           "comparison_unit": "daily_probability_percent",
-          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_quantity": "NOAA S1-or-greater forecast probability",
           "comparison_direction": "lower_is_better",
           "comparison_tolerance": 0.0,
           "completeness": "complete",
@@ -403,18 +426,18 @@
           "evidence": [
             {
               "event": {
-                "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377:0",
+                "id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb:0",
                 "mechanism": "space_weather",
                 "kind": "external_forecast",
-                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "quantity": "NOAA S1-or-greater forecast probability",
                 "value": 15.0,
                 "unit": "%",
                 "valid_start": "2024-05-05T00:00:00Z",
                 "valid_end": "2024-05-06T00:00:00Z",
-                "published_at": "2024-05-04T22:00:00Z",
+                "published_at": "2024-05-05T00:30:00Z",
                 "observed_at": null,
-                "raw_record_id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
+                "raw_record_id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405050030three_day_forecast.txt",
                 "limitations": [
                   "Daily probability is not an EVA dose or an event arrival time.",
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
@@ -422,6 +445,29 @@
               },
               "forecast_validity_overlap_minutes": 60.0,
               "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
+            },
+            {
+              "event": {
+                "id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb:kp:2:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast_context",
+                "quantity": "NOAA expected 3-hour planetary Kp",
+                "value": 2.67,
+                "unit": "Kp index",
+                "valid_start": "2024-05-05T06:00:00Z",
+                "valid_end": "2024-05-05T09:00:00Z",
+                "published_at": "2024-05-05T00:30:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405050030three_day_forecast.txt",
+                "limitations": [
+                  "Planetary Kp is geomagnetic forecast context, not an EVA dose or a direct astronaut-risk probability.",
+                  "Kp context is not counted as an additional independent risk factor or combined with S1 probability."
+                ]
+              },
+              "forecast_validity_overlap_minutes": 60.0,
+              "role": "forecast_context_only",
+              "rule": "Three-hour Kp expresses expected geomagnetic evolution. It is shown as forecast context and is not converted into EVA dose, treated as an independent factor, or added to the S1 probability."
             }
           ],
           "limitations": [
@@ -534,8 +580,8 @@
         {
           "mechanism": "lighting",
           "role": "plan_constraint",
-          "decision_eligible": false,
-          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "attention",
           "covered_minutes": 60.0,
           "overlap_minutes": 10.8359375,
@@ -758,13 +804,13 @@
           "covered_minutes": 60.0,
           "overlap_minutes": null,
           "forecast_probability_percent": 15.0,
-          "forecast_horizon_hours": 74.0,
+          "forecast_horizon_hours": 59.5,
           "supports_next_6h_horizon": null,
-          "forecast_temporal_resolution": "1 UTC day",
-          "forecast_basis": "NOAA/USAF published daily solar-radiation event probability",
+          "forecast_temporal_resolution": "3 hours for planetary Kp context; 1 UTC day for solar-radiation probability",
+          "forecast_basis": "NOAA/USAF published solar-radiation probability; NOAA 3-hour planetary Kp is context-only",
           "comparison_value": 15.0,
           "comparison_unit": "daily_probability_percent",
-          "comparison_quantity": "USAF/NOAA proton event probability (daily proxy)",
+          "comparison_quantity": "NOAA S1-or-greater forecast probability",
           "comparison_direction": "lower_is_better",
           "comparison_tolerance": 0.0,
           "completeness": "complete",
@@ -772,18 +818,18 @@
           "evidence": [
             {
               "event": {
-                "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377:0",
+                "id": "noaa_archive:9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43:0",
                 "mechanism": "space_weather",
                 "kind": "external_forecast",
-                "quantity": "USAF/NOAA proton event probability (daily proxy)",
+                "quantity": "NOAA S1-or-greater forecast probability",
                 "value": 15.0,
                 "unit": "%",
                 "valid_start": "2024-05-05T00:00:00Z",
                 "valid_end": "2024-05-06T00:00:00Z",
-                "published_at": "2024-05-04T22:00:00Z",
+                "published_at": "2024-05-05T12:30:00Z",
                 "observed_at": null,
-                "raw_record_id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
+                "raw_record_id": "noaa_archive:9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405051230three_day_forecast.txt",
                 "limitations": [
                   "Daily probability is not an EVA dose or an event arrival time.",
                   "GOES/NOAA conditions do not directly measure astronaut exposure at ISS."
@@ -791,6 +837,29 @@
               },
               "forecast_validity_overlap_minutes": 60.0,
               "rule": "Daily event probability applies to the UTC day, not to an EVA interval or its duration."
+            },
+            {
+              "event": {
+                "id": "noaa_archive:9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43:kp:4:0",
+                "mechanism": "space_weather",
+                "kind": "external_forecast_context",
+                "quantity": "NOAA expected 3-hour planetary Kp",
+                "value": 2.0,
+                "unit": "Kp index",
+                "valid_start": "2024-05-05T12:00:00Z",
+                "valid_end": "2024-05-05T15:00:00Z",
+                "published_at": "2024-05-05T12:30:00Z",
+                "observed_at": null,
+                "raw_record_id": "noaa_archive:9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43",
+                "source_url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405051230three_day_forecast.txt",
+                "limitations": [
+                  "Planetary Kp is geomagnetic forecast context, not an EVA dose or a direct astronaut-risk probability.",
+                  "Kp context is not counted as an additional independent risk factor or combined with S1 probability."
+                ]
+              },
+              "forecast_validity_overlap_minutes": 60.0,
+              "role": "forecast_context_only",
+              "rule": "Three-hour Kp expresses expected geomagnetic evolution. It is shown as forecast context and is not converted into EVA dose, treated as an independent factor, or added to the S1 probability."
             }
           ],
           "limitations": [
@@ -903,8 +972,8 @@
         {
           "mechanism": "lighting",
           "role": "plan_constraint",
-          "decision_eligible": false,
-          "eligibility_reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay.",
+          "decision_eligible": true,
+          "eligibility_reason": null,
           "state": "attention",
           "covered_minutes": 60.0,
           "overlap_minutes": 22.1171875,
@@ -1114,42 +1183,52 @@
     }
   ],
   "comparison": {
-    "outcome": "equivalent",
-    "preferred_index": null,
+    "outcome": "preferred",
+    "preferred_index": 0,
     "pareto_frontier_indices": [
-      0,
-      1,
-      2
+      0
     ],
     "reasons": [
-      "Окна на Парето-фронте 1, 2, 3 эквивалентны в пределах явно заданных допусков."
+      "Окно 1 Парето-доминирует: ни один сопоставимый фактор не хуже за пределами своего допуска, а хотя бы один лучше."
     ],
     "decision_mechanisms": [
-      "space_weather"
+      "space_weather",
+      "lighting"
     ],
     "excluded_mechanisms": [
       {
         "mechanism": "conjunctions",
         "reason": "Historical conjunction geometry is reconstruction/validation only: per-element publication time and catalog completeness at the historical instant are unproven."
-      },
-      {
-        "mechanism": "lighting",
-        "reason": "Historical orbital-element publication times are unavailable, so lighting geometry is validation-only in strict replay."
       }
     ],
     "algorithm_version": "0.5.0"
   },
-  "created_at": "2026-09-19T18:39:50.161033Z",
+  "created_at": "2026-09-19T18:31:46.705910Z",
   "algorithm_version": "0.5.0",
   "source_records": [
     {
-      "id": "noaa_archive:b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
+      "id": "noaa_archive:8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
       "source": "noaa_archive",
-      "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/reports_solar_geophysical_activity/2024/05/20240504RSGA.txt",
-      "content_sha256": "b267a8989b2e9734e2f26b0cb73868d237e55a7babeb38fb4c531a732bcf1377",
-      "retrieved_at": "2026-09-19T18:39:47.191973Z",
-      "published_at": "2024-05-04T22:00:00Z",
-      "archive_last_modified_at": "2024-05-04T22:00:10Z",
+      "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405050030three_day_forecast.txt",
+      "content_sha256": "8797787016bdfd81a1993c92720ec9a0677ed5ea2b79b9cc76ec79f8aea9f1fb",
+      "retrieved_at": "2026-09-19T18:31:43.738236Z",
+      "published_at": "2024-05-05T00:30:00Z",
+      "archive_last_modified_at": "2024-05-05T00:30:00Z",
+      "publication_basis": "Issued plus retrospective matching HTTP Last-Modified; no signed historical snapshot",
+      "artifact_path": null,
+      "source_revision": null,
+      "http_status": 200,
+      "parser_version": "1",
+      "cache_state": "archived"
+    },
+    {
+      "id": "noaa_archive:9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43",
+      "source": "noaa_archive",
+      "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/3day_forecast/2024/05/202405051230three_day_forecast.txt",
+      "content_sha256": "9d97e9f5fe11b1ba284c2566612d8b2562b01dff20755390c1d212051a8fde43",
+      "retrieved_at": "2026-09-19T18:31:43.785874Z",
+      "published_at": "2024-05-05T12:30:00Z",
+      "archive_last_modified_at": "2024-05-05T12:30:00Z",
       "publication_basis": "Issued plus retrospective matching HTTP Last-Modified; no signed historical snapshot",
       "artifact_path": null,
       "source_revision": null,
@@ -1162,7 +1241,7 @@
       "source": "iss_history_extract",
       "url": "https://huggingface.co/datasets/juliensimon/space-track-tle-history",
       "content_sha256": "3293cc69f93348fd21c4928cf0cd004fea8b8e6a193e6ac6af00bcdbc7cf4295",
-      "retrieved_at": "2026-09-19T18:39:47.196886Z",
+      "retrieved_at": "2026-09-19T18:31:43.792409Z",
       "published_at": null,
       "archive_last_modified_at": null,
       "publication_basis": "unknown",

@@ -1,2 +1,2 @@
-__version__ = "0.4.0"
-ALGORITHM_VERSION = "0.4.0"
+__version__ = "0.5.0"
+ALGORITHM_VERSION = "0.5.0"

@@ -12,6 +12,10 @@ import {
   safeURL,
   esc,
   normalizeWindow,
+  parseUTC,
+  inputUTC,
+  windowRole,
+  decisionRows,
 } from "../app/static/model.js";
 const example = JSON.parse(
   readFileSync(
@@ -24,7 +28,7 @@ test("HTML export includes the exact displayed snapshot and preserves replay sem
   const report = buildReport(example, "window_demo");
   assert.ok(report.includes("Сохранённый исследовательский пример"));
   assert.ok(report.includes("Варианты равнозначны"));
-  assert.ok(report.includes("25 мин в тени"));
+  assert.ok(report.includes("22,1 мин в тени"));
   assert.ok(report.includes(esc(JSON.stringify(example, null, 2))));
   const untrusted = structuredClone(example);
   untrusted.comparison.reasons = ["<script>alert(1)</script>"];
@@ -40,7 +44,7 @@ test("archived replay cannot imply an improvement from excluded lighting", () =>
     example.windows.map((w) =>
       factorValue(w.factors.find((f) => f.mechanism === "lighting")),
     ),
-    ["0 мин в тени", "10 мин в тени", "25 мин в тени"],
+    ["0 мин в тени", "10,8 мин в тени", "22,1 мин в тени"],
   );
   assert.ok(
     example.windows.every(
@@ -56,7 +60,7 @@ test("equivalent Pareto subset is not described as all windows equivalent", () =
     ...example,
     comparison: { ...example.comparison, pareto_frontier_indices: [0, 1] },
   };
-  assert.equal(conclusion(a)[1], "Равнозначны варианты с 2024-05-05 01:00 UTC до 2024-05-05 02:00 UTC, с 2024-05-05 07:00 UTC до 2024-05-05 08:00 UTC");
+  assert.equal(conclusion(a)[1], "Есть равнозначные варианты");
 });
 test("timeline clips intervals to the selected window, including a UTC day boundary", () => {
   const w = { start: "2024-05-01T23:00Z", end: "2024-05-02T01:00Z" };
@@ -130,4 +134,33 @@ test("invalid shared selection falls back to the first existing window", () => {
   for (const value of [-1, 3, NaN, 0.2])
     assert.equal(normalizeWindow(value, 3), 0);
   assert.equal(normalizeWindow(2, 3), 2);
+});
+
+test("Russian UTC date entry rejects calendar overflow and round trips leap days", () => {
+  assert.equal(parseUTC("29.02.2024 23:59"), "2024-02-29T23:59:00.000Z");
+  assert.equal(inputUTC(parseUTC("05.05.2024 01:00")), "05.05.2024 01:00");
+  for (const bad of [
+    "31.02.2024 01:00",
+    "01.05.2024 24:00",
+    "05/01/24 1 PM",
+    "29.02.2023 10:00",
+  ])
+    assert.throws(() => parseUTC(bad));
+});
+test("decision excludes historical lighting in replay and distinguishes dominated windows", () => {
+  assert.deepEqual(
+    decisionRows(example).map((r) => r.name),
+    ["space_weather"],
+  );
+  const a = JSON.parse(
+    readFileSync(
+      new URL("../research_results/sunlight.json", import.meta.url),
+      "utf8",
+    ),
+  );
+  assert.equal(conclusion(a)[1], "Начать в 01:00 UTC");
+  assert.equal(windowRole(a, 0), "Предпочтительно");
+  assert.equal(windowRole(a, 1), "Уступает другим");
+  a.request.task_name = "<img src=x onerror=alert(1)>";
+  assert.equal(buildReport(a).includes("<img src=x"), false);
 });

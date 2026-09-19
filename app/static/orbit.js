@@ -1,7 +1,13 @@
+import { shadowAt } from "./model.js?v=20260919-6";
 import * as THREE from "./vendor/three/three.module.min.js";
 import { GLTFLoader } from "./vendor/three/GLTFLoader.js";
 import { DRACOLoader } from "./vendor/three/DRACOLoader.js";
-import { earthRotation, sunDirection, scenePosition, sceneVector } from "./orbit-math.js";
+import {
+  earthRotation,
+  sunDirection,
+  scenePosition,
+  sceneVector,
+} from "./orbit-math.js";
 
 export class OrbitScene {
   constructor(canvas) {
@@ -15,7 +21,11 @@ export class OrbitScene {
     this.note = document.getElementById("orbit-render-status");
     this.stationLabel = document.getElementById("station-label");
     try {
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      this.renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+      });
     } catch {
       this.message("Для 3D нужен WebGL. Расчёты доступны ниже.");
       return;
@@ -28,23 +38,41 @@ export class OrbitScene {
     this.scene.add(new THREE.AmbientLight(0xffffff, 0.12));
     this.sun = new THREE.DirectionalLight(0xffffff, 2.8);
     this.sun.castShadow = true;
-    Object.assign(this.sun.shadow.camera, { left: -1.5, right: 1.5, top: 1.5, bottom: -1.5, near: 0.1, far: 10 });
+    Object.assign(this.sun.shadow.camera, {
+      left: -1.5,
+      right: 1.5,
+      top: 1.5,
+      bottom: -1.5,
+      near: 0.1,
+      far: 10,
+    });
     this.sun.shadow.mapSize.set(1024, 1024);
     this.sun.shadow.bias = -0.0002;
     this.scene.add(this.sun);
     this.earth = new THREE.Mesh(
       new THREE.SphereGeometry(1, 96, 64),
-      new THREE.MeshPhongMaterial({ color: 0xffffff, shininess: 6, specular: 0x182432 }),
+      new THREE.MeshPhongMaterial({
+        color: 0xffffff,
+        shininess: 6,
+        specular: 0x182432,
+      }),
     );
     this.solarDirection = { value: new THREE.Vector3(1, 0, 0) };
     this.earth.material.onBeforeCompile = (shader) => {
       shader.uniforms.solarDirection = this.solarDirection;
-      shader.vertexShader = "uniform vec3 solarDirection; varying float solarAltitude;\n" + shader.vertexShader;
-      shader.vertexShader = shader.vertexShader.replace("#include <begin_vertex>",
-        "#include <begin_vertex>\nsolarAltitude = dot(normalize(mat3(modelMatrix) * normal), solarDirection);");
-      shader.fragmentShader = "varying float solarAltitude;\n" + shader.fragmentShader;
-      shader.fragmentShader = shader.fragmentShader.replace("#include <emissivemap_fragment>",
-        "#include <emissivemap_fragment>\ntotalEmissiveRadiance *= 1.0 - smoothstep(-0.08, 0.08, solarAltitude);");
+      shader.vertexShader =
+        "uniform vec3 solarDirection; varying float solarAltitude;\n" +
+        shader.vertexShader;
+      shader.vertexShader = shader.vertexShader.replace(
+        "#include <begin_vertex>",
+        "#include <begin_vertex>\nsolarAltitude = dot(normalize(mat3(modelMatrix) * normal), solarDirection);",
+      );
+      shader.fragmentShader =
+        "varying float solarAltitude;\n" + shader.fragmentShader;
+      shader.fragmentShader = shader.fragmentShader.replace(
+        "#include <emissivemap_fragment>",
+        "#include <emissivemap_fragment>\ntotalEmissiveRadiance *= 1.0 - smoothstep(-0.08, 0.08, solarAltitude);",
+      );
     };
     this.earth.castShadow = true;
     this.scene.add(this.earth);
@@ -63,17 +91,27 @@ export class OrbitScene {
     canvas.addEventListener("pointermove", (e) => {
       if (!drag) return;
       this.yaw -= (e.clientX - drag.x) * 0.007;
-      this.pitch = Math.max(-1.3, Math.min(1.3, this.pitch + (e.clientY - drag.y) * 0.006));
+      this.pitch = Math.max(
+        -1.3,
+        Math.min(1.3, this.pitch + (e.clientY - drag.y) * 0.006),
+      );
       drag = { x: e.clientX, y: e.clientY };
       this.draw();
     });
     for (const event of ["pointerup", "pointercancel", "lostpointercapture"])
       canvas.addEventListener(event, () => (drag = null));
-    canvas.addEventListener("wheel", (e) => {
-      e.preventDefault();
-      this.zoom = Math.max(0.8, Math.min(2, this.zoom * Math.exp(-e.deltaY * 0.001)));
-      this.draw();
-    }, { passive: false });
+    canvas.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+        this.zoom = Math.max(
+          0.8,
+          Math.min(2, this.zoom * Math.exp(-e.deltaY * 0.001)),
+        );
+        this.draw();
+      },
+      { passive: false },
+    );
     canvas.addEventListener("webglcontextlost", (e) => {
       e.preventDefault();
       this.message("3D приостановлено. Обновите страницу.");
@@ -88,14 +126,19 @@ export class OrbitScene {
     draco.setDecoderPath("/static/vendor/three/draco/");
     const loader = new GLTFLoader().setDRACOLoader(draco);
     const results = await Promise.allSettled([
-      new THREE.TextureLoader().loadAsync("/static/assets/earth-blue-marble.png"),
+      new THREE.TextureLoader().loadAsync(
+        "/static/assets/earth-blue-marble.png",
+      ),
       loader.loadAsync("/static/assets/iss.glb"),
       new THREE.TextureLoader().loadAsync("/static/assets/earth-night.png"),
     ]);
     if (results[0].status === "fulfilled") {
       const texture = results[0].value;
       texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = Math.min(8, this.renderer.capabilities.getMaxAnisotropy());
+      texture.anisotropy = Math.min(
+        8,
+        this.renderer.capabilities.getMaxAnisotropy(),
+      );
       this.earth.material.map = texture;
       this.earth.material.needsUpdate = true;
     }
@@ -124,9 +167,14 @@ export class OrbitScene {
       this.station.add(model);
     }
     draco.dispose();
-    this.canvas.dataset.assets = results.every((r) => r.status === "fulfilled") ? "ready" : "error";
-    this.message(results.some((r) => r.status === "rejected")
-      ? "Не удалось загрузить 3D-ресурсы. Обновите страницу." : "");
+    this.canvas.dataset.assets = results.every((r) => r.status === "fulfilled")
+      ? "ready"
+      : "error";
+    this.message(
+      results.some((r) => r.status === "rejected")
+        ? "Не удалось загрузить 3D-ресурсы. Обновите страницу."
+        : "",
+    );
     this.draw();
   }
   setData(windows, selected, sample = 0) {
@@ -142,26 +190,75 @@ export class OrbitScene {
         this.paths.remove(child);
       }
       windows.forEach((window, index) => {
-        const points = window.orbit.map((state) => new THREE.Vector3(...scenePosition(state.position_teme_km)));
+        const points = window.orbit.map(
+          (state) =>
+            new THREE.Vector3(...scenePosition(state.position_teme_km)),
+        );
         if (points.length < 2) return;
         // Spherical interpolation avoids chords cutting through Earth between 5-min samples.
         const vertices = [];
         points.forEach((p, i) => {
           if (i === points.length - 1) return;
-          const next = points[i + 1], a = p.clone().normalize(), b = next.clone().normalize();
+          const next = points[i + 1],
+            a = p.clone().normalize(),
+            b = next.clone().normalize();
           const angle = a.angleTo(b);
           for (let j = 0; j < 12; j++) {
             const t = j / 12;
-            const direction = angle < 1e-6 ? a.clone() : a.clone().multiplyScalar(Math.sin((1 - t) * angle))
-              .addScaledVector(b, Math.sin(t * angle)).divideScalar(Math.sin(angle));
-            vertices.push(direction.multiplyScalar(THREE.MathUtils.lerp(p.length(), next.length(), t)));
+            const direction =
+              angle < 1e-6
+                ? a.clone()
+                : a
+                    .clone()
+                    .multiplyScalar(Math.sin((1 - t) * angle))
+                    .addScaledVector(b, Math.sin(t * angle))
+                    .divideScalar(Math.sin(angle));
+            vertices.push(
+              direction.multiplyScalar(
+                THREE.MathUtils.lerp(p.length(), next.length(), t),
+              ),
+            );
           }
         });
         vertices.push(points.at(-1));
-        const line = new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints(vertices),
-          new THREE.LineBasicMaterial({ color: index === selected ? 0x3678ed : 0x9daec4,
-            transparent: true, opacity: index === selected ? 0.95 : 0.25 }),
+        const positions = [],
+          colors = [];
+        const lighting = window.factors.find((f) => f.mechanism === "lighting");
+        for (let j = 0; j < vertices.length - 1; j++) {
+          const segment = Math.floor(j / 12),
+            fraction = ((j % 12) + 0.5) / 12;
+          const a = window.orbit[segment],
+            b = window.orbit[Math.min(segment + 1, window.orbit.length - 1)];
+          const time =
+            Date.parse(a.at) + (Date.parse(b.at) - Date.parse(a.at)) * fraction;
+          const color = new THREE.Color(
+            index !== selected
+              ? 0x9daec4
+              : shadowAt(lighting, time)
+                ? 0xa36416
+                : 0x245ac5,
+          );
+          for (const v of [vertices[j], vertices[j + 1]]) {
+            positions.push(v.x, v.y, v.z);
+            colors.push(color.r, color.g, color.b);
+          }
+        }
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(positions, 3),
+        );
+        geometry.setAttribute(
+          "color",
+          new THREE.Float32BufferAttribute(colors, 3),
+        );
+        const line = new THREE.LineSegments(
+          geometry,
+          new THREE.LineBasicMaterial({
+            vertexColors: true,
+            transparent: true,
+            opacity: index === selected ? 1 : 0.16,
+          }),
         );
         this.paths.add(line);
       });
@@ -171,11 +268,17 @@ export class OrbitScene {
   reset() {
     const state = this.windows[this.selected]?.orbit[this.sample];
     if (state) {
-      const radial = new THREE.Vector3(...scenePosition(state.position_teme_km)).normalize();
+      const radial = new THREE.Vector3(
+        ...scenePosition(state.position_teme_km),
+      ).normalize();
       const sun = new THREE.Vector3(...sceneVector(sunDirection(state.at)));
       const tangent = sun.clone().addScaledVector(radial, -sun.dot(radial));
-      if (tangent.lengthSq() < 1e-6) tangent.crossVectors(radial, new THREE.Vector3(0, 1, 0));
-      const view = radial.multiplyScalar(0.48).addScaledVector(tangent.normalize(), 0.88).normalize();
+      if (tangent.lengthSq() < 1e-6)
+        tangent.crossVectors(radial, new THREE.Vector3(0, 1, 0));
+      const view = radial
+        .multiplyScalar(0.48)
+        .addScaledVector(tangent.normalize(), 0.88)
+        .normalize();
       this.yaw = Math.atan2(view.x, view.z);
       this.pitch = Math.asin(view.y);
     } else {
@@ -194,13 +297,16 @@ export class OrbitScene {
     const { width, height } = this.canvas.parentElement.getBoundingClientRect();
     if (!width || !height) return;
     this.renderer.setSize(width, height, false);
-    const halfHeight = Math.max(1.6, 1.4 * height / width) / this.zoom;
-    this.camera.left = -halfHeight * width / height;
-    this.camera.right = halfHeight * width / height;
+    const halfHeight = Math.max(1.6, (1.4 * height) / width) / this.zoom;
+    this.camera.left = (-halfHeight * width) / height;
+    this.camera.right = (halfHeight * width) / height;
     this.camera.top = halfHeight;
     this.camera.bottom = -halfHeight;
-    this.camera.position.set(5 * Math.cos(this.pitch) * Math.sin(this.yaw),
-      5 * Math.sin(this.pitch), 5 * Math.cos(this.pitch) * Math.cos(this.yaw));
+    this.camera.position.set(
+      5 * Math.cos(this.pitch) * Math.sin(this.yaw),
+      5 * Math.sin(this.pitch),
+      5 * Math.cos(this.pitch) * Math.cos(this.yaw),
+    );
     this.camera.lookAt(0, 0, 0);
     this.camera.updateProjectionMatrix();
     const orbit = this.windows[this.selected]?.orbit || [];
@@ -214,7 +320,10 @@ export class OrbitScene {
       this.station.position.set(...scenePosition(state.position_teme_km));
       // Representative nadir-facing attitude, not live ISS attitude telemetry.
       const radial = this.station.position.clone().normalize();
-      this.station.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), radial);
+      this.station.quaternion.setFromUnitVectors(
+        new THREE.Vector3(0, 1, 0),
+        radial,
+      );
       this.canvas.dataset.time = state.at;
       this.canvas.dataset.earthRotation = this.earth.rotation.y;
     }
@@ -223,12 +332,16 @@ export class OrbitScene {
       const projected = this.station.position.clone().project(this.camera);
       const towardsCamera = this.camera.position.clone().normalize();
       const depth = this.station.position.dot(towardsCamera);
-      const distanceFromAxis = this.station.position.clone().addScaledVector(towardsCamera, -depth).length();
+      const distanceFromAxis = this.station.position
+        .clone()
+        .addScaledVector(towardsCamera, -depth)
+        .length();
       const behind = depth < 0 && distanceFromAxis < 1;
-      this.stationLabel.hidden = Math.abs(projected.x) > 0.9 || Math.abs(projected.y) > 0.9;
+      this.stationLabel.hidden =
+        Math.abs(projected.x) > 0.9 || Math.abs(projected.y) > 0.9;
       this.stationLabel.textContent = behind ? "МКС за Землёй" : "МКС";
-      this.stationLabel.style.left = `${(projected.x + 1) * width / 2}px`;
-      this.stationLabel.style.top = `${(1 - projected.y) * height / 2}px`;
+      this.stationLabel.style.left = `${((projected.x + 1) * width) / 2}px`;
+      this.stationLabel.style.top = `${((1 - projected.y) * height) / 2}px`;
     }
   }
 }
