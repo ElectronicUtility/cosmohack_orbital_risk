@@ -25,3 +25,28 @@ export function sunDirection(at) {
 export const sceneVector = ([x, y, z]) => [x, z, -y];
 export const scenePosition = (position) =>
   sceneVector(position).map((value) => value / EARTH_RADIUS_KM);
+
+// Interpolate the short orbital arc, keeping the sampled radius rather than
+// cutting a straight chord through the Earth. This affects display only.
+export function orbitSample(orbit, position) {
+  if (!orbit.length) return null;
+  const index = Math.max(0, Math.min(orbit.length - 1, position));
+  const i = Math.floor(index), t = index - i, a = orbit[i], b = orbit[i + 1];
+  if (!b || t === 0) return a;
+  const ra = Math.hypot(...a.position_teme_km), rb = Math.hypot(...b.position_teme_km);
+  const u = a.position_teme_km.map(v => v / ra), v = b.position_teme_km.map(v => v / rb);
+  const angle = Math.acos(Math.max(-1, Math.min(1, u.reduce((s, x, j) => s + x * v[j], 0))));
+  const sa = angle < 1e-8 ? 1 - t : Math.sin((1 - t) * angle) / Math.sin(angle);
+  const sb = angle < 1e-8 ? t : Math.sin(t * angle) / Math.sin(angle);
+  const radius = ra + (rb - ra) * t;
+  return {...a, at: new Date(Date.parse(a.at) + (Date.parse(b.at) - Date.parse(a.at)) * t).toISOString(),
+    position_teme_km: u.map((x, j) => radius * (sa * x + sb * v[j]))};
+}
+
+export function sampleAtTime(orbit, at) {
+  if (!orbit.length || at <= Date.parse(orbit[0].at)) return 0;
+  const next = orbit.findIndex(s => Date.parse(s.at) > at);
+  if (next < 0) return orbit.length - 1;
+  const start = Date.parse(orbit[next - 1].at);
+  return next - 1 + (at - start) / (Date.parse(orbit[next].at) - start);
+}

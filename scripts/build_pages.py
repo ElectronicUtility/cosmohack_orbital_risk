@@ -16,14 +16,12 @@ def build(destination: Path):
     if any(destination.iterdir()):
         raise ValueError("Output directory must be empty")
     shutil.copytree(ROOT / "app/static", destination / "static")
-    briefing = destination / "static/briefing.html"
-    briefing.write_text(briefing.read_text(encoding="utf-8").replace('href="/planner?', 'href="../?'), encoding="utf-8")
     html = (ROOT / "app/index.html").read_text(encoding="utf-8")
+    html = html.replace('data-tip="Исследовательская поддержка решений.', 'data-tip="Сохранённые примеры. Новые расчёты требуют сервера. Исследовательская поддержка решений.')
     html = html.replace('<head>', '<head>\n    <meta name="static-demo" content="true" />')
     html = html.replace('"/static/', '"./static/')
     for page in ("planner", "archive", "sources", "method"):
         html = html.replace(f'href="/{page}"', f'href="?page={page}"')
-    html = html.replace('<div class="plan-toolbar">', '<p class="demo-label">Демо: сохранённые расчёты</p>\n          <div class="plan-toolbar">')
     (destination / "index.html").write_text(html, encoding="utf-8")
     (destination / ".nojekyll").touch()
     for name in ("sunlight", "tradeoff", "window_demo", "event", "control"):

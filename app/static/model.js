@@ -112,7 +112,7 @@ export function decisionRows(a) {
   return a.comparison.decision_mechanisms.map((name) => ({
     name,
     title:
-      name === "space_weather" ? "Протонное событие за сутки" : names[name],
+      name === "space_weather" ? "Космическая погода" : names[name],
     values: a.windows.map((w) =>
       factorValue(w.factors.find((f) => f.mechanism === name)),
     ),
@@ -216,7 +216,7 @@ export function publicationLabel(value) {
 }
 export function quantityLabel(value) {
   if (/proton/i.test(value || ""))
-    return "Вероятность протонного события за сутки";
+    return "Вероятность солнечного протонного события за сутки";
   if (/S1/i.test(value || "")) return "Вероятность события S1+ за сутки";
   if (/Kp/i.test(value || "")) return "Геомагнитный индекс Kp";
   return "Величина из источника";

@@ -58,3 +58,33 @@ test("coordinate mapping preserves altitude and north pole orientation", () => {
   close(Math.hypot(...scenePosition([EARTH_RADIUS_KM + 410, 0, 0])), 1 + 410 / EARTH_RADIUS_KM);
   assert.deepEqual(scenePosition([0, 0, EARTH_RADIUS_KM]), [0, 1, -0]);
 });
+
+test('playback interpolates an orbital arc without losing altitude and keeps UTC continuous', async () => {
+  const { orbitSample } = await import('../app/static/orbit-math.js');
+  const radius = 6800, angle = Math.PI / 6;
+  const orbit = [
+    {at: '2024-05-05T01:00:00Z', position_teme_km: [radius, 0, 0]},
+    {at: '2024-05-05T01:05:00Z', position_teme_km: [radius * Math.cos(angle), radius * Math.sin(angle), 0]},
+  ];
+  for (const t of [.01, .25, .5, .75, .99]) {
+    const sample = orbitSample(orbit, t);
+    assert.ok(Math.abs(Math.hypot(...sample.position_teme_km) - radius) < 1e-8);
+    assert.ok(Math.abs(Math.atan2(sample.position_teme_km[1], sample.position_teme_km[0]) - angle*t) < 1e-12);
+    assert.equal(Date.parse(sample.at), Date.parse(orbit[0].at) + 300000*t);
+  }
+  assert.equal(orbitSample(orbit, -1), orbit[0]);
+  assert.equal(orbitSample(orbit, 5), orbit[1]);
+  assert.equal(orbitSample([], 0), null);
+});
+
+test('playback time advances evenly across a shorter final sample interval', async () => {
+  const { sampleAtTime, orbitSample } = await import('../app/static/orbit-math.js');
+  const orbit = ['01:00:00', '01:05:00', '01:06:00'].map(time => ({
+    at: `2024-05-05T${time}Z`, position_teme_km: [6800, 0, 0],
+  }));
+  for (const seconds of [30, 150, 300, 315, 330, 359]) {
+    const at = Date.parse(orbit[0].at) + seconds * 1000;
+    assert.equal(Date.parse(orbitSample(orbit, sampleAtTime(orbit, at)).at), at);
+  }
+  assert.equal(sampleAtTime(orbit, Date.parse(orbit[2].at) + 1000), 2);
+});

@@ -368,8 +368,58 @@ body[data-static-demo] .provider-panel,
 body[data-static-demo] .archive-group:nth-child(2) {
   display: none;
 }
-.demo-label {
+
+.info-button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  min-height: 30px;
+  padding: 5px;
+  border: 0;
+  background: transparent;
   color: var(--muted);
-  font-size: 12px;
-  margin: 0;
+  vertical-align: middle;
 }
+.info-button svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+.ui-tooltip {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  padding: 12px 15px;
+  max-width: min(330px, calc(100vw - 24px));
+  max-height: 55vh;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  color: var(--ink);
+  box-shadow: 0 4px 16px #17263c1c;
+  font: 13px/1.5 "Segoe UI", sans-serif;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+.window-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+  align-items: center;
+}
+.window-option .window-card { width: 100%; }
+.window-column-head { margin-right: 30px; }
+.factor-row > div { display: flex; align-items: center; gap: 4px; }
+.validation-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+  margin: 14px 0;
+}
+.validation-details { margin-top: 16px; }
+.validation-details > summary { cursor: pointer; }

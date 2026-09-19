@@ -1,3 +1,6 @@
+import { orbitSample, sampleAtTime } from "./orbit-math.js?v=20260919-9";
+import { initTooltips, infoButton } from "./tooltips.js";
+const tips = initTooltips();
 import { staticDemo, apiURL, routeURL } from "./runtime.js";
 import {
   names,
@@ -23,9 +26,9 @@ import {
   inputUTC,
   publicationLabel,
   quantityLabel,
-} from "./model.js?v=20260919-7";
-import { OrbitScene } from "./orbit.js?v=20260919-6";
-import { buildReport } from "./report.js?v=20260919-7";
+} from "./model.js?v=20260919-9";
+import { OrbitScene } from "./orbit.js?v=20260919-9";
+import { buildReport } from "./report.js?v=20260919-9";
 
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
@@ -259,7 +262,8 @@ function renderWindows() {
           return p ? `<i style="left:${p.left}%;width:${p.width}%"></i>` : "";
         })
         .join("");
-      return `<button class="window-card ${dominated ? "dominated" : ""}" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}"><span><span class="window-time">${clock(w.window.start)}–${clock(w.window.end)}</span><span class="window-day">${w.window.start.slice(0, 10) !== a.request.start.slice(0, 10) ? esc(dateLabel(w.window.start)) : ""}</span><span class="window-offset">${i === 0 ? "Исходное начало" : "Перенос +" + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 1) + " ч"}</span><span class="window-role">${esc(role)}</span></span><span class="compare-weather"><strong>${weather ? esc(factorValue(weather)) : "Нет данных"}</strong><small>${weather?.decision_eligible ? "" : "Вне сравнения"}</small></span><span><strong>${!light || light.state === "insufficient" ? "Нет данных" : light.state === "not_requested" ? "Не задано" : numeric(light.overlap_minutes, 1) + " мин"}</strong><span class="shadow-mini" aria-hidden="true">${shadow}</span><small>${light?.decision_eligible ? "" : "Справочно"}</small></span></button>`;
+      const tip = `${i === 0 ? "Исходное начало" : "Перенос на " + numeric((Date.parse(w.window.start) - Date.parse(a.request.start)) / 3600000, 1) + " ч"}. ${role}.`;
+      return `<div class="window-option"><button class="window-card ${dominated ? "dominated" : ""}" data-window="${i}" aria-pressed="${i === state.selected}" aria-label="Выбрать выход с ${stamp(w.window.start)} до ${stamp(w.window.end)}. ${esc(tip)}"><span><span class="window-time">${clock(w.window.start)}–${clock(w.window.end)}</span><span class="window-day">${w.window.start.slice(0, 10) !== a.request.start.slice(0, 10) ? esc(dateLabel(w.window.start)) : ""}</span></span><span class="compare-weather"><strong>${weather ? esc(factorValue(weather)) : "Нет данных"}</strong><small>${weather?.decision_eligible ? "" : "Вне сравнения"}</small></span><span><strong>${!light || light.state === "insufficient" ? "Нет данных" : light.state === "not_requested" ? "Не задано" : numeric(light.overlap_minutes, 1) + " мин"}</strong><span class="shadow-mini" aria-hidden="true">${shadow}</span><small>${light?.decision_eligible ? "" : "Справочно"}</small></span></button>${infoButton(tip, "Об окне " + clock(w.window.start))}</div>`;
     })
     .join("");
 }
@@ -296,7 +300,7 @@ function renderSelected() {
     .filter((f) => f.mechanism !== "lighting")
     .map(
       (f) =>
-        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}">${esc(f.mechanism === "space_weather" ? "Протонное событие за сутки" : names[f.mechanism])} <span aria-hidden="true">›</span></button><div><strong class="${f.state === "attention" ? "attention" : ""}">${esc(factorValue(f))}</strong>${!f.decision_eligible ? "<small>Вне сравнения</small>" : ""}</div></div>`,
+        `<div class="factor-row"><button data-factor="${esc(f.mechanism)}">${esc(f.mechanism === "space_weather" ? "Космическая погода" : names[f.mechanism])} <span aria-hidden="true">›</span></button><div><strong class="${f.state === "attention" ? "attention" : ""}">${f.decision_eligible ? esc(factorValue(f)) : "Справочно"}</strong>${!f.decision_eligible ? infoButton(factorValue(f) + ". " + eligibility(f), "О полноте данных") : ""}</div></div>`,
     )
     .join("");
   renderTimeline(w);
@@ -347,7 +351,7 @@ function renderTimeline(w) {
       text = missing ? "Нет полных актуальных данных" : factorValue(f);
       hint = f.decision_eligible ? "" : "Вне сравнения";
     }
-    return `<div class="timeline-row"><button class="lane-label" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}${hint ? `<small>${esc(hint)}</small>` : ""}</button><div class="track ${missing ? "unknown" : ""}" role="img" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}<span class="track-text">${esc(text)}</span><span class="track-cursor"></span></div><button class="detail-button" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
+    return `<div class="timeline-row"><button class="lane-label" data-tip="${esc(text + (hint ? ". " + hint : ""))}" data-factor="${esc(f.mechanism)}">${esc(names[f.mechanism])}</button><div class="track ${missing ? "unknown" : ""}" role="img" aria-label="${esc(names[f.mechanism] + ": " + text)}">${marks}<span class="track-text">${esc(f.mechanism === "conjunctions" && !f.decision_eligible ? "Справочно" : text)}</span><span class="track-cursor"></span></div><button class="detail-button" data-factor="${esc(f.mechanism)}" aria-label="Доказательства: ${esc(names[f.mechanism])}">›</button></div>`;
   });
   $("timeline").innerHTML =
     `<div class="timeline-axis">${[0, 0.25, 0.5, 0.75, 1].map((p) => `<span>${clock(lo + p * (hi - lo))}</span>`).join("")}</div>` +
@@ -356,9 +360,9 @@ function renderTimeline(w) {
 function setSample(index) {
   const w = state.analysis?.windows[state.selected];
   if (!w) return;
-  state.sample = normalizeWindow(Number(index), w.orbit.length);
+  state.sample = Math.max(0, Math.min(w.orbit.length - 1, Number(index) || 0));
   $("scrub").value = state.sample;
-  const s = w.orbit[state.sample];
+  const s = orbitSample(w.orbit, state.sample);
   scene.setData(state.analysis.windows, state.selected, state.sample);
   if (!s) {
     $("orbit-time").textContent = "–";
@@ -383,7 +387,7 @@ function setSample(index) {
   $("scrub").setAttribute("aria-valuetext", stamp(s.at));
 }
 function stop() {
-  clearInterval(state.timer);
+  cancelAnimationFrame(state.timer);
   state.timer = null;
   $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-play" /></svg>';
   $("play").setAttribute("aria-label", "Воспроизвести траекторию");
@@ -400,13 +404,18 @@ function play() {
   $("play").innerHTML = '<svg aria-hidden="true"><use href="#i-pause" /></svg>';
   $("play").setAttribute("aria-label", "Остановить воспроизведение");
   $("play").setAttribute("aria-pressed", "true");
-  state.timer = setInterval(() => {
-    if (state.sample >= count - 1) {
-      stop();
-      return;
-    }
-    setSample(state.sample + 1);
-  }, 800);
+  const orbit = state.analysis.windows[state.selected].orbit;
+  const start = Date.parse(orbitSample(orbit, state.sample).at);
+  const end = Date.parse(orbit.at(-1).at);
+  const started = performance.now();
+  function frame(now) {
+    // Preserve the previous playback speed: five simulated minutes per 800 ms.
+    const at = Math.min(end, start + (now - started) * 375);
+    setSample(sampleAtTime(orbit, at));
+    if (at >= end) stop();
+    else state.timer = requestAnimationFrame(frame);
+  }
+  state.timer = requestAnimationFrame(frame);
 }
 function renderReplay() {
   const a = state.analysis;
@@ -835,6 +844,7 @@ function currentPage() {
   return (staticDemo ? new URLSearchParams(location.search).get("page") : location.pathname.split("/")[1]) || "planner";
 }
 function applyRoute() {
+  tips.hide();
   const page = pages[currentPage()] ? currentPage() : "planner";
   document.body.dataset.route = page;
   document.title = pages[page] + " – Орбитальный риск";
@@ -1048,7 +1058,7 @@ async function loadValidation() {
   try {
     const d = await readJSON("/api/validation");
     $("validation-summary").innerHTML =
-      `<p>Выбор только по освещению. <strong>${d.cases} планов, ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="${apiURL("/api/validation")}" target="_blank" rel="noopener">Полные результаты</a></p>`;
+      `<div class="validation-metrics"><span><strong>${d.windows}</strong> окон</span><span><strong>${d.improved_cases}/${d.cases}</strong> планов улучшено</span><span><strong>${d.worse_cases}</strong> ухудшений</span>${infoButton(`Сравнение по освещению с исходным началом. Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин. Одна модель тени, не оценка точности погодного прогноза.`, "О проверке освещения")}<a href="${apiURL("/api/validation")}" target="_blank" rel="noopener">Данные</a></div>`;
   } catch {
     $("validation-summary").textContent =
       "Отчёт проверки пока недоступен. Команда воспроизведения: python scripts/validate_planning.py";
@@ -1098,7 +1108,7 @@ $("monitor").addEventListener("change", scheduleMonitor);
 async function loadWeatherValidation() {
   try {
     const d = await readJSON("/api/validation/weather");
-    $("weather-validation").innerHTML = `<h3>Погодные предупреждения</h3><p>${numeric(d.labelled_days)} суток по сводкам NOAA SGAS. Порог внимания ${numeric(d.alert_threshold_percent)}%.</p><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div><p class="small">Проверка по текстовым сводкам, не по непрерывному потоку частиц. Один неоднозначный день исключён. <a href="${apiURL("/api/validation/weather")}" target="_blank" rel="noopener">Даты, источники и ошибки</a></p>`;
+    $("weather-validation").innerHTML = `<details class="validation-details"><summary>Проверка погодных предупреждений</summary><div class="validation-metrics"><span>${numeric(d.labelled_days)} суток</span><span>Порог ${numeric(d.alert_threshold_percent)}%</span>${infoButton("Проверка по текстовым сводкам NOAA SGAS, не по непрерывному потоку частиц. Один неоднозначный день исключён.", "О погодной проверке")}<a href="${apiURL("/api/validation/weather")}" target="_blank" rel="noopener">Данные</a></div><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div></details>`;
   } catch { $("weather-validation").textContent = "Погодная проверка недоступна."; }
 }
 loadWeatherValidation();

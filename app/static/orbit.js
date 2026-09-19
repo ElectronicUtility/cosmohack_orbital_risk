@@ -1,13 +1,14 @@
-import { shadowAt } from "./model.js?v=20260919-6";
+import { shadowAt } from "./model.js?v=20260919-9";
 import * as THREE from "./vendor/three/three.module.min.js";
 import { GLTFLoader } from "./vendor/three/GLTFLoader.js";
 import { DRACOLoader } from "./vendor/three/DRACOLoader.js";
 import {
+  orbitSample,
   earthRotation,
   sunDirection,
   scenePosition,
   sceneVector,
-} from "./orbit-math.js";
+} from "./orbit-math.js?v=20260919-9";
 
 export class OrbitScene {
   constructor(canvas) {
@@ -266,7 +267,7 @@ export class OrbitScene {
     this.draw();
   }
   reset() {
-    const state = this.windows[this.selected]?.orbit[this.sample];
+    const state = orbitSample(this.windows[this.selected]?.orbit || [], this.sample);
     if (state) {
       const radial = new THREE.Vector3(
         ...scenePosition(state.position_teme_km),
@@ -296,7 +297,11 @@ export class OrbitScene {
     if (!this.renderer) return;
     const { width, height } = this.canvas.parentElement.getBoundingClientRect();
     if (!width || !height) return;
-    this.renderer.setSize(width, height, false);
+    if (this.viewportWidth !== width || this.viewportHeight !== height) {
+      this.renderer.setSize(width, height, false);
+      this.viewportWidth = width;
+      this.viewportHeight = height;
+    }
     const halfHeight = Math.max(1.6, (1.4 * height) / width) / this.zoom;
     this.camera.left = (-halfHeight * width) / height;
     this.camera.right = (halfHeight * width) / height;
@@ -310,7 +315,7 @@ export class OrbitScene {
     this.camera.lookAt(0, 0, 0);
     this.camera.updateProjectionMatrix();
     const orbit = this.windows[this.selected]?.orbit || [];
-    const state = orbit[this.sample];
+    const state = orbitSample(orbit, this.sample);
     this.station.visible = !!state;
     this.stationLabel.hidden = !state;
     if (state) {
