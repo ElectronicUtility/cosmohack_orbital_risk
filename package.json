@@ -1,0 +1,8 @@
+{
+  "name": "orbital-risk-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/ui-model.test.js"
+  }
+}
