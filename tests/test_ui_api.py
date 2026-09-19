@@ -26,3 +26,13 @@ def test_examples_are_allowlisted_and_static_app_is_available():
     assert client.get('/').status_code == 200
     for path in ('app.js', 'model.js', 'orbit.js', 'report.js', 'styles.css'):
         assert client.get('/static/' + path).status_code == 200
+
+
+def test_workspace_routes_support_direct_links_and_reload():
+    for page in ('planner', 'archive', 'sources', 'method'):
+        response = client.get(f'/{page}?example=window_demo&window=2')
+        assert response.status_code == 200
+        assert 'id="workspace"' in response.text
+        assert f'data-page="{page}"' in response.text
+    assert client.get('/unknown-page').status_code == 404
+    assert client.get('/api/analyses/' + '0' * 32).status_code == 404
