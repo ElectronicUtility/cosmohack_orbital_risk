@@ -7,6 +7,7 @@ from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from . import __version__, ALGORITHM_VERSION
 from .analysis import run
@@ -16,9 +17,25 @@ from .storage import load_analysis, store_analysis
 
 app = FastAPI(title="ВКД: исследовательская система поддержки решений", version=__version__)
 PAGE = Path(__file__).resolve().parent / "index.html"
+app.mount("/static", StaticFiles(directory=PAGE.parent / "static"), name="static")
+
+
+@app.get("/api/examples/{name}", response_model=SavedAnalysis)
+def example(name: str):
+    """Read-only, explicitly archived research snapshots for instant exploration."""
+    if name not in {"window_demo", "event", "control"}:
+        raise HTTPException(404, "Unknown research example")
+    path = PAGE.parent.parent / "research_results" / f"{name}.json"
+    if not path.is_file():
+        raise HTTPException(404, "Research example unavailable")
+    return SavedAnalysis.model_validate_json(path.read_text(encoding="utf-8"))
 
 
 @app.get("/", response_class=HTMLResponse)
+@app.get("/planner", response_class=HTMLResponse)
+@app.get("/archive", response_class=HTMLResponse)
+@app.get("/sources", response_class=HTMLResponse)
+@app.get("/method", response_class=HTMLResponse)
 def index():
     return PAGE.read_text(encoding="utf-8")
 
