@@ -32,6 +32,10 @@ def example(name: str):
 
 
 @app.get("/", response_class=HTMLResponse)
+@app.get("/planner", response_class=HTMLResponse)
+@app.get("/archive", response_class=HTMLResponse)
+@app.get("/sources", response_class=HTMLResponse)
+@app.get("/method", response_class=HTMLResponse)
 def index():
     return PAGE.read_text(encoding="utf-8")
 
