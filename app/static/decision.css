@@ -355,3 +355,13 @@ body.presentation .plan-toolbar {
     padding-top: 0;
   }
 }
+
+#monitor-control {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.validation-table { overflow-x: auto; }
+.validation-table th, .validation-table td { padding: 8px; text-align: left; }

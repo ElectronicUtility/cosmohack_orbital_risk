@@ -32,6 +32,10 @@ PARSER_VERSION = "1"
 CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES = 2 * 24 * 60
 
 
+def utc_now():
+    return datetime.now(timezone.utc)
+
+
 def socrates_source_max_age_minutes() -> int:
     """Maximum accepted age of SOCRATES' own `Data current as of` timestamp.
 
@@ -291,7 +295,7 @@ def archived_weather(cutoff: datetime, target_start: datetime, target_end: datet
         if target_end <= last:
             try:
                 provisional = RawRecord(id="probe", source="noaa_archive", url=url,
-                    content_sha256="probe", retrieved_at=datetime.now(timezone.utc), published_at=issue)
+                    content_sha256="probe", retrieved_at=utc_now(), published_at=issue)
                 events = forecast_events(text, provisional)
                 first = min(e.valid_start for e in events)
                 if first <= target_start:
@@ -313,7 +317,7 @@ def fetch_current(source: str, url: str, max_age_minutes: int = 60):
     if source in disabled:
         return (previous[0], previous[1].model_copy(update={"cache_state": "provider_disabled"}), "disabled") if previous else (None, None, "disabled")
     if previous:
-        age = datetime.now(timezone.utc) - previous[1].retrieved_at
+        age = utc_now() - previous[1].retrieved_at
         if age < timedelta(minutes=max_age_minutes):
             return previous[0], previous[1].model_copy(update={"cache_state": "cached"}), "cached"
     for attempt in range(2):
@@ -328,7 +332,7 @@ def fetch_current(source: str, url: str, max_age_minutes: int = 60):
                 content = payload.decode("utf-8", "replace")
                 pub = published(content)
                 probe = RawRecord(id="probe", source=source, url=url, content_sha256="probe",
-                                  retrieved_at=datetime.now(timezone.utc), published_at=pub)
+                                  retrieved_at=utc_now(), published_at=pub)
                 forecast_events(content, probe)
             elif source == "iss_current":
                 pub = None
@@ -342,7 +346,7 @@ def fetch_current(source: str, url: str, max_age_minutes: int = 60):
                 if socrates_threshold_km(content) != 5.0:
                     raise ValueError("Unexpected SOCRATES computation threshold")
                 probe = RawRecord(id="probe", source=source, url=url, content_sha256="probe",
-                                  retrieved_at=datetime.now(timezone.utc), published_at=pub)
+                                  retrieved_at=utc_now(), published_at=pub)
                 socrates_events(content, probe)
             else:
                 pub = None
@@ -375,6 +379,10 @@ def current_weather(refresh=False):
         events = forecast_events(payload.decode("utf-8", "replace"), raw)
     except ValueError:
         return [], [raw], "invalid"
+    if status in {"fresh", "cached"} and (
+        utc_now() - raw.published_at > timedelta(hours=24)
+    ):
+        status = "stale"
     return events, [raw], status
 
 
@@ -386,7 +394,7 @@ def current_tle(refresh=False):
     if len(lines) < 2 or "25544" not in lines[0] or "25544" not in lines[1]:
         return None, [raw], "invalid"
     try:
-        source_age_minutes = tle_source_age_minutes(lines[0], lines[1], raw.retrieved_at)
+        source_age_minutes = tle_source_age_minutes(lines[0], lines[1], utc_now())
     except (ValueError, OverflowError):
         return None, [raw], "invalid"
     if status in {"fresh", "cached"} and abs(source_age_minutes) > CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES:
@@ -402,7 +410,7 @@ def current_conjunctions(refresh=False):
         text = payload.decode("utf-8", "replace")
         events, coverage = socrates_events(text, raw)
         truncated = socrates_results_truncated(text)
-        source_age_minutes = socrates_source_age_minutes(text, raw.retrieved_at)
+        source_age_minutes = socrates_source_age_minutes(text, utc_now())
     except ValueError:
         return [], [raw], "invalid", None
     if truncated:
@@ -415,7 +423,7 @@ def current_conjunctions(refresh=False):
 def current_provider_health() -> dict:
     """Read-only provider/cache health without performing external requests."""
     disabled = {s.strip() for s in os.getenv("DISABLE_PROVIDERS", "").split(",") if s.strip()}
-    now = datetime.now(timezone.utc)
+    now = utc_now()
     result = {}
     for name, max_age_minutes in CURRENT_PROVIDER_MAX_AGE_MINUTES.items():
         cached = latest_raw(name)
@@ -430,6 +438,8 @@ def current_provider_health() -> dict:
                 if name == "noaa_current":
                     text = payload.decode("utf-8", "replace")
                     forecast_events(text, record)
+                    source_data_at = published(text)
+                    source_age_minutes = (now - source_data_at).total_seconds() / 60
                     validation_state = "valid"
                 elif name == "iss_current":
                     lines = [line for line in payload.decode("utf-8", "replace").splitlines()
@@ -437,14 +447,14 @@ def current_provider_health() -> dict:
                     if len(lines) < 2 or "25544" not in lines[0] or "25544" not in lines[1]:
                         raise ValueError("Invalid ISS TLE response")
                     source_data_at = tle_epoch(lines[0], lines[1])
-                    source_age_minutes = tle_source_age_minutes(lines[0], lines[1], record.retrieved_at)
+                    source_age_minutes = tle_source_age_minutes(lines[0], lines[1], now)
                     validation_state = "valid"
                 elif name == "socrates_current":
                     text = payload.decode("utf-8", "replace")
                     source_data_at, _, _ = socrates_metadata(text)
                     socrates_events(text, record)
                     validation_state = "truncated" if socrates_results_truncated(text) else "valid"
-                    source_age_minutes = socrates_source_age_minutes(text, record.retrieved_at)
+                    source_age_minutes = socrates_source_age_minutes(text, now)
             except (ValueError, UnicodeError):
                 validation_state = "invalid"
         if name in disabled:
@@ -455,6 +465,8 @@ def current_provider_health() -> dict:
             state = "invalid"
         elif validation_state == "truncated":
             state = "truncated"
+        elif name == "noaa_current" and source_age_minutes is not None and source_age_minutes > 1440:
+            state = "source_stale"
         elif (name == "iss_current" and source_age_minutes is not None
               and abs(source_age_minutes) > CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES):
             state = "source_stale"
@@ -472,7 +484,13 @@ def current_provider_health() -> dict:
             "expected_max_age_minutes": max_age_minutes,
             "validation_state": validation_state,
             "source_data_at": source_data_at.isoformat() if source_data_at else None,
-            "source_data_age_at_retrieval_minutes": source_age_minutes,
+            "source_data_age_minutes": source_age_minutes,
+            "source_data_age_at_retrieval_minutes": (
+                (record.retrieved_at - source_data_at).total_seconds() / 60
+                if record and source_data_at else None
+            ),
+            "checked_at": now.isoformat(),
+            "next_fetch_at": (record.retrieved_at + timedelta(minutes=max_age_minutes)).isoformat() if record else None,
             "source_expected_max_age_minutes": (
                 socrates_source_max_age_minutes() if name == "socrates_current" else
                 CURRENT_TLE_MAX_PROPAGATION_AGE_MINUTES if name == "iss_current" else None

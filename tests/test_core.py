@@ -143,7 +143,7 @@ def test_api_historical_e2e(tmp_path,monkeypatch):
     assert doc["source_records"][0]["published_at"]<request["cutoff"]
     assert client.get(f"/api/analyses/{doc['id']}").json()==doc
     assert client.get(f"/api/analyses/{doc['id']}/export.json").status_code==200
-    assert "<h1>Анализ ВКД</h1>" in client.get(f"/api/analyses/{doc['id']}/export.html").text
+    assert "buildReport(snapshot)" in client.get(f"/api/analyses/{doc['id']}/export.html").text
 
 
 def test_provider_disabled_and_stale_cache(tmp_path,monkeypatch):
@@ -175,7 +175,8 @@ def test_provider_http_failure_never_becomes_good(tmp_path,monkeypatch):
 
 def test_sources_api_reports_fresh_stale_missing_and_disabled(monkeypatch):
     from app import providers
-    now = datetime.now(UTC)
+    now = datetime(2026, 9, 18, 18, tzinfo=UTC)
+    monkeypatch.setattr(providers, "utc_now", lambda: now)
     fixtures = Path(__file__).parent / "fixtures"
 
     def record(source, age_minutes):
@@ -571,6 +572,7 @@ def test_current_tle_fresh_download_with_old_element_epoch_is_stale(monkeypatch)
     fixture = (Path(__file__).parent / "fixtures" / "iss_20260918.tle").read_bytes()
     lines = [line for line in fixture.decode().splitlines() if line.startswith(("1 ", "2 "))]
     epoch = providers.tle_epoch(lines[0], lines[1])
+    monkeypatch.setattr(providers, "utc_now", lambda: epoch + timedelta(days=3))
     raw = RawRecord(
         id="old-tle", source="iss_current", url=providers.ISS_CURRENT,
         content_sha256="x", retrieved_at=epoch + timedelta(days=3),
@@ -586,6 +588,7 @@ def test_sources_health_exposes_tle_epoch_and_rejects_old_source_data(monkeypatc
     fixture = (Path(__file__).parent / "fixtures" / "iss_20260918.tle").read_bytes()
     lines = [line for line in fixture.decode().splitlines() if line.startswith(("1 ", "2 "))]
     epoch = providers.tle_epoch(lines[0], lines[1])
+    monkeypatch.setattr(providers, "utc_now", lambda: epoch + timedelta(days=3))
     record = RawRecord(
         id="tle-health", source="iss_current", url=providers.ISS_CURRENT,
         content_sha256="x", retrieved_at=epoch + timedelta(days=3),

@@ -1,0 +1,506 @@
+[
+  {
+    "path": "data/validation/sgas/20240430SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/04/20240430SGAS.txt",
+    "sha256": "f065dc97bc271ef85b5143c0e2bc9fbe6b733513eabfebf9d0f16b12847fe3a2",
+    "retrieved_at": "2026-09-19T19:10:17.507785+00:00",
+    "last_modified": "Tue, 30 Apr 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240501SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240501SGAS.txt",
+    "sha256": "a07a41cb364d528ec4217477abd5452ba37b50574fd9126c8f9ebc523939dcbb",
+    "retrieved_at": "2026-09-19T19:10:17.490904+00:00",
+    "last_modified": "Wed, 01 May 2024 02:45:10 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240502SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240502SGAS.txt",
+    "sha256": "2b7498a3c8559d0b4dadf5550ca220c8f682a5a16ce17c4261e1f7975c313424",
+    "retrieved_at": "2026-09-19T19:10:17.506563+00:00",
+    "last_modified": "Thu, 02 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240503SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240503SGAS.txt",
+    "sha256": "450abd1d9b05f4b6883ee24ee17a186754fc0e309932cd33bcb246623bd55686",
+    "retrieved_at": "2026-09-19T19:10:17.965187+00:00",
+    "last_modified": "Fri, 03 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240504SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240504SGAS.txt",
+    "sha256": "702f7b2f31c9e5a061b8968ecb938551b6fe5b49d0da8b4c21d1c29c2c81ec51",
+    "retrieved_at": "2026-09-19T19:10:17.994626+00:00",
+    "last_modified": "Sat, 04 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240505SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240505SGAS.txt",
+    "sha256": "55aebd0e324bdcc0e8707c4a6ad590b45019be8f60a4e140d98fd22cdaad909f",
+    "retrieved_at": "2026-09-19T19:10:17.976426+00:00",
+    "last_modified": "Sun, 05 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240506SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240506SGAS.txt",
+    "sha256": "a1818b82f940d1f13899f98299aaae009d36cdac1756f55ad0b5a6c6cc41ea73",
+    "retrieved_at": "2026-09-19T19:10:18.450196+00:00",
+    "last_modified": "Mon, 06 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240507SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240507SGAS.txt",
+    "sha256": "5c679e12a0b64a1687bfa048d3ca93c2c2dd3dfa711ab426c5278b772580a65f",
+    "retrieved_at": "2026-09-19T19:10:18.449837+00:00",
+    "last_modified": "Tue, 07 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240508SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240508SGAS.txt",
+    "sha256": "4f73fc6467d761f726b3d2f58e359a661ca5e8572ece31895433cd1aca5b6f79",
+    "retrieved_at": "2026-09-19T19:10:18.479904+00:00",
+    "last_modified": "Wed, 08 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240509SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240509SGAS.txt",
+    "sha256": "c0cdc155ab6887d824f52dfd571702e03bb2d7f86a9562e915252e1d2587df86",
+    "retrieved_at": "2026-09-19T19:10:18.945761+00:00",
+    "last_modified": "Thu, 09 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240510SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240510SGAS.txt",
+    "sha256": "2071f8c08f4af3b6022df6991bdc2cc594c64f799c033d4303028194daf14dc5",
+    "retrieved_at": "2026-09-19T19:10:18.925393+00:00",
+    "last_modified": "Fri, 10 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240511SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240511SGAS.txt",
+    "sha256": "46dd3a36bbe8f42b6f938e570f8987bdd6b0dc215af0912423fd83ca10d15e57",
+    "retrieved_at": "2026-09-19T19:10:18.966444+00:00",
+    "last_modified": "Sat, 11 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240512SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240512SGAS.txt",
+    "sha256": "b0c2d9e7a6d0b2d5b5c663217c0f90856654d41608f30120d21c21d7e6bc1430",
+    "retrieved_at": "2026-09-19T19:10:19.399656+00:00",
+    "last_modified": "Sun, 12 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240513SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240513SGAS.txt",
+    "sha256": "b16699f0c1b42e95cebd00f20cef58ec12172544357015a1c87a8c9366ad6514",
+    "retrieved_at": "2026-09-19T19:10:19.448986+00:00",
+    "last_modified": "Mon, 13 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240514SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240514SGAS.txt",
+    "sha256": "3b5e763f14b7729c16c8c8aa8cd5cf44b65413e29ed41471602245edf38e4cb7",
+    "retrieved_at": "2026-09-19T19:10:19.430178+00:00",
+    "last_modified": "Tue, 14 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240515SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240515SGAS.txt",
+    "sha256": "f48eaea8e82b73175f2645b01c0b50a69ee13246f879cf55937f75f42004061e",
+    "retrieved_at": "2026-09-19T19:10:19.930920+00:00",
+    "last_modified": "Wed, 15 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240516SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240516SGAS.txt",
+    "sha256": "cdc761f9d468cb4ac3b983b08142143c4de068b272501eb9bac725697a5e293e",
+    "retrieved_at": "2026-09-19T19:10:19.930454+00:00",
+    "last_modified": "Thu, 16 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240517SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240517SGAS.txt",
+    "sha256": "5b4e9f73622e632b0a1b2ec4548943aa9c3f6045de9150724f6ede513a8afc32",
+    "retrieved_at": "2026-09-19T19:10:19.924554+00:00",
+    "last_modified": "Fri, 17 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240518SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240518SGAS.txt",
+    "sha256": "2d17c8c5681db0d58bbf3f1276dacc9480814167174b576e7d1b80bf198da195",
+    "retrieved_at": "2026-09-19T19:10:20.402076+00:00",
+    "last_modified": "Sat, 18 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240519SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240519SGAS.txt",
+    "sha256": "2d265fe0058264ebc186cec58fde6bf782457df602354971af5e6f1911de59f6",
+    "retrieved_at": "2026-09-19T19:10:20.440233+00:00",
+    "last_modified": "Sun, 19 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240520SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240520SGAS.txt",
+    "sha256": "4d7a0b9f459f9fd5b6f3e3525735a387a5daa9a77d33fb75f5c6eb5ff08dd6eb",
+    "retrieved_at": "2026-09-19T19:10:20.420526+00:00",
+    "last_modified": "Mon, 20 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240521SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240521SGAS.txt",
+    "sha256": "13703960634edbd29a4c391b0ef73d08779c350205f5a827003ba517667ddde8",
+    "retrieved_at": "2026-09-19T19:10:20.877085+00:00",
+    "last_modified": "Tue, 21 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240522SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240522SGAS.txt",
+    "sha256": "078360b13ef64377a6bb86ae4ae069a45e16015e1d5f2b2640b69bf584365d71",
+    "retrieved_at": "2026-09-19T19:10:20.891414+00:00",
+    "last_modified": "Wed, 22 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240523SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240523SGAS.txt",
+    "sha256": "289513f4e6fd608a152d4b3a003ecdc1d5d2368ee669ec96182669a70793853c",
+    "retrieved_at": "2026-09-19T19:10:20.928848+00:00",
+    "last_modified": "Thu, 23 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240524SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240524SGAS.txt",
+    "sha256": "841f36bb32aa58854bc1a606242e374684f1b2afb4c192f87b1cca73a2b69898",
+    "retrieved_at": "2026-09-19T19:10:21.353087+00:00",
+    "last_modified": "Fri, 24 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240525SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240525SGAS.txt",
+    "sha256": "839e4bbcc6d22aa21a2bf964d45999047fb3e2a968b3fdcb333dc05439004b8e",
+    "retrieved_at": "2026-09-19T19:10:21.380233+00:00",
+    "last_modified": "Sat, 25 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240526SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240526SGAS.txt",
+    "sha256": "dfe697900a1a3aec1b570f609ae576485c5845f6089e3d9f88df0295e1aa2923",
+    "retrieved_at": "2026-09-19T19:10:21.397753+00:00",
+    "last_modified": "Sun, 26 May 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240527SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240527SGAS.txt",
+    "sha256": "0b2965a3e744f0c7876ef039122c5ea9f67892755d3ebb772e620405f9c8a102",
+    "retrieved_at": "2026-09-19T19:10:21.827095+00:00",
+    "last_modified": "Mon, 27 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240528SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240528SGAS.txt",
+    "sha256": "6801b4767b860ce846fc39493610a5318761c2e6beefac934ee0ac068e90c1b4",
+    "retrieved_at": "2026-09-19T19:10:21.889579+00:00",
+    "last_modified": "Tue, 28 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240529SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240529SGAS.txt",
+    "sha256": "7b74c83cc8ada14be56ffb7a7f7a8db0dbca759b325566d16cb420b5241b843a",
+    "retrieved_at": "2026-09-19T19:10:21.884489+00:00",
+    "last_modified": "Wed, 29 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240530SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240530SGAS.txt",
+    "sha256": "52c5a2d456ff0a85d5476985368a7f4e2bfadcb12c9a97c93555d872aca1c54e",
+    "retrieved_at": "2026-09-19T19:10:22.318361+00:00",
+    "last_modified": "Thu, 30 May 2024 02:45:08 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240531SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/05/20240531SGAS.txt",
+    "sha256": "33e8f9d71a72e0185fdd8b429c669cb33acb20d2f5cf2a5f2243ad49a765a716",
+    "retrieved_at": "2026-09-19T19:10:22.375529+00:00",
+    "last_modified": "Fri, 31 May 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240601SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240601SGAS.txt",
+    "sha256": "fe3d59e38158bfdb97b239f547e3568402fb53b162a50110baf8e9efa6709a2c",
+    "retrieved_at": "2026-09-19T19:10:22.386138+00:00",
+    "last_modified": "Sat, 01 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240602SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240602SGAS.txt",
+    "sha256": "3904f7039554d2dbb699a593f123b87fa999527df4bf10995f344bc1841ce2df",
+    "retrieved_at": "2026-09-19T19:10:22.791300+00:00",
+    "last_modified": "Sun, 02 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240603SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240603SGAS.txt",
+    "sha256": "3edd6eb434cf89ef51d16b352325d897ecc4afb8f87fa636aa6a5c190e78ad52",
+    "retrieved_at": "2026-09-19T19:10:22.869653+00:00",
+    "last_modified": "Mon, 03 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240604SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240604SGAS.txt",
+    "sha256": "bcf075df53f26c57604587248d4d62099890f5fb238fc9f3016e7ef2042fc113",
+    "retrieved_at": "2026-09-19T19:10:22.859959+00:00",
+    "last_modified": "Tue, 04 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240605SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240605SGAS.txt",
+    "sha256": "ff48d5dc639e53d8c5e76387c29f177a84b760527e139ae6573fb288d3be3e74",
+    "retrieved_at": "2026-09-19T19:10:23.265513+00:00",
+    "last_modified": "Wed, 05 Jun 2024 02:45:05 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240606SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240606SGAS.txt",
+    "sha256": "5de74f89f6e01d58b6857a9fef3115b3932ed5408e4b6829b164dc5116ecb3b3",
+    "retrieved_at": "2026-09-19T19:10:23.333557+00:00",
+    "last_modified": "Thu, 06 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240607SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240607SGAS.txt",
+    "sha256": "eff25c28c320ed0224f7b7e8dd921a8676fdfc3725895ea038a921b627bd6975",
+    "retrieved_at": "2026-09-19T19:10:23.377476+00:00",
+    "last_modified": "Fri, 07 Jun 2024 02:45:05 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240608SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240608SGAS.txt",
+    "sha256": "d87e1f17c71555fb24c4cf896dc039f21a811f84a27841acf999afc9cee245b4",
+    "retrieved_at": "2026-09-19T19:10:23.757669+00:00",
+    "last_modified": "Sat, 08 Jun 2024 02:45:10 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240609SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240609SGAS.txt",
+    "sha256": "2f059e5b1c6bb2d898b70e2b485e55edd705d57dde97fc78af46442ffebfc0f2",
+    "retrieved_at": "2026-09-19T19:10:23.808944+00:00",
+    "last_modified": "Sun, 09 Jun 2024 02:45:05 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240610SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240610SGAS.txt",
+    "sha256": "4c2e7cf237392a34913b17b81a3c7133df616c800fae2b1be3d1b5e44402598f",
+    "retrieved_at": "2026-09-19T19:10:23.850147+00:00",
+    "last_modified": "Mon, 10 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240611SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240611SGAS.txt",
+    "sha256": "48ad9209263ecaab59fe10bb97fd8a16dbf6bed1df48ed459d4f8cd8298e4b65",
+    "retrieved_at": "2026-09-19T19:10:24.230463+00:00",
+    "last_modified": "Tue, 11 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240612SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240612SGAS.txt",
+    "sha256": "8c45d006fe729e051f30a4aa9d60602855a3a610dd28292a017ab9e0adbd83c6",
+    "retrieved_at": "2026-09-19T19:10:24.283815+00:00",
+    "last_modified": "Wed, 12 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240613SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240613SGAS.txt",
+    "sha256": "7ad19a54637308f42f20b066642a7f5a8c8b5819770a89cc849c1692b97d2d49",
+    "retrieved_at": "2026-09-19T19:10:24.340462+00:00",
+    "last_modified": "Thu, 13 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240614SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240614SGAS.txt",
+    "sha256": "6cb88840805a9aeb05d958a1bdcbd1c60349bf6d99e9018ae1a805e0ca749856",
+    "retrieved_at": "2026-09-19T19:10:24.706742+00:00",
+    "last_modified": "Fri, 14 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240615SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240615SGAS.txt",
+    "sha256": "2d1dc37c22aa51072e7c46cc9a5ba8402bf38b2e6ea2084491af63694e61cf12",
+    "retrieved_at": "2026-09-19T19:10:24.764492+00:00",
+    "last_modified": "Sat, 15 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240616SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240616SGAS.txt",
+    "sha256": "4e10dcf8612c4631e32157997e0f554f4166b1407cb1d853528a66eed83723b1",
+    "retrieved_at": "2026-09-19T19:10:24.809419+00:00",
+    "last_modified": "Sun, 16 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240617SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240617SGAS.txt",
+    "sha256": "6a1050bb9afb581aacadde93957bfb9686d52bdc4483a5767597d275e2898ee6",
+    "retrieved_at": "2026-09-19T19:10:25.207465+00:00",
+    "last_modified": "Mon, 17 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240618SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240618SGAS.txt",
+    "sha256": "8d857f9fab5686d727483ad7c5fa115bc73d6ca560cd8029d8c982cf6f68094c",
+    "retrieved_at": "2026-09-19T19:10:25.255358+00:00",
+    "last_modified": "Tue, 18 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240619SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240619SGAS.txt",
+    "sha256": "5125f1b38dca8a9969fe76e2d5d2882c243a7ca863517bf37aa76f4905540ffe",
+    "retrieved_at": "2026-09-19T19:10:25.301454+00:00",
+    "last_modified": "Wed, 19 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240620SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240620SGAS.txt",
+    "sha256": "c0752d2186d4d72e1222f5bfd4ad857e61c6bca40409be074c4c0d9e9366de47",
+    "retrieved_at": "2026-09-19T19:10:25.683380+00:00",
+    "last_modified": "Thu, 20 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240621SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240621SGAS.txt",
+    "sha256": "bc384162f7f2c5d256e5cb236f0171d04f0299d7da81cb88cfc92c2e7d794fe3",
+    "retrieved_at": "2026-09-19T19:10:25.747459+00:00",
+    "last_modified": "Fri, 21 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240622SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240622SGAS.txt",
+    "sha256": "87a4824d74007b3ed52eb6c359e5464b95c77143a33af028950f2201fb6e088c",
+    "retrieved_at": "2026-09-19T19:10:25.771650+00:00",
+    "last_modified": "Sat, 22 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240623SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240623SGAS.txt",
+    "sha256": "b15c54372139e0ef7ee8446626e327bcc7e69843450798cfbf8cdb00476649f9",
+    "retrieved_at": "2026-09-19T19:10:26.175334+00:00",
+    "last_modified": "Sun, 23 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240624SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240624SGAS.txt",
+    "sha256": "a100554640fc5197d8a485690ad10de7224be9a1a2ec497031b64a5302ea66d4",
+    "retrieved_at": "2026-09-19T19:10:26.221662+00:00",
+    "last_modified": "Mon, 24 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240625SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240625SGAS.txt",
+    "sha256": "f801f0b6a06fde7259ea56c9edb185f8145735db3cb422fb0124c1d7d7d8eeae",
+    "retrieved_at": "2026-09-19T19:10:26.244523+00:00",
+    "last_modified": "Tue, 25 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240626SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240626SGAS.txt",
+    "sha256": "d7a11de5683690a132824aefdea13d279857af96c493ddecddda4e24baa41969",
+    "retrieved_at": "2026-09-19T19:10:26.649005+00:00",
+    "last_modified": "Wed, 26 Jun 2024 02:45:07 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240627SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240627SGAS.txt",
+    "sha256": "77a13d45dc7a491c3939adf51215069cd5738a5af72e019bc74b3f51e1b27908",
+    "retrieved_at": "2026-09-19T19:10:26.713519+00:00",
+    "last_modified": "Thu, 27 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240628SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240628SGAS.txt",
+    "sha256": "c05b0bb3bd2e176de30b820edc77952fa611cfd78516f9085c42cc5ea6380fe7",
+    "retrieved_at": "2026-09-19T19:10:26.735571+00:00",
+    "last_modified": "Fri, 28 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240629SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240629SGAS.txt",
+    "sha256": "c6093c12a9eb9fef56b059a376e219579d299c6102cd61c062b160546859b7be",
+    "retrieved_at": "2026-09-19T19:10:27.143167+00:00",
+    "last_modified": "Sat, 29 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240630SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/06/20240630SGAS.txt",
+    "sha256": "5e914e189f45384890e4ef6061204dc3f1cb2ae22145e0ed518e3a297e5c854e",
+    "retrieved_at": "2026-09-19T19:10:27.208148+00:00",
+    "last_modified": "Sun, 30 Jun 2024 02:45:06 GMT",
+    "status": 200
+  },
+  {
+    "path": "data/validation/sgas/20240701SGAS.txt",
+    "url": "https://www.ngdc.noaa.gov/stp/space-weather/swpc-products/daily_reports/solar_geophysical_activity_summaries/2024/07/20240701SGAS.txt",
+    "sha256": "e839ba73c8e21b3a731e24d8933a4a412582f2e3191c001ba0d42f4e75799a99",
+    "retrieved_at": "2026-09-19T19:10:27.207941+00:00",
+    "last_modified": "Mon, 01 Jul 2024 02:45:06 GMT",
+    "status": 200
+  }
+]

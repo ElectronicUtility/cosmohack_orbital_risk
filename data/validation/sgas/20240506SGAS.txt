@@ -1,0 +1,50 @@
+:Product: 0506SGAS.txt
+:Issued: 2024 May 06 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 127 Issued at 0245Z on 06 May 2024
+This report is compiled from data received at SWO on 05 May
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0106 0106 0106                       140                           
+ 0110 0110 0110                       110                           
+ 0115 0127 0143  3663 N26W10 M8.4  1b 340    71                     
+ 0148 0148 0148                       130                           
+ 0244 0247 0253  3663 N26W10       Sf 200                           
+ 0301 0317 0327  3663 N26W10 C8.8  Sf 110    280                    
+ 0547 0601 0607  3663 N26W10 X1.3  1b 5200   120                    
+ 0616 0616 0616                       270                           
+ 0628 0628 0628                       210                           
+ 0656 0656 0656                       200                           
+ 0805 0805 0805                       140                           
+ 0807 0819 0824  3663 N27W21 M1.3  Sf                               
+ 0853 0853 0853                       110                           
+ 0906 0912 0923  3663 N27W21 C8.4  Sf 100                           
+ 0923 0938 0953  3664 S20E22 M2.3  Sn 190                           
+ 0933 0933 0933                       140                           
+ 0939 0941 0941                       230                           
+ 0953 1000 1019  3663 N26W21 M7.4  1b                               
+ 1112 1112 1112                       140                           
+ 1141 1154 1216  3663 N26W22 X1.2  1b                               
+ 1433 1447 1456  3663 N25W25 M1.3  Sf                               
+ 1528 1538 1551  3663 N24W26 M2.2  2n                               
+ 1655 1701 1706  3664 S19E25 M1.3  1f                               
+ 1834 1840 1845  3664 S19E25 M1.0  Sf                               
+ 1944 1952 2006  3663 N24W28 M1.3  2n                               
+B.  Proton Events:  None.
+C.  Geomagnetic Activity Summary:  The geomagnetic field was quiet to
+active.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 177  SSN 152  Afr/Ap 012/010   X-ray Background C2.7
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 1.1e+06   GT 10 MeV 1.8e+04 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 2.10e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 2 2 3 3 2 2 3 3 Planetary 2 1 2 2 2 2 3 4 
+F.  Comments:  None.
