@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 from . import ALGORITHM_VERSION
 from .conjunctions import historical_conjunction_source_record, reconstruct_historical_conjunctions
 from .domain import AnalysisRequest, Comparison, FactorAssessment, Window, WindowAssessment
-from .orbit import in_earth_shadow, trajectory
+from .orbit import in_earth_shadow, trajectory, shadow_intervals
 from .providers import archived_weather, current_conjunctions, current_tle, current_weather, ISS_ARCHIVE
 from .storage import store_raw
 
@@ -226,17 +226,8 @@ def lighting_assessment(window: Window, states, requires_sunlight, provider_stat
             decision_eligible=eligible, eligibility_reason=eligibility_reason,
             overlap_minutes=None, completeness="partial_or_absent", freshness="orbit_missing",
             algorithm_version=ALGORITHM_VERSION, limitations=["No suitable ISS elements for the full window."])
-    dark = 0.0
-    intervals = []
-    for a, b in zip(states, states[1:]):
-        midpoint = a.model_copy(update={
-            "at": a.at + (b.at - a.at) / 2,
-            "position_teme_km": tuple((x + y) / 2 for x, y in zip(a.position_teme_km, b.position_teme_km)),
-        })
-        if in_earth_shadow(midpoint):
-            minutes = (b.at - a.at).total_seconds() / 60
-            dark += minutes
-            intervals.append({"start": a.at.isoformat(), "end": b.at.isoformat(), "minutes": minutes})
+    intervals = shadow_intervals(states)
+    dark = sum(i['minutes'] for i in intervals)
     unavailable = provider_status in {"stale", "disabled", "missing", "invalid"}
     return FactorAssessment(mechanism="lighting", role="plan_constraint",
         decision_eligible=eligible, eligibility_reason=eligibility_reason,
@@ -247,7 +238,7 @@ def lighting_assessment(window: Window, states, requires_sunlight, provider_stat
         comparison_value=dark if requires_sunlight else None, comparison_unit="minutes_of_plan_constraint",
         comparison_quantity="Earth-shadow minutes requiring direct sunlight",
         comparison_direction="lower_is_better",
-        comparison_tolerance=float(os.getenv("EXPERIMENTAL_LIGHTING_EQUIVALENCE_MINUTES", "0")),
+        comparison_tolerance=float(os.getenv("EXPERIMENTAL_LIGHTING_EQUIVALENCE_MINUTES", "1")),
         completeness="complete" if not unavailable else "stale_or_unavailable",
         freshness="historical_reconstruction" if states[0].classification.startswith("historical") else provider_status,
         evidence=[{"quantity": "Earth-shadow interval", "unit": "minutes", "value": dark,

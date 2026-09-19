@@ -111,3 +111,51 @@ def in_earth_shadow(state: OrbitState):
     dot = sum(a * b for a, b in zip(p, s))
     perpendicular2 = sum(a*a for a in p) - dot*dot
     return dot < 0 and perpendicular2 < 6378.137**2
+
+
+def interpolate_orbit(a: OrbitState, b: OrbitState, fraction: float):
+    """Short-arc spherical interpolation; a chord falsely lowers orbital altitude."""
+    ra = math.sqrt(sum(x*x for x in a.position_teme_km))
+    rb = math.sqrt(sum(x*x for x in b.position_teme_km))
+    u = [x/ra for x in a.position_teme_km]
+    v = [x/rb for x in b.position_teme_km]
+    angle = math.acos(max(-1.0, min(1.0, sum(x*y for x,y in zip(u,v)))))
+    if angle < 1e-8:
+        direction = u
+    else:
+        direction = [(math.sin((1-fraction)*angle)*x + math.sin(fraction*angle)*y)/math.sin(angle)
+                     for x,y in zip(u,v)]
+    radius = ra + (rb-ra)*fraction
+    return a.model_copy(update={'at': a.at+(b.at-a.at)*fraction,
+                                'position_teme_km': tuple(radius*x for x in direction)})
+
+
+def shadow_intervals(states):
+    """30-second probes and <=1-second boundary bisection on short orbital arcs.
+
+    Sub-30-second grazing transits may remain unresolved. This improves numerical
+    integration, not the physical accuracy of the cylindrical shadow model.
+    """
+    segments=[]
+    for a,b in zip(states,states[1:]):
+        seconds=(b.at-a.at).total_seconds()
+        count=max(1,math.ceil(seconds/30))
+        for j in range(count):
+            left,right=j/count,(j+1)/count
+            dark_left=in_earth_shadow(interpolate_orbit(a,b,left))
+            dark_right=in_earth_shadow(interpolate_orbit(a,b,right))
+            if dark_left != dark_right:
+                lo,hi=left,right
+                while (hi-lo)*seconds>1:
+                    mid=(lo+hi)/2
+                    if in_earth_shadow(interpolate_orbit(a,b,mid))==dark_left: lo=mid
+                    else: hi=mid
+                boundary=(lo+hi)/2
+                if dark_left: right=boundary
+                else: left=boundary
+            elif not dark_left:
+                continue
+            start=a.at+(b.at-a.at)*left; end=a.at+(b.at-a.at)*right
+            if segments and segments[-1][1]==start: segments[-1]=(segments[-1][0],end)
+            else: segments.append((start,end))
+    return [{'start':a.isoformat(),'end':b.isoformat(),'minutes':(b-a).total_seconds()/60} for a,b in segments]

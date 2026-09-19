@@ -6,13 +6,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 
 from . import __version__, ALGORITHM_VERSION
 from .analysis import run
 from .domain import AnalysisRequest, SavedAnalysis
-from .providers import current_provider_health
+from .providers import current_provider_health, current_weather, current_tle, current_conjunctions
 from .storage import load_analysis, store_analysis
 
 app = FastAPI(title="ВКД: исследовательская система поддержки решений", version=__version__)
@@ -23,7 +23,7 @@ app.mount("/static", StaticFiles(directory=PAGE.parent / "static"), name="static
 @app.get("/api/examples/{name}", response_model=SavedAnalysis)
 def example(name: str):
     """Read-only, explicitly archived research snapshots for instant exploration."""
-    if name not in {"window_demo", "event", "control"}:
+    if name not in {"window_demo", "event", "control", "sunlight", "tradeoff"}:
         raise HTTPException(404, "Unknown research example")
     path = PAGE.parent.parent / "research_results" / f"{name}.json"
     if not path.is_file():
@@ -48,6 +48,23 @@ def health():
 @app.get("/api/sources")
 def sources():
     return current_provider_health()
+
+
+@app.post("/api/sources/refresh")
+def refresh_sources():
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        list(pool.map(lambda provider: provider(True), (current_weather, current_tle, current_conjunctions)))
+    return current_provider_health()
+
+
+@app.get("/api/validation")
+def validation():
+    import json
+    path = PAGE.parent.parent / "research_results" / "planning_validation.json"
+    if not path.is_file():
+        raise HTTPException(404, "Validation report unavailable")
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 @app.post("/api/analyze", response_model=SavedAnalysis)
@@ -90,3 +107,26 @@ def export_html(identifier: str):
     sources = "".join(f"<li><a href='{esc(r['url'])}'>{esc(r['source'])}</a> — SHA-256 {esc(r['content_sha256'])}, published {esc(r['published_at'])}, retrieved {esc(r['retrieved_at'])}</li>" for r in item["source_records"])
     body = f"<!doctype html><html lang='ru'><meta charset='utf-8'><title>Анализ ВКД</title><style>body{{font:16px system-ui;max-width:900px;margin:3rem auto;line-height:1.5}}pre{{white-space:pre-wrap;overflow-wrap:anywhere}}section{{border-top:1px solid #bbb;padding:1rem 0}}</style><h1>Анализ ВКД</h1><p>Исследовательский прототип; не допуск к реальной ВКД.</p><p>Версия алгоритма: {esc(item['algorithm_version'])}. Режим: {esc(item['request']['mode'])}. Cutoff: {esc(item['request']['cutoff'])}.</p><h2>Сравнение</h2><p>{esc(item['comparison']['outcome'])}: {esc('; '.join(item['comparison']['reasons']))}</p>{''.join(rows)}<h2>Исходные записи</h2><ul>{sources}</ul></html>"
     return HTMLResponse(body, headers={"Content-Disposition": f'attachment; filename="analysis-{identifier}.html"'})
+
+
+def bundle_response(item):
+    from .bundle import build_bundle
+    try:
+        payload = build_bundle(item)
+    except ValueError as exc:
+        raise HTTPException(409, str(exc)) from exc
+    return Response(payload, media_type="application/zip",
+                    headers={"Content-Disposition": 'attachment; filename="orbital-risk-evidence.zip"'})
+
+
+@app.get("/api/analyses/{identifier}/bundle.zip")
+def export_bundle(identifier: str):
+    item = load_analysis(identifier)
+    if item is None:
+        raise HTTPException(404, "Analysis not found")
+    return bundle_response(item)
+
+
+@app.get("/api/examples/{name}/bundle.zip")
+def example_bundle(name: str):
+    return bundle_response(example(name).model_dump(mode="json"))
