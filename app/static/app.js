@@ -22,9 +22,9 @@ import {
   inputUTC,
   publicationLabel,
   quantityLabel,
-} from "./model.js?v=20260919-6";
+} from "./model.js?v=20260919-7";
 import { OrbitScene } from "./orbit.js?v=20260919-6";
-import { buildReport } from "./report.js?v=20260919-6";
+import { buildReport } from "./report.js?v=20260919-7";
 
 const $ = (id) => document.getElementById(id),
   $$ = (s) => [...document.querySelectorAll(s)];
@@ -190,6 +190,9 @@ async function load(url, example, index, push) {
   }
 }
 function accept(a, example, index = 0, push = false) {
+  $("monitor").checked = false;
+  $("monitor-control").hidden = a.request.mode !== "current";
+  $("monitor-next").textContent = "";
   state.analysis = a;
   state.example = example;
   state.selected = normalizeWindow(index, a.windows.length);
@@ -218,7 +221,7 @@ function render() {
     `<strong>${esc(title)}</strong><p>${esc(summary)}</p>`;
   $("conclusion-text").textContent = summary;
   $("plan-condition").textContent =
-    `${a.request.task_name || "Работа за бортом станции"} · ${numeric(a.request.duration_hours, 1)} ч · ${a.request.requires_sunlight ? "нужен солнечный свет" : "освещение не ограничивает план"} · ${modes[a.request.mode]}`;
+    `${a.request.task_name || "Работа за бортом станции"}, ${numeric(a.request.duration_hours, 1)} ч, ${a.request.requires_sunlight ? "нужен солнечный свет" : "освещение не ограничивает план"}, ${modes[a.request.mode]}`;
 
   $("conclusion").dataset.outcome = a.comparison.outcome;
   $("result-label").textContent = state.example
@@ -580,7 +583,7 @@ function report() {
   toast("Отчёт подготовлен для скачивания");
 }
 
-async function calculate(refresh = false) {
+async function calculate(refresh = false, automatic = false) {
   if (state.busy) return;
   $("start").setCustomValidity("");
   $("cutoff").setCustomValidity("");
@@ -623,8 +626,14 @@ async function calculate(refresh = false) {
       signal: controller.signal,
     });
     if (controller !== state.controller) return;
+    if (automatic && (!$("monitor").checked || $("plan-dialog").open)) {
+      readyStatus();
+      return;
+    }
     navigate("planner", false);
-    accept(a, null, 0, true);
+    accept(a, null, automatic ? state.selected : 0, !automatic);
+    $("monitor").checked = request.mode === "current";
+    scheduleMonitor();
   } catch (e) {
     if (controller !== state.controller) return;
     status(
@@ -846,6 +855,7 @@ function applyRoute() {
   if (page === "archive") renderArchive();
   if (page === "sources") loadProviderHealth();
   if (page === "planner") requestAnimationFrame(() => scene.draw());
+  if (page !== "planner") $("monitor").checked = false;
 }
 function navigate(page, push = true) {
   if (!pages[page]) return;
@@ -1033,7 +1043,7 @@ async function loadValidation() {
   try {
     const d = await readJSON("/api/validation");
     $("validation-summary").innerHTML =
-      `<p>Выбор только по освещению. <strong>${d.cases} планов · ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 2)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="/api/validation" target="_blank" rel="noopener">Полные результаты</a></p>`;
+      `<p>Выбор только по освещению. <strong>${d.cases} планов, ${d.windows} окон</strong>. ${d.improved_cases} планов с меньшим временем в тени, чем при исходном начале. Ухудшений: ${d.worse_cases}.</p><p>Проверка шагом 1 мин: средняя ошибка ${numeric(d.mean_absolute_error_minutes, 3)} мин, максимальная ${numeric(d.max_absolute_error_minutes, 2)} мин.</p><p class="small">Сравнение шагов расчёта одной модели тени, не оценка точности погодного прогноза. <a href="/api/validation" target="_blank" rel="noopener">Полные результаты</a></p>`;
   } catch {
     $("validation-summary").textContent =
       "Отчёт проверки пока недоступен. Команда воспроизведения: python scripts/validate_planning.py";
@@ -1062,3 +1072,28 @@ $("export-bundle").addEventListener("click", async () => {
     button.disabled = false;
   }
 });
+
+let monitorTimer;
+function scheduleMonitor() {
+  clearTimeout(monitorTimer);
+  const active = $("monitor").checked && state.analysis?.request.mode === "current";
+  $("monitor-next").textContent = active ? "(следующая проверка " + clock(Date.now() + 300000) + " UTC)" : "";
+  if (!active) return;
+  monitorTimer = setTimeout(async () => {
+    if ($("monitor").checked && state.analysis?.request.mode === "current" && !document.hidden && currentPage() === "planner" && !state.busy && !$("plan-dialog").open) {
+      let unchanged = false;
+      try { unchanged = sameRequest(formRequest(), state.analysis.request); } catch {}
+      if (unchanged) await calculate(false, true);
+    }
+    scheduleMonitor();
+  }, 300000);
+}
+$("monitor").addEventListener("change", scheduleMonitor);
+
+async function loadWeatherValidation() {
+  try {
+    const d = await readJSON("/api/validation/weather");
+    $("weather-validation").innerHTML = `<h3>Погодные предупреждения</h3><p>${numeric(d.labelled_days)} суток по сводкам NOAA SGAS. Порог внимания ${numeric(d.alert_threshold_percent)}%.</p><div class="validation-table"><table><thead><tr><th>Метод</th><th>Обнаружено</th><th>Пропущено</th><th>Ложные тревоги</th></tr></thead><tbody>${[["Прогноз NOAA",d.forecast],["Последняя известная обстановка",d.persistence]].map(([name,r])=>`<tr><th>${name}</th><td>${numeric(r.hits)}</td><td>${numeric(r.misses)}</td><td>${numeric(r.false_alerts)}</td></tr>`).join("")}</tbody></table></div><p class="small">Проверка по текстовым сводкам, не по непрерывному потоку частиц. Один неоднозначный день исключён. <a href="/api/validation/weather" target="_blank" rel="noopener">Даты, источники и ошибки</a></p>`;
+  } catch { $("weather-validation").textContent = "Погодная проверка недоступна."; }
+}
+loadWeatherValidation();

@@ -1,0 +1,44 @@
+:Product: 0509SGAS.txt
+:Issued: 2024 May 09 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 130 Issued at 0245Z on 09 May 2024
+This report is compiled from data received at SWO on 08 May
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0106 0106 0106                       150                           
+ 0133 0141 0148  3663 N26W58 X1.0  1b                               
+ 0216 0227 0236  3664        M3.4                                   
+ 0319 0327 0338  3664        M1.8     160                           
+ 0424 0652 1552  3664 S18W17       3b                               
+ 0437 0437 0437                       130                           
+ 0437 0509 0532  3664 S18W17 X1.0  3b 160    570    II/IV           
+ 0729 0741 0753  3663 N28W59 M4.5  1f                               
+ 0931 0937 0942  3663        M1.8     1300             IV           
+ 0943 0948 0956  3663 N26W66 M2.1  Sf                               
+ 1109 1122 1126  3664 S17W06 M4.1  Sf 3600   730                    
+ 1609      2359                                        IV           
+ 1732 1753 1800  3664 S18W18 M7.9  2n                               
+ 1814 1836 1851  3663 N28W72 M2.9  1f 590                           
+ 1915 1921 1929  3664        M2.0                                   
+ 2023 2023 2023                       1400                          
+ 2027 2034 2039  3664        M1.7                                   
+ 2108 2140 2310  3664        X1.0            1000                   
+ 2205 2227 2312              M9.8                      IV           
+B.  Proton Events:  None
+C.  Geomagnetic Activity Summary:  The geomagnetic field was quiet
+with an isolated unsettled period.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 227  SSN 142  Afr/Ap 010/006   X-ray Background C6.1
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 8.9e+04   GT 10 MeV 1.9e+04 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 2.70e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 1 1 1 2 2 3 1 3 Planetary 1 1 1 2 2 2 1 2 
+F.  Comments:  None

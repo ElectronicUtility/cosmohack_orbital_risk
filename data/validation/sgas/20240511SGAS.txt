@@ -1,0 +1,56 @@
+:Product: 0511SGAS.txt
+:Issued: 2024 May 11 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 132 Issued at 0245Z on 11 May 2024
+This report is compiled from data received at SWO on 10 May
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0000 0007 0007                       2200                          
+ 0010 0010 0013                       1100                          
+ 0010 0013 0022  3664        M1.3     2200                          
+ 0037 0037 0037                       3300                          
+ 0136 0136 0136                       1000                          
+ 0142 0142 0142                       1800                          
+ 0158 0158 0158                       1400                          
+ 0315 0329 0340  3664        M1.4                                   
+ 0627 0654 0706  3664        X3.9     440    900    II/IV           
+ 0758 0758 0758                       280                           
+ 0803 0808 0825                       490                           
+ 1010 1014 1019  3664        M2.2                                   
+ 1101 1101 1101                       100                           
+ 1106 1110 1110                       120                           
+ 1140 1146 1148  3664 S20W42       Sf 540                           
+ 1358 1411 1423  3664 S14W39 M5.9  1n                               
+ 1559 1608 1612  3664 S15W36 C6.9  Sf 110                           
+ 1616 1616 1616                       110                           
+ 1725 1725 1725                       110                           
+ 1726 1726 1726                       110                           
+ 1826 1832 1838  3664        M1.1                                   
+ 1838 1848 1857  3664 S16W44 M1.7  1f                               
+ 1857 1905 1910  3664        M2.0                                   
+ 1920 1922 1922                       150                           
+ 1935 1953 1956  3664        M1.1     440                           
+ 1956 2003 2018  3664        M1.9                                   
+ 2059 2059 2059                       170                           
+ 2059 2108 2112  3664        M3.8     110                           
+ 2114 2115 2115                       120                           
+B.  Proton Events:  S1 (Minor) solar radiation storms began at
+10/1305 UTC and the S2 (Moderate) threshold was reached with a peak
+flux of 149 pfu at 10/1515 UTC.
+C.  Geomagnetic Activity Summary:  The geomagnetic field reached G5
+(Severe) geomagnetic storming levels.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 223  SSN 156  Afr/Ap 080/157   X-ray Background C5.2
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 4.9e+08   GT 10 MeV 1.2e+06 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 2.10e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 3 3 3 2 3 7 7 9 Planetary 3 3 2 2 3 9 9 9 
+F.  Comments:  None

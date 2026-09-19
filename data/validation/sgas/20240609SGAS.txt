@@ -1,0 +1,38 @@
+:Product: 0609SGAS.txt
+:Issued: 2024 Jun 09 0245 UTC
+# Prepared jointly by the U.S. Dept. of Commerce, NOAA,
+# Space Weather Prediction Center and the U.S. Air Force.
+#
+Joint USAF/NOAA Solar and Geophysical Activity Summary
+SGAS Number 161 Issued at 0245Z on 09 Jun 2024
+This report is compiled from data received at SWO on 08 Jun
+A.  Energetic Events
+Begin  Max  End  Rgn   Loc   Xray  Op 245MHz 10cm   Sweep
+ 0018 0028 0035  3709 S13E47 M1.8  Sf                               
+ 0039 0051 0057  3697 S18W53 M3.3  1f                               
+ 0041 0041 0041                       620                           
+ 0123 0149 0219  3697 S18W53 M9.7  1f 560    460    II/IV           
+ 0304 0304 0304                       140                           
+ 0517 0528 0538  3697 S21W61 M1.5  Sf                               
+ 0726 0726 0726                       220                           
+ 0834 0844 0854  3697        M1.2                                   
+ 0854 0858 0902  3697 S21W76 M1.2  Sf                               
+ 1715 1726 1732  3697        C5.7     900                           
+ 2053 2102 2107  3703        M1.0     100                           
+B.  Proton Events:  The greater than 10 MeV proton flux reached 10
+pfu beginning at 08/0255 UTC, and reached a peak flux of 1,030 pfu
+at 08/0800 UTC.
+C.  Geomagnetic Activity Summary:  The geomagnetic field ranged from
+quiet to active levels.
+D.  Stratwarm:  Not Available
+E.  Daily Indices: (real-time preliminary/estimated values)
+10 cm 190  SSN 143  Afr/Ap 015/013   X-ray Background C3.2
+Daily Proton Fluence (flux accumulation over 24 hrs)
+GT 1 MeV 8.0e+07   GT 10 MeV 2.7e+07 p/(cm2-ster-day)
+(GOES-18 satellite synchronous orbit W137 degrees)
+Daily Electron Fluence
+GT 2 MeV 1.90e+06 e/(cm2-ster-day)
+(GOES-16 satellite synchronous orbit W75 degrees)
+3 Hour K-indices:
+Boulder 4 3 3 3 2 4 2 2 Planetary 4 3 3 2 2 3 2 2 
+F.  Comments:  None.

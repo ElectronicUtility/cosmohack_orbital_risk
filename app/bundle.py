@@ -6,6 +6,7 @@ import platform
 import zipfile
 
 from .storage import ROOT, connect
+from .report import build_report
 from .providers import ARCHIVE, ISS_ARCHIVE
 from .conjunctions import HISTORY
 
@@ -30,7 +31,8 @@ def source_bytes(record):
 
 
 def build_bundle(analysis):
-    files = {'analysis.json': json.dumps(analysis, ensure_ascii=False, indent=2).encode('utf-8'),
+    files = {'report.html': build_report(analysis).encode('utf-8'),
+             'analysis.json': json.dumps(analysis, ensure_ascii=False, indent=2).encode('utf-8'),
              'requirements.txt': (ROOT / 'requirements.txt').read_bytes()}
     sources = []
     for record in analysis['source_records']:

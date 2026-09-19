@@ -1,0 +1,11 @@
+services:
+  planner:
+    image: orbital-risk:0.6.0
+    build: .
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - analyses:/var/lib/orbital
+    restart: unless-stopped
+volumes:
+  analyses:
